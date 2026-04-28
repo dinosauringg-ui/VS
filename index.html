@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="manifest" href="manifest.json">
+<title>Vltimate Showdown</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:ital,wght@0,400;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+
+/* ══ THEME TOKENS ══ */
+:root{
+  --red:#ff2d55;--red-d:rgba(255,45,85,.18);--red-g:rgba(255,45,85,.35);
+  --blue:#0a84ff;--blue-d:rgba(10,132,255,.18);--blue-g:rgba(10,132,255,.35);
+  --gold:#ffd60a;--gold-d:rgba(255,214,10,.13);
+  --bg:#07070f;--surf:#0d0d1c;--surf2:#13132a;
+  --border:rgba(255,255,255,.07);--border2:rgba(255,255,255,.14);
+  --text:#edeeff;--muted:rgba(237,238,255,.45);
+  --bg-grad:radial-gradient(ellipse 80% 50% at 15% -5%,rgba(255,45,85,.07) 0%,transparent 55%),
+    radial-gradient(ellipse 80% 50% at 85% 105%,rgba(10,132,255,.07) 0%,transparent 55%),var(--bg);
+  --D:'Bebas Neue',cursive;--B:'Nunito',sans-serif;
+}
+[data-theme="arcade"]{
+  --red:#ff006e;--red-d:rgba(255,0,110,.2);--red-g:rgba(255,0,110,.4);
+  --blue:#00f5ff;--blue-d:rgba(0,245,255,.15);--blue-g:rgba(0,245,255,.35);
+  --gold:#fcff4b;--gold-d:rgba(252,255,75,.12);
+  --bg:#050510;--surf:#0a0a20;--surf2:#10102e;
+  --border:rgba(0,245,255,.1);--border2:rgba(0,245,255,.22);
+  --text:#e8ffff;--muted:rgba(200,255,255,.4);
+  --bg-grad:radial-gradient(ellipse 70% 60% at 20% 10%,rgba(255,0,110,.09) 0%,transparent 60%),
+    radial-gradient(ellipse 70% 60% at 80% 90%,rgba(0,245,255,.09) 0%,transparent 60%),var(--bg);
+}
+[data-theme="colosseum"]{
+  --red:#e63946;--red-d:rgba(230,57,70,.2);--red-g:rgba(230,57,70,.4);
+  --blue:#c9a84c;--blue-d:rgba(201,168,76,.18);--blue-g:rgba(201,168,76,.35);
+  --gold:#f4c430;--gold-d:rgba(244,196,48,.14);
+  --bg:#0c0a05;--surf:#161208;--surf2:#1e180a;
+  --border:rgba(244,196,48,.1);--border2:rgba(244,196,48,.22);
+  --text:#f5ead8;--muted:rgba(245,234,216,.38);
+  --bg-grad:radial-gradient(ellipse 80% 50% at 50% 0%,rgba(244,196,48,.06) 0%,transparent 55%),
+    radial-gradient(ellipse 60% 60% at 50% 110%,rgba(230,57,70,.07) 0%,transparent 60%),var(--bg);
+}
+[data-theme="blood"]{
+  --red:#ff3131;--red-d:rgba(255,49,49,.2);--red-g:rgba(255,49,49,.45);
+  --blue:#c0392b;--blue-d:rgba(192,57,43,.2);--blue-g:rgba(192,57,43,.4);
+  --gold:#ff6b35;--gold-d:rgba(255,107,53,.13);
+  --bg:#080303;--surf:#120505;--surf2:#1a0707;
+  --border:rgba(255,49,49,.1);--border2:rgba(255,49,49,.22);
+  --text:#ffe8e8;--muted:rgba(255,220,220,.38);
+  --bg-grad:radial-gradient(ellipse 80% 60% at 50% 50%,rgba(255,49,49,.06) 0%,transparent 65%),var(--bg);
+}
+[data-theme="jungle"]{
+  --red:#ff4757;--red-d:rgba(255,71,87,.18);--red-g:rgba(255,71,87,.35);
+  --blue:#2ed573;--blue-d:rgba(46,213,115,.15);--blue-g:rgba(46,213,115,.3);
+  --gold:#ffa502;--gold-d:rgba(255,165,2,.12);
+  --bg:#030d07;--surf:#071409;--surf2:#0d1e0f;
+  --border:rgba(46,213,115,.09);--border2:rgba(46,213,115,.18);
+  --text:#e8fff0;--muted:rgba(200,255,220,.38);
+  --bg-grad:radial-gradient(ellipse 80% 60% at 50% 100%,rgba(46,213,115,.07) 0%,transparent 60%),
+    radial-gradient(ellipse 60% 40% at 20% 0%,rgba(255,71,87,.05) 0%,transparent 50%),var(--bg);
+}
+
+html,body{background:var(--bg);color:var(--text);font-family:var(--B);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased;transition:background .4s,color .3s;}
+#root{display:flex;justify-content:center;min-height:100vh;background:var(--bg-grad);transition:background .4s;}
+.shell{width:100%;max-width:430px;min-height:100vh;display:flex;flex-direction:column;position:relative;overflow:hidden;padding-bottom:max(20px,env(safe-area-inset-bottom));}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pop{0%{opacity:0;transform:scale(.8) rotate(-4deg)}65%{transform:scale(1.06) rotate(1deg)}100%{opacity:1;transform:scale(1) rotate(0)}}
+@keyframes winPop{0%{opacity:0;transform:scale(.5) rotate(-10deg)}65%{transform:scale(1.12)}100%{opacity:1;transform:scale(1)}}
+@keyframes pulseR{0%,100%{box-shadow:0 0 22px var(--red-d)}50%{box-shadow:0 0 44px var(--red-g)}}
+@keyframes pulseB{0%,100%{box-shadow:0 0 22px var(--blue-d)}50%{box-shadow:0 0 44px var(--blue-g)}}
+@keyframes slamIn{0%{transform:scale(1.3) translateY(-30px);opacity:0}100%{transform:scale(1) translateY(0);opacity:1}}
+@keyframes floatIdle{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+
+.a0{animation:fadeUp .35s ease both}
+.a1{animation:fadeUp .35s .07s ease both}
+.a2{animation:fadeUp .35s .14s ease both}
+.a3{animation:fadeUp .35s .21s ease both}
+.a4{animation:fadeUp .35s .28s ease both}
+.apop{animation:pop .4s ease both}
+.aslam{animation:slamIn .5s cubic-bezier(.175,.885,.32,1.275) both}
+
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:15px 20px;border:none;border-radius:14px;font-family:var(--D);font-size:22px;letter-spacing:1.5px;cursor:pointer;transition:all .15s;-webkit-tap-highlight-color:transparent;user-select:none;}
+.btn:active{transform:scale(.97);filter:brightness(.88);}
+.btn-r{background:var(--red);color:#fff;box-shadow:0 4px 24px var(--red-g);}
+.btn-b{background:var(--blue);color:#fff;box-shadow:0 4px 24px var(--blue-g);}
+.btn-g{background:var(--gold);color:#000;box-shadow:0 4px 20px var(--gold-d);}
+.btn-ghost{background:transparent;color:var(--muted);border:1.5px solid var(--border);font-family:var(--B);font-size:14px;font-weight:800;letter-spacing:.3px;padding:12px 20px;border-radius:12px;transition:all .15s;}
+.btn-ghost:hover{color:var(--text);border-color:var(--border2);}
+.btn-sm{padding:11px 16px;font-size:17px;border-radius:11px;}
+.btn-outline-r{background:var(--red-d);color:var(--red);border:1.5px solid rgba(255,45,85,.3);font-family:var(--D);font-size:18px;letter-spacing:1px;padding:14px;border-radius:14px;cursor:pointer;flex:1;-webkit-tap-highlight-color:transparent;transition:all .15s;}
+.btn-outline-r:active{transform:scale(.96);}
+.btn-outline-b{background:var(--blue-d);color:var(--blue);border:1.5px solid rgba(10,132,255,.3);font-family:var(--D);font-size:18px;letter-spacing:1px;padding:14px;border-radius:14px;cursor:pointer;flex:1;-webkit-tap-highlight-color:transparent;transition:all .15s;}
+.btn-outline-b:active{transform:scale(.96);}
+
+.inp{background:var(--surf2);border:1.5px solid var(--border);border-radius:12px;padding:13px 16px;color:var(--text);font-family:var(--B);font-size:16px;font-weight:700;width:100%;outline:none;transition:border-color .2s;}
+.inp:focus{border-color:var(--border2);}
+.inp::placeholder{color:var(--muted);font-weight:400;}
+
+.chip{display:inline-flex;align-items:center;gap:5px;padding:7px 15px;border-radius:999px;border:1.5px solid var(--border);background:var(--surf);color:var(--muted);font-size:13px;font-weight:800;cursor:pointer;transition:all .15s;-webkit-tap-highlight-color:transparent;}
+.chip:hover,.chip.on{color:var(--gold);border-color:rgba(255,214,10,.4);background:var(--gold-d);}
+
+.tog{position:relative;width:46px;height:26px;flex-shrink:0;}
+.tog input{position:absolute;opacity:0;width:0;height:0;}
+.tog-tr{position:absolute;inset:0;border-radius:999px;background:var(--surf2);border:1.5px solid var(--border);cursor:pointer;transition:.2s;}
+.tog-tr::after{content:'';position:absolute;left:3px;top:50%;transform:translateY(-50%);width:18px;height:18px;border-radius:50%;background:var(--muted);transition:.2s;}
+.tog input:checked~.tog-tr{background:var(--gold);border-color:var(--gold);}
+.tog input:checked~.tog-tr::after{left:calc(100% - 21px);background:#000;}
+
+.score-bar{display:flex;align-items:center;justify-content:space-between;padding:10px 20px;background:var(--surf);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10;backdrop-filter:blur(12px);}
+.score-side{display:flex;flex-direction:column;align-items:center;gap:1px;min-width:90px;}
+.score-n{font-family:var(--D);font-size:44px;line-height:1;}
+.score-n.r{color:var(--red);}
+.score-n.b{color:var(--blue);}
+.score-lbl{font-size:10px;font-weight:800;letter-spacing:1.5px;color:var(--muted);text-transform:uppercase;max-width:90px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.score-mid{display:flex;flex-direction:column;align-items:center;}
+.score-vs{font-family:var(--D);font-size:13px;letter-spacing:3px;color:var(--border2);}
+.reset-btn{background:none;border:none;color:var(--muted);font-size:10px;font-weight:800;letter-spacing:.5px;cursor:pointer;padding:2px 6px;border-radius:4px;margin-top:2px;}
+.reset-btn:hover{color:var(--text);}
+
+.scen-banner{text-align:center;padding:18px 20px 10px;}
+.scen-who{font-family:var(--D);font-size:14px;letter-spacing:4px;color:var(--muted);display:block;}
+.scen-in{font-family:var(--D);font-size:clamp(24px,7vw,33px);color:var(--gold);letter-spacing:2px;line-height:1.15;text-shadow:0 0 40px var(--gold-d);display:block;}
+
+.f-row{display:flex;gap:10px;padding:0 16px;}
+.f-wrap{flex:1;display:flex;flex-direction:column;justify-content:stretch;}
+.f-wrap.r{animation:floatIdle 3s ease-in-out infinite;}
+.f-wrap.b{animation:floatIdle 3.4s ease-in-out infinite;}
+.f-card{flex:1;border-radius:16px;padding:18px 12px;display:flex;flex-direction:column;align-items:center;text-align:center;min-height:168px;justify-content:center;position:relative;overflow:hidden;}
+.f-card.r{background:linear-gradient(150deg,var(--red-d) 0%,var(--surf) 70%);border:1.5px solid rgba(255,45,85,.3);animation:pulseR 3s ease-in-out infinite;}
+.f-card.b{background:linear-gradient(150deg,var(--blue-d) 0%,var(--surf) 70%);border:1.5px solid rgba(10,132,255,.3);animation:pulseB 3s ease-in-out infinite;}
+.f-team{font-family:var(--D);font-size:11px;letter-spacing:3px;margin-bottom:8px;}
+.f-team.r{color:var(--red);}
+.f-team.b{color:var(--blue);}
+.f-name{font-family:var(--D);font-size:clamp(19px,5vw,25px);line-height:1.1;color:var(--text);margin-bottom:6px;}
+.f-tag{font-size:11px;color:var(--muted);font-style:italic;line-height:1.4;}
+.vs-pill{display:flex;align-items:center;justify-content:center;width:36px;flex-shrink:0;align-self:center;animation:pop .4s .3s ease both;}
+.vs-pill span{font-family:var(--D);font-size:16px;letter-spacing:2px;color:var(--muted);}
+.vote-row{display:flex;gap:10px;padding:0 16px;}
+.win-overlay{position:fixed;inset:0;z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;backdrop-filter:blur(14px);}
+.win-overlay.r{background:rgba(255,45,85,.28);}
+.win-overlay.b{background:rgba(10,132,255,.28);}
+.win-big{font-family:var(--D);font-size:clamp(68px,18vw,90px);letter-spacing:3px;line-height:.95;animation:winPop .5s ease both;}
+.win-big.r{color:var(--red);text-shadow:0 0 60px var(--red-g);}
+.win-big.b{color:var(--blue);text-shadow:0 0 60px var(--blue-g);}
+.win-sub{font-size:18px;font-weight:800;color:rgba(255,255,255,.7);margin-top:6px;letter-spacing:.5px;}
+.win-dismiss{margin-top:28px;font-size:13px;color:rgba(255,255,255,.5);font-weight:700;letter-spacing:.5px;cursor:pointer;}
+
+.home-sub{font-family:var(--D);font-size:13px;letter-spacing:6px;color:var(--muted);text-align:center;}
+.nav-back{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:800;color:var(--muted);background:none;border:none;cursor:pointer;padding:16px 20px;-webkit-tap-highlight-color:transparent;}
+.nav-back:hover{color:var(--text);}
+.section-lbl{font-family:var(--D);font-size:13px;letter-spacing:3px;color:var(--muted);}
+
+.f-list-item{display:flex;align-items:center;gap:12px;padding:13px 16px;background:var(--surf);border:1px solid var(--border);border-radius:12px;transition:border-color .15s;}
+.f-list-item:hover{border-color:var(--border2);}
+.f-list-info{flex:1;min-width:0;}
+.f-list-name{font-weight:900;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.f-list-tag{font-size:12px;color:var(--muted);font-style:italic;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.del-btn{background:none;border:none;color:rgba(255,45,85,.45);cursor:pointer;font-size:20px;padding:4px;flex-shrink:0;line-height:1;}
+.del-btn:hover{color:var(--red);}
+
+.draft-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 16px;}
+.draft-card{padding:12px 14px;background:var(--surf);border:1.5px solid var(--border);border-radius:12px;cursor:pointer;transition:all .12s;-webkit-tap-highlight-color:transparent;text-align:left;}
+.draft-card:hover:not(.drafted-r):not(.drafted-b){border-color:var(--border2);background:var(--surf2);}
+.draft-card.drafted-r{border-color:var(--red);background:var(--red-d);opacity:.45;cursor:default;}
+.draft-card.drafted-b{border-color:var(--blue);background:var(--blue-d);opacity:.45;cursor:default;}
+.draft-card-name{font-weight:900;font-size:14px;line-height:1.2;}
+.draft-card-tag{font-size:11px;color:var(--muted);margin-top:2px;}
+.turn-banner{text-align:center;padding:10px 20px;font-family:var(--D);font-size:22px;letter-spacing:3px;}
+.turn-banner.r{color:var(--red);}
+.turn-banner.b{color:var(--blue);}
+.pos-rows{display:flex;flex-direction:column;gap:8px;}
+.pos-row{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--surf);border:1px solid var(--border);border-radius:12px;cursor:pointer;transition:all .12s;}
+.pos-row:hover{border-color:var(--border2);background:var(--surf2);}
+.pos-lbl{font-family:var(--D);font-size:20px;letter-spacing:2px;width:36px;flex-shrink:0;}
+.pos-lbl.r{color:var(--red);}
+.pos-lbl.b{color:var(--blue);}
+.lineup-wrap{display:flex;gap:8px;padding:0 16px;}
+.lineup-side{flex:1;}
+.lineup-hd{text-align:center;font-family:var(--D);font-size:17px;letter-spacing:2px;padding:8px;border-radius:10px 10px 0 0;margin-bottom:1px;}
+.lineup-hd.r{color:var(--red);background:var(--red-d);}
+.lineup-hd.b{color:var(--blue);background:var(--blue-d);}
+.lineup-item{padding:8px 10px;background:var(--surf);border-bottom:1px solid var(--border);}
+.lineup-item:last-child{border-radius:0 0 10px 10px;border-bottom:none;}
+.lineup-pos-lbl{font-family:var(--D);font-size:11px;letter-spacing:2px;color:var(--muted);}
+.lineup-fname{font-weight:900;font-size:12px;line-height:1.2;margin-top:1px;}
+
+.scroll{overflow-y:auto;-webkit-overflow-scrolling:touch;}
+::-webkit-scrollbar{width:3px;}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
+.mode-card{background:var(--surf);border:1.5px solid var(--border);border-radius:18px;padding:20px;display:flex;align-items:center;gap:16px;cursor:pointer;transition:all .15s;-webkit-tap-highlight-color:transparent;}
+.mode-card:hover{border-color:var(--border2);transform:translateY(-1px);}
+.mode-card:active{transform:scale(.98);}
+.mode-card.active-r{border-color:rgba(255,45,85,.4);background:rgba(255,45,85,.06);}
+.mode-card.active-b{border-color:rgba(10,132,255,.4);background:rgba(10,132,255,.06);}
+.mode-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;}
+.mode-icon.r{background:var(--red-d);}
+.mode-icon.b{background:var(--blue-d);}
+.mode-title{font-family:var(--D);font-size:22px;letter-spacing:1px;line-height:1;}
+.mode-desc{font-size:12px;color:var(--muted);margin-top:3px;line-height:1.4;}
+.empty-state{display:flex;flex-direction:column;align-items:center;gap:10px;padding:32px 20px;color:var(--muted);}
+.empty-icon{font-size:40px;opacity:.4;}
+.empty-text{font-size:14px;font-weight:700;text-align:center;}
+.cat-header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:var(--surf2);border-radius:12px;margin-top:16px;border:1px solid var(--border);}
+.cat-title{font-family:var(--D);font-size:18px;letter-spacing:2px;text-transform:uppercase;}
+.dir-chip{display:inline-flex;font-size:12px;padding:6px 12px;border-radius:8px;border:1.5px solid var(--border);background:var(--surf);color:var(--text);font-weight:700;cursor:pointer;transition:all .12s;}
+.dir-chip:hover{border-color:var(--border2);}
+.dir-chip.off{opacity:0.4;text-decoration:line-through;}
+.dir-chip:active{transform:scale(0.96);}
+.px20{padding-left:20px;padding-right:20px;}
+
+/* ══ THEME PICKER ══ */
+.theme-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:0 20px;}
+.theme-swatch{border-radius:14px;padding:14px 10px;text-align:center;border:2px solid var(--border);cursor:pointer;transition:all .2s;-webkit-tap-highlight-color:transparent;position:relative;background:var(--surf);}
+.theme-swatch:hover{transform:translateY(-2px);border-color:var(--border2);}
+.theme-swatch.active{border-color:var(--gold);}
+.theme-swatch.active::after{content:'✓';position:absolute;top:6px;right:8px;font-size:11px;color:var(--gold);font-weight:900;}
+.theme-dots{display:flex;gap:4px;justify-content:center;margin-bottom:7px;}
+.theme-dot{width:12px;height:12px;border-radius:50%;}
+.theme-name{font-family:var(--D);font-size:12px;letter-spacing:1px;color:var(--text);}
+
+/* ══ EXPANSION PACKS ══ */
+.pack-card{border-radius:18px;padding:20px;border:2px solid var(--border);background:var(--surf);cursor:pointer;transition:all .2s;-webkit-tap-highlight-color:transparent;position:relative;overflow:hidden;}
+.pack-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--gold-d) 0%,transparent 60%);opacity:0;transition:opacity .3s;pointer-events:none;}
+.pack-card:hover{transform:translateY(-1px);}
+.pack-card:active{transform:scale(.98);}
+.pack-card.enabled{border-color:var(--gold);}
+.pack-card.enabled::before{opacity:1;}
+.pack-header{display:flex;align-items:center;gap:12px;margin-bottom:10px;}
+.pack-emoji{font-size:28px;flex-shrink:0;}
+.pack-info{flex:1;}
+.pack-name{font-family:var(--D);font-size:20px;letter-spacing:1.5px;line-height:1;}
+.pack-counts{font-size:11px;color:var(--muted);font-weight:700;margin-top:2px;letter-spacing:.5px;}
+.pack-desc{font-size:12px;color:var(--muted);line-height:1.5;}
+.pack-badge{position:absolute;top:14px;right:14px;font-family:var(--D);font-size:11px;letter-spacing:1px;padding:3px 9px;border-radius:6px;}
+.pack-badge.on{background:var(--gold);color:#000;}
+.pack-badge.off{background:var(--surf2);color:var(--muted);border:1px solid var(--border);}
+.active-pack-pill{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:999px;background:var(--gold-d);border:1px solid rgba(255,214,10,.3);font-size:11px;font-weight:800;color:var(--gold);}
+
+/* ══ SETTINGS TABS ══ */
+.settings-tab-bar{display:flex;gap:4px;padding:0 20px;margin-bottom:16px;}
+.settings-tab{flex:1;padding:10px 6px;text-align:center;border-radius:10px;font-family:var(--D);font-size:13px;letter-spacing:1px;cursor:pointer;border:1.5px solid transparent;background:var(--surf);color:var(--muted);transition:all .15s;-webkit-tap-highlight-color:transparent;}
+.settings-tab.active{background:var(--surf2);color:var(--text);border-color:var(--border2);}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+<script src="data.js"></script>
+
+<script type="text/babel">
+const {useState,useEffect,useRef}=React;
+const FIGHTERS = window.FIGHTERS || [];
+const SCENARIOS = window.SCENARIOS || [];
+const EXPANSION_PACKS = window.EXPANSION_PACKS || [];
+const POSITIONS=['PG','SG','SF','PF','C'];
+const POS_FULL={PG:'Point Guard',SG:'Shooting Guard',SF:'Small Forward',PF:'Power Forward',C:'Center'};
+
+const LS={
+  get:(k,d)=>{try{const v=localStorage.getItem(k);return v?JSON.parse(v):d;}catch{return d;}},
+  set:(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));}catch{}}
+};
+const pickN=(arr,n)=>[...arr].sort(()=>Math.random()-.5).slice(0,n);
+const randItem=(arr)=>arr[Math.floor(Math.random()*arr.length)];
+
+const THEMES=[
+  {id:'default',name:'MIDNIGHT',dots:['#ff2d55','#0a84ff','#ffd60a']},
+  {id:'arcade', name:'ARCADE',  dots:['#ff006e','#00f5ff','#fcff4b']},
+  {id:'colosseum',name:'COLOSSEUM',dots:['#e63946','#c9a84c','#f4c430']},
+  {id:'blood',  name:'BLOOD',   dots:['#ff3131','#c0392b','#ff6b35']},
+  {id:'jungle', name:'JUNGLE',  dots:['#ff4757','#2ed573','#ffa502']},
+];
+
+function App(){
+  const [screen,setScreen]=useState('home');
+  const [names,setNames]=useState(()=>LS.get('vs_names',{red:'Red Team',blue:'Blue Team'}));
+  const [scores,setScores]=useState(()=>LS.get('vs_scores',{red:0,blue:0}));
+  const [custom,setCustom]=useState(()=>LS.get('vs_custom',[]));
+  const [fighterStats,setFighterStats]=useState(()=>LS.get('vs_fstats',{}));
+  const [disabledCats,setDisabledCats]=useState(()=>LS.get('vs_cats',[]));
+  const [disabledFighters,setDisabledFighters]=useState(()=>LS.get('vs_dis_f',[]));
+  const [enabledPacks,setEnabledPacks]=useState(()=>LS.get('vs_packs',[]));
+  const [theme,setTheme]=useState(()=>LS.get('vs_theme','default'));
+  const [matchup,setMatchup]=useState(null);
+  const [winTeam,setWinTeam]=useState(null);
+  const [showWin,setShowWin]=useState(false);
+  const [tempRed,setTempRed]=useState('');
+  const [tempBlue,setTempBlue]=useState('');
+    const [pendingMode,setPendingMode]=useState('classic');
+  const [activeMode,setActiveMode]=useState('classic');
+  const [tagline,setTagline]=useState('WHO WOULD ACTUALLY WIN?');
+  const [newFName,setNewFName]=useState('');
+
+  // The Easter Egg Roller
+  useEffect(() => {
+    if (screen === 'home') {
+      const roll = Math.random();
+      if (roll < 0.01) setTagline('OLD GODZILLA WAS HOPPING AROUND...');
+      else if (roll < 0.02) setTagline('GOOD GUYS, BAD GUYS, AND EXPLOSIONS');
+      else if (roll < 0.03) setTagline('OF ULTIMATE DESTINY...');
+      else setTagline('WHO WOULD ACTUALLY WIN?');
+    }
+  }, [screen]);
+
+  const [newFTag,setNewFTag]=useState('');
+  const [sfPool,setSfPool]=useState([]);
+  const [sfPicks,setSfPicks]=useState({red:[],blue:[]});
+  const [sfTurn,setSfTurn]=useState(0);
+    const [sfLineup,setSfLineup]=useState({red:{},blue:{}});
+  const [sfPhase,setSfPhase]=useState('spin');
+  const [displayFighter,setDisplayFighter]=useState(null);
+  const winTimerRef=useRef(null);
+    const [settingsTab,setSettingsTab]=useState('packs');
+
+  useEffect(()=>{
+    document.documentElement.setAttribute('data-theme',theme==='default'?'':theme);
+  },[theme]);
+
+  useEffect(()=>{setTempRed(names.red);setTempBlue(names.blue);},[]);
+
+  const getPool=()=>{
+    let base=[...FIGHTERS.filter(f=>!disabledCats.includes(f.cat)&&!disabledFighters.includes(f.id))];
+    enabledPacks.forEach(pid=>{
+      const p=EXPANSION_PACKS.find(x=>x.id===pid);
+      if(p) p.fighters.forEach(f=>{if(!disabledCats.includes(f.cat)&&!disabledFighters.includes(f.id))base.push(f);});
+    });
+    if(custom.length>0&&!disabledCats.includes('custom')){
+      custom.filter(f=>!disabledFighters.includes(`cx${f.id}`))
+        .forEach(f=>base.push({id:`cx${f.id}`,name:f.name,tag:f.tag||'custom fighter',cat:'custom'}));
+    }
+    return base.length>=10?base:[...FIGHTERS,...custom.map(f=>({id:`cx${f.id}`,name:f.name,tag:f.tag,cat:'custom'}))];
+  };
+
+  const getScenarios=()=>{
+    let base=[...SCENARIOS];
+    enabledPacks.forEach(pid=>{
+      const p=EXPANSION_PACKS.find(x=>x.id===pid);
+      if(p&&p.scenarios) base=[...base,...p.scenarios];
+    });
+    return base;
+  };
+
+    const genMatchup=(overrideMode)=>{
+    const mode = overrideMode || activeMode;
+    if(mode === 'tagteam') {
+      const [f1a, f1b, f2a, f2b] = pickN(getPool(), 4);
+      setMatchup({f1: [f1a, f1b], f2: [f2a, f2b], scenario: randItem(getScenarios())});
+    } else {
+      const [f1, f2] = pickN(getPool(), 2);
+      setMatchup({f1, f2, scenario: randItem(getScenarios())});
+    }
+    setWinTeam(null);
+  };
+
+  const award=(team)=>{
+    const ns={...scores,[team]:scores[team]+1};
+    setScores(ns);LS.set('vs_scores',ns);
+    if(matchup){
+      const ns2={...fighterStats};
+      const wArr = activeMode==='tagteam' ? (team==='red'?matchup.f1:matchup.f2) : [team==='red'?matchup.f1:matchup.f2];
+      const lArr = activeMode==='tagteam' ? (team==='red'?matchup.f2:matchup.f1) : [team==='red'?matchup.f2:matchup.f1];
+      wArr.forEach(f=>{ if(!ns2[f.id])ns2[f.id]={matches:0,wins:0}; ns2[f.id].matches++; ns2[f.id].wins++; });
+      lArr.forEach(f=>{ if(!ns2[f.id])ns2[f.id]={matches:0,wins:0}; ns2[f.id].matches++; });
+      setFighterStats(ns2);LS.set('vs_fstats',ns2);
+    }
+    setWinTeam(team);setShowWin(true);
+    clearTimeout(winTimerRef.current);
+    winTimerRef.current=setTimeout(()=>{setShowWin(false);genMatchup();},2200);
+  };
+
+  const startGame=(mode)=>{
+    const n={red:(tempRed||'Red Team').trim(),blue:(tempBlue||'Blue Team').trim()};
+    setNames(n);LS.set('vs_names',n);
+    setActiveMode(mode);
+    if(mode==='classic' || mode==='tagteam'){genMatchup(mode);setScreen('play');}
+    else{
+      const fighters=pickN(getPool(),10);
+      setSfPool(fighters);setSfPicks({red:[],blue:[]});setSfTurn(0);
+      setSfLineup({red:{},blue:{}});setSfPhase('spin');setDisplayFighter(null);
+      setScreen('sf_draft');
+    }
+  };
+
+
+  const sfDraftPick=(f)=>{
+    const team=sfTurn%2===0?'red':'blue';
+    const np={...sfPicks,[team]:[...sfPicks[team],f]};setSfPicks(np);
+    const nt=sfTurn+1;setSfTurn(nt);
+    if(nt>=10){setSfLineup({red:{},blue:{}});setSfPhase('red');setScreen('sf_assign');}
+  };
+
+  const addCustom=()=>{
+    if(!newFName.trim())return;
+    const nc=[...custom,{id:Date.now(),name:newFName.trim(),tag:newFTag.trim()||'custom fighter',cat:'custom'}];
+    setCustom(nc);LS.set('vs_custom',nc);setNewFName('');setNewFTag('');
+  };
+  const delCustom=(id)=>{const nc=custom.filter(f=>f.id!==id);setCustom(nc);LS.set('vs_custom',nc);};
+  const toggleCat=(cat)=>{const n=disabledCats.includes(cat)?disabledCats.filter(c=>c!==cat):[...disabledCats,cat];setDisabledCats(n);LS.set('vs_cats',n);};
+  const toggleFighter=(id)=>{const n=disabledFighters.includes(id)?disabledFighters.filter(i=>i!==id):[...disabledFighters,id];setDisabledFighters(n);LS.set('vs_dis_f',n);};
+  const togglePack=(pid)=>{const n=enabledPacks.includes(pid)?enabledPacks.filter(p=>p!==pid):[...enabledPacks,pid];setEnabledPacks(n);LS.set('vs_packs',n);};
+  const setThemeAndSave=(t)=>{setTheme(t);LS.set('vs_theme',t);};
+  const resetScores=()=>{setScores({red:0,blue:0});LS.set('vs_scores',{red:0,blue:0});};
+
+  /* ── HOME ── */
+  if(screen==='home') return(
+    <div className="shell scroll">
+      <div style={{flex:1,display:'flex',flexDirection:'column',justifyContent:'center',gap:0,paddingBottom:32,minHeight:'100vh'}}>
+        <div className="px20 a0" style={{paddingTop:50,paddingBottom:20,display:'flex',flexDirection:'column',alignItems:'center'}}>
+                   <img 
+            src="Logo2.png" 
+            alt="Vltimate Showdown" 
+            style={{
+              width: '100%', 
+              maxWidth: '420px', 
+              objectFit: 'contain', 
+              mixBlendMode: 'screen', 
+              filter: 'contrast(1.15) brightness(1.1)',
+              WebkitMaskImage: 'radial-gradient(ellipse 90% 70% at 50% 50%, black 50%, transparent 100%)',
+              maskImage: 'radial-gradient(ellipse 90% 70% at 50% 50%, black 50%, transparent 100%)'
+            }}
+          />
+
+           <div className="home-sub" style={{marginTop:-10, zIndex:2, position:'relative', color: tagline !== 'WHO WOULD ACTUALLY WIN?' ? 'var(--gold)' : 'var(--muted)'}}>
+            {tagline}
+          </div>
+          {enabledPacks.length>0&&(
+            <div style={{display:'flex',gap:6,marginTop:10,flexWrap:'wrap',justifyContent:'center'}}>
+              {enabledPacks.map(pid=>{
+                const p=EXPANSION_PACKS.find(x=>x.id===pid);
+                return p&&<span key={pid} className="active-pack-pill">{p.emoji} {p.name}</span>;
+              })}
+            </div>
+          )}
+        </div>
+
+        {(scores.red>0||scores.blue>0)&&(
+          <div className="a1 px20" style={{marginBottom:20}}>
+            <div style={{background:'var(--surf)',border:'1px solid var(--border)',borderRadius:14,padding:'12px 20px',display:'flex',alignItems:'center',justifyContent:'space-between'}}>
+              <div style={{textAlign:'center'}}>
+                <div style={{fontFamily:'var(--D)',fontSize:32,color:'var(--red)',lineHeight:1}}>{scores.red}</div>
+                <div style={{fontSize:11,color:'var(--muted)',fontWeight:800,letterSpacing:1}}>{names.red}</div>
+              </div>
+              <div style={{fontFamily:'var(--D)',fontSize:13,letterSpacing:3,color:'var(--muted)'}}>VS</div>
+              <div style={{textAlign:'center'}}>
+                <div style={{fontFamily:'var(--D)',fontSize:32,color:'var(--blue)',lineHeight:1}}>{scores.blue}</div>
+                <div style={{fontSize:11,color:'var(--muted)',fontWeight:800,letterSpacing:1}}>{names.blue}</div>
+              </div>
+              <button className="reset-btn" onClick={resetScores}>RESET</button>
+            </div>
+          </div>
+        )}
+
+        <div className="px20 a2" style={{display:'flex',flexDirection:'column',gap:10}}>
+          <div className="mode-card active-r" onClick={()=>{setPendingMode('classic');setTempRed(names.red);setTempBlue(names.blue);setScreen('setup');}}>
+            <div className="mode-icon r">⚔️</div>
+            <div><div className="mode-title">CLASSIC MODE</div><div className="mode-desc">Two teams debate hilarious matchups across wild scenarios. Points awarded by the crowd.</div></div>
+          </div>
+          <div className="mode-card active-b" onClick={()=>{setPendingMode('sf');setTempRed(names.red);setTempBlue(names.blue);setScreen('setup');}}>
+            <div className="mode-icon b">🏀</div>
+            <div><div className="mode-title">STARTING FIVE</div><div className="mode-desc">Draft 5 fighters each and build the ultimate basketball lineup. Who's got the better team?</div></div>
+          </div>
+                    <div className="mode-card" style={{borderColor: 'rgba(255,214,10,0.4)', background: 'rgba(255,214,10,0.06)'}} onClick={()=>{setPendingMode('tagteam');setTempRed(names.red);setTempBlue(names.blue);setScreen('setup');}}>
+            <div className="mode-icon" style={{background: 'var(--gold-d)'}}>🌪️</div>
+            <div><div className="mode-title" style={{color: 'var(--gold)'}}>TAG TEAM TORNADO</div><div className="mode-desc">2v2 chaos. Argue how your two randomly paired fighters synergize to dominate the scenario.</div></div>
+          </div>
+
+        </div>
+
+        <div className="a3" style={{marginTop:20,display:'flex',gap:8,flexWrap:'wrap',justifyContent:'center',padding:'0 20px'}}>
+          <span className="chip" onClick={()=>setScreen('howToPlay')}>📖 How to Play</span>
+          <span className="chip" onClick={()=>setScreen('myFighters')}>✦ My Fighters{custom.length>0&&` (${custom.length})`}</span>
+          <span className="chip" onClick={()=>setScreen('leaderboard')}>🏆 Hall of Fame</span>
+          <span className="chip" onClick={()=>{setSettingsTab('packs');setScreen('settings');}}>⚙️ Settings</span>
+        </div>
+      </div>
+    </div>
+  );
+
+  /* ── SETUP ── */
+  if(screen==='setup') return(
+    <div className="shell">
+      <button className="nav-back" onClick={()=>setScreen('home')}>← BACK</button>
+      <div style={{flex:1,display:'flex',flexDirection:'column',justifyContent:'center',paddingBottom:40}}>
+        <div className="px20 a0" style={{marginBottom:28}}>
+          <div style={{fontFamily:'var(--D)',fontSize:13,letterSpacing:4,color:'var(--muted)',marginBottom:4}}>{pendingMode==='classic'?'⚔️ CLASSIC MODE':pendingMode==='tagteam'?'🌪️ TAG TEAM TORNADO':'🏀 STARTING FIVE'}</div>
+          <div style={{fontFamily:'var(--D)',fontSize:38,letterSpacing:2}}>SET YOUR<br/>TEAMS</div>
+        </div>
+        <div className="px20 a1" style={{display:'flex',flexDirection:'column',gap:10,marginBottom:20}}>
+          <div style={{display:'flex',flexDirection:'column',gap:6}}>
+            <div style={{display:'flex',alignItems:'center',gap:8}}><div style={{width:10,height:10,borderRadius:'50%',background:'var(--red)',flexShrink:0}}/><span style={{fontSize:12,fontWeight:800,letterSpacing:1.5,color:'var(--red)'}}>RED TEAM</span></div>
+            <input className="inp" style={{borderColor:'rgba(255,45,85,.25)'}} value={tempRed} onChange={e=>setTempRed(e.target.value)} placeholder="Enter team name..." maxLength={24}/>
+          </div>
+          <div style={{display:'flex',flexDirection:'column',gap:6}}>
+            <div style={{display:'flex',alignItems:'center',gap:8}}><div style={{width:10,height:10,borderRadius:'50%',background:'var(--blue)',flexShrink:0}}/><span style={{fontSize:12,fontWeight:800,letterSpacing:1.5,color:'var(--blue)'}}>BLUE TEAM</span></div>
+            <input className="inp" style={{borderColor:'rgba(10,132,255,.25)'}} value={tempBlue} onChange={e=>setTempBlue(e.target.value)} placeholder="Enter team name..." maxLength={24}/>
+          </div>
+        </div>
+        <div className="px20 a3">
+          <button className={`btn ${pendingMode==='classic'?'btn-r':pendingMode==='tagteam'?'btn-g':'btn-b'}`} onClick={()=>startGame(pendingMode)}>START {pendingMode==='sf'?'DRAFT':'BATTLE'}</button>
+        </div>
+      </div>
+    </div>
+  );
+
+  /* ── PLAY ── */
+  if(screen==='play') return(
+    <div className="shell scroll">
+      {showWin&&(
+        <div className={`win-overlay ${winTeam}`} onClick={()=>setShowWin(false)}>
+          <div className={`win-big ${winTeam}`}>{winTeam==='red'?names.red:names.blue}</div>
+          <div className="win-sub">WINS THE ROUND!</div>
+          <div className="win-dismiss">TAP TO CONTINUE</div>
+        </div>
+      )}
+      <div className="score-bar">
+        <div className="score-side"><div className="score-n r">{scores.red}</div><div className="score-lbl">{names.red}</div></div>
+        <div className="score-mid"><div className="score-vs">VS</div><button className="reset-btn" onClick={()=>{if(confirm('Reset scores?'))resetScores();}}>RESET</button></div>
+        <div className="score-side"><div className="score-n b">{scores.blue}</div><div className="score-lbl">{names.blue}</div></div>
+      </div>
+      {matchup&&(
+        <div style={{flex:1,display:'flex',flexDirection:'column',gap:14,paddingTop:4,paddingBottom:20}}>
+          <div className="scen-banner apop">
+            <span className="scen-who">WHO WOULD WIN...</span>
+            <span className="scen-in">in {matchup.scenario}?</span>
+          </div>
+                   <div className="f-row">
+            <div className="f-wrap aslam r" style={{animationDelay:'0.1s'}}>
+              <div className="f-card r" style={{justifyContent: activeMode==='tagteam'?'space-between':'center'}}>
+                <div className="f-team r">{names.red}</div>
+                {activeMode === 'tagteam' ? (
+                  <div style={{display:'flex', flexDirection:'column', gap:8, alignItems:'center', margin:'auto 0'}}>
+                    <div className="f-name" style={{fontSize: 'clamp(15px,4vw,19px)', marginBottom:0}}>{matchup.f1[0].name}</div>
+                    <div style={{fontSize:11, color:'var(--red)', fontWeight:900, opacity:0.6}}>AND</div>
+                    <div className="f-name" style={{fontSize: 'clamp(15px,4vw,19px)', marginBottom:0}}>{matchup.f1[1].name}</div>
+                  </div>
+                ) : (
+                  <><div className="f-name">{matchup.f1.name}</div><div className="f-tag">"{matchup.f1.tag}"</div></>
+                )}
+              </div>
+            </div>
+            
+            <div className="vs-pill"><span>VS</span></div>
+            
+            <div className="f-wrap aslam b" style={{animationDelay:'0.2s'}}>
+              <div className="f-card b" style={{justifyContent: activeMode==='tagteam'?'space-between':'center'}}>
+                <div className="f-team b">{names.blue}</div>
+                {activeMode === 'tagteam' ? (
+                  <div style={{display:'flex', flexDirection:'column', gap:8, alignItems:'center', margin:'auto 0'}}>
+                    <div className="f-name" style={{fontSize: 'clamp(15px,4vw,19px)', marginBottom:0}}>{matchup.f2[0].name}</div>
+                    <div style={{fontSize:11, color:'var(--blue)', fontWeight:900, opacity:0.6}}>AND</div>
+                    <div className="f-name" style={{fontSize: 'clamp(15px,4vw,19px)', marginBottom:0}}>{matchup.f2[1].name}</div>
+                  </div>
+                ) : (
+                  <><div className="f-name">{matchup.f2.name}</div><div className="f-tag">"{matchup.f2.tag}"</div></>
+                )}
+              </div>
+            </div>
+          </div>
+          
+          <div style={{textAlign:'center',padding:'10px 20px 0'}}><div style={{fontSize:12,color:'var(--muted)',fontWeight:800,letterSpacing:.5}}>DEBATE IT OUT • THEN VOTE</div></div>
+          <div className="vote-row a2">
+            <button className="btn-outline-r" onClick={()=>award('red')}>🏆 {names.red} WINS</button>
+            <button className="btn-outline-b" onClick={()=>award('blue')}>🏆 {names.blue} WINS</button>
+          </div>
+          <div style={{padding:'0 16px',display:'flex',gap:8}}>
+            <button className="btn btn-ghost" style={{flex:1}} onClick={genMatchup}>⟳ NEXT ROUND</button>
+            <button className="btn btn-ghost" style={{width:'auto',padding:'12px 16px'}} onClick={()=>setScreen('home')}>⌂</button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+
+  /* ── SETTINGS ── */
+  if(screen==='settings'){
+    const allFighters=[...FIGHTERS];
+    custom.forEach(f=>allFighters.push({id:`cx${f.id}`,name:f.name,tag:f.tag,cat:'custom'}));
+    enabledPacks.forEach(pid=>{
+      const p=EXPANSION_PACKS.find(x=>x.id===pid);
+      if(p) p.fighters.forEach(f=>allFighters.push(f));
+    });
+    const grouped=allFighters.reduce((acc,f)=>{(acc[f.cat]=acc[f.cat]||[]).push(f);return acc;},{});
+    return(
+      <div className="shell scroll">
+        <button className="nav-back" onClick={()=>setScreen('home')}>← BACK</button>
+        <div style={{padding:'0 20px 8px'}} className="a0">
+          <div style={{fontFamily:'var(--D)',fontSize:38,letterSpacing:2}}>SETTINGS</div>
+        </div>
+        <div className="settings-tab-bar a1">
+          {[['packs','📦 PACKS'],['themes','🎨 THEMES'],['roster','⚙️ ROSTER']].map(([t,label])=>(
+            <button key={t} className={`settings-tab ${settingsTab===t?'active':''}`} onClick={()=>setSettingsTab(t)}>{label}</button>
+          ))}
+        </div>
+
+        {settingsTab==='packs'&&(
+          <div style={{padding:'0 20px 32px',display:'flex',flexDirection:'column',gap:12}} className="a2">
+            <div style={{fontSize:13,color:'var(--muted)',fontWeight:700,lineHeight:1.6,marginBottom:4}}>
+              Expansion packs add new fighters AND scenarios to the pool. Toggle them on before starting a game.
+            </div>
+            {EXPANSION_PACKS.map((pack,idx)=>{
+              const isOn=enabledPacks.includes(pack.id);
+              return(
+                <div key={pack.id} className={`pack-card ${isOn?'enabled':''}`} style={{animationDelay:`${idx*.06}s`}} onClick={()=>togglePack(pack.id)}>
+                  <span className={`pack-badge ${isOn?'on':'off'}`}>{isOn?'ON':'OFF'}</span>
+                  <div className="pack-header">
+                    <div className="pack-emoji">{pack.emoji}</div>
+                    <div className="pack-info">
+                      <div className="pack-name">{pack.name}</div>
+                      <div className="pack-counts">{pack.fighters.length} FIGHTERS · {pack.scenarios.length} SCENARIOS</div>
+                    </div>
+                  </div>
+                  <div className="pack-desc">{pack.description}</div>
+                </div>
+              );
+            })}
+            {enabledPacks.length>0&&(
+              <div style={{textAlign:'center',padding:'4px 0',fontSize:12,color:'var(--gold)',fontWeight:800}}>
+                +{enabledPacks.reduce((a,pid)=>{const p=EXPANSION_PACKS.find(x=>x.id===pid);return a+(p?p.fighters.length:0);},0)} fighters &amp;&nbsp;
+                +{enabledPacks.reduce((a,pid)=>{const p=EXPANSION_PACKS.find(x=>x.id===pid);return a+(p?p.scenarios.length:0);},0)} scenarios active
+              </div>
+            )}
+          </div>
+        )}
+
+        {settingsTab==='themes'&&(
+          <div style={{paddingBottom:32}} className="a2">
+            <div style={{padding:'0 20px 16px',fontSize:13,color:'var(--muted)',fontWeight:700}}>Pick a vibe. Changes apply immediately.</div>
+            <div className="theme-grid">
+              {THEMES.map((t,idx)=>(
+                <div key={t.id} className={`theme-swatch ${theme===t.id?'active':''}`} style={{animationDelay:`${idx*.04}s`}} onClick={()=>setThemeAndSave(t.id)}>
+                  <div className="theme-dots">{t.dots.map((d,i)=><div key={i} className="theme-dot" style={{background:d}}/>)}</div>
+                  <div className="theme-name">{t.name}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {settingsTab==='roster'&&(
+          <div style={{padding:'0 20px 32px',display:'flex',flexDirection:'column'}} className="a2">
+            <div style={{fontSize:13,color:'var(--muted)',marginBottom:4}}>Toggle categories or individual fighters.</div>
+            {Object.entries(grouped).map(([cat,fList],idx)=>{
+              const isCatOff=disabledCats.includes(cat);
+              return(
+                <div key={cat} style={{animationDelay:`${idx*.05}s`}}>
+                  <div className="cat-header">
+                    <div className="cat-title">{cat} ({fList.length})</div>
+                    <label className="tog"><input type="checkbox" checked={!isCatOff} onChange={()=>toggleCat(cat)}/><div className="tog-tr"/></label>
+                  </div>
+                  {!isCatOff&&(
+                    <div style={{padding:'12px 0',display:'flex',flexWrap:'wrap',gap:8}}>
+                      {fList.map(f=>{const isOff=disabledFighters.includes(f.id);return<div key={f.id} className={`dir-chip ${isOff?'off':''}`} onClick={()=>toggleFighter(f.id)}>{f.name}</div>;})}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  /* ── LEADERBOARD ── */
+  if(screen==='leaderboard'){
+    const ranked=getPool().map(f=>{
+      const rid=String(f.id).replace('cx','');
+      const st=fighterStats[rid]||{matches:0,wins:0};
+      return{...f,...st,winPct:st.matches>0?Math.round((st.wins/st.matches)*100):0};
+    }).filter(f=>f.matches>0).sort((a,b)=>b.winPct-a.winPct||b.wins-a.wins);
+    return(
+      <div className="shell scroll">
+        <button className="nav-back" onClick={()=>setScreen('home')}>← BACK</button>
+        <div style={{padding:'0 20px 32px'}}>
+          <div className="a0"><div style={{fontFamily:'var(--D)',fontSize:38,letterSpacing:2}}>HALL OF FAME</div><div style={{fontSize:13,color:'var(--muted)',marginTop:4,marginBottom:20}}>All-time win rates for your roster.</div></div>
+          <div className="a1" style={{display:'flex',flexDirection:'column',gap:8}}>
+            {ranked.map((f,i)=>(
+              <div key={f.id} className="f-list-item" style={{animationDelay:`${i*.04}s`}}>
+                <div style={{fontFamily:'var(--D)',fontSize:20,color:i===0?'var(--gold)':'var(--muted)',width:28}}>#{i+1}</div>
+                <div className="f-list-info"><div className="f-list-name">{f.name}</div><div className="f-list-tag">{f.wins}W - {f.matches-f.wins}L</div></div>
+                <div style={{fontFamily:'var(--D)',fontSize:24,color:f.winPct>50?'var(--gold)':'var(--text)'}}>{f.winPct}%</div>
+              </div>
+            ))}
+            {ranked.length===0&&<div className="empty-state"><div className="empty-icon">📊</div><div className="empty-text">No battles yet.<br/>Play some rounds to see who rises.</div></div>}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  /* ── HOW TO PLAY ── */
+  if(screen==='howToPlay') return(
+    <div className="shell scroll">
+      <button className="nav-back" onClick={()=>setScreen('home')}>← BACK</button>
+      <div style={{padding:'0 20px 40px',display:'flex',flexDirection:'column',gap:24}}>
+        <div className="a0"><div style={{fontFamily:'var(--D)',fontSize:38,letterSpacing:2}}>HOW TO PLAY</div><div style={{fontSize:13,color:'var(--muted)',marginTop:4}}>The ultimate test of logic, volume, and unearned confidence.</div></div>
+        <div className="a1" style={{background:'var(--surf)',border:'1px solid var(--border)',borderRadius:16,padding:16}}>
+          <div style={{fontFamily:'var(--D)',fontSize:20,color:'var(--gold)',letterSpacing:1,marginBottom:12}}>PHASE 1: THE DRAFT (PHYSICAL)</div>
+          <div style={{fontSize:14,lineHeight:1.5,display:'flex',flexDirection:'column',gap:10}}>
+            <p>Don't want to choose teams? Let the deck decide.</p>
+            <ul style={{paddingLeft:20,color:'var(--muted)',display:'flex',flexDirection:'column',gap:6}}>
+              <li>Grab a physical deck of playing cards.</li>
+              <li>Pull out enough cards so there is one for every human playing.</li>
+              <li>Shuffle and deal one face-down to everyone. Flip 'em.</li>
+              <li><strong>Red suits = Red Team. Black suits = Blue Team.</strong></li>
+            </ul>
+          </div>
+        </div>
+        <div className="a2" style={{background:'var(--surf)',border:'1px solid var(--border)',borderRadius:16,padding:16}}>
+          <div style={{fontFamily:'var(--D)',fontSize:20,color:'var(--gold)',letterSpacing:1,marginBottom:12}}>PHASE 2: THE DEBATE</div>
+          <div style={{fontSize:14,lineHeight:1.5,display:'flex',flexDirection:'column',gap:10}}>
+            <p>Once teams are set, start the game on the app.</p>
+            <ul style={{paddingLeft:20,color:'var(--muted)',display:'flex',flexDirection:'column',gap:6}}>
+              <li>Read the matchup and scenario aloud.</li>
+              <li>Each team has <strong>60 seconds</strong> to argue why their fighter dominates.</li>
+              <li>Cross-examination is allowed. Yelling is encouraged.</li>
+              <li>The team that made the best (or funniest) argument gets the point.</li>
+            </ul>
+          </div>
+        </div>
+        <div className="a3" style={{background:'var(--surf2)',border:'1px dashed var(--border2)',borderRadius:16,padding:16}}>
+          <div style={{fontFamily:'var(--D)',fontSize:20,letterSpacing:1,marginBottom:12}}>HOUSE RULES</div>
+          <div style={{fontSize:14,lineHeight:1.5,display:'flex',flexDirection:'column',gap:16}}>
+            <div><strong style={{color:'var(--red)'}}>The Devil's Advocate:</strong><p style={{color:'var(--muted)',marginTop:4}}>Both teams instantly swap sides and argue for the other fighter.</p></div>
+            <div><strong style={{color:'var(--blue)'}}>The Blind Draw:</strong><p style={{color:'var(--muted)',marginTop:4}}>Champions must start arguing before they even know who they drew.</p></div>
+            <div><strong style={{color:'var(--gold)'}}>The High Roller:</strong><p style={{color:'var(--muted)',marginTop:4}}>The losing team buys the next round of drinks. Or does the dishes. Your call.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  /* ── MY FIGHTERS ── */
+  if(screen==='myFighters') return(
+    <div className="shell scroll">
+      <button className="nav-back" onClick={()=>setScreen('home')}>← BACK</button>
+      <div style={{padding:'0 20px 32px',display:'flex',flexDirection:'column',gap:20}}>
+        <div className="a0"><div style={{fontFamily:'var(--D)',fontSize:38,letterSpacing:2}}>MY FIGHTERS</div><div style={{fontSize:13,color:'var(--muted)',marginTop:4}}>Add custom inside-joke fighters.</div></div>
+        <div className="a1" style={{background:'var(--surf)',border:'1px solid var(--border)',borderRadius:16,padding:16,display:'flex',flexDirection:'column',gap:10}}>
+          <div style={{fontFamily:'var(--D)',fontSize:14,letterSpacing:3,color:'var(--muted)'}}>ADD FIGHTER</div>
+          <input className="inp" value={newFName} onChange={e=>setNewFName(e.target.value)} placeholder="Fighter name..." maxLength={40} onKeyDown={e=>e.key==='Enter'&&newFName.trim()&&addCustom()}/>
+          <input className="inp" value={newFTag} onChange={e=>setNewFTag(e.target.value)} placeholder='Tagline (optional)' maxLength={60} onKeyDown={e=>e.key==='Enter'&&newFName.trim()&&addCustom()}/>
+          <button className="btn btn-g btn-sm" onClick={addCustom} disabled={!newFName.trim()} style={{opacity:newFName.trim()?1:.5}}>+ ADD FIGHTER</button>
+        </div>
+        {custom.length===0?(
+          <div className="a2 empty-state"><div className="empty-icon">🥊</div><div className="empty-text">No custom fighters yet.<br/>Add your friends, enemies, or a very aggressive houseplant.</div></div>
+        ):(
+          <div className="a2" style={{display:'flex',flexDirection:'column',gap:8}}>
+            <div className="section-lbl">YOUR ROSTER ({custom.length})</div>
+            {custom.map((f,i)=>(
+              <div key={f.id} className="f-list-item">
+                <div style={{width:36,height:36,borderRadius:10,background:'var(--surf2)',display:'flex',alignItems:'center',justifyContent:'center',fontFamily:'var(--D)',fontSize:18,color:'var(--gold)',flexShrink:0}}>{i+1}</div>
+                <div className="f-list-info"><div className="f-list-name">{f.name}</div>{f.tag&&<div className="f-list-tag">"{f.tag}"</div>}</div>
+                <button className="del-btn" onClick={()=>delCustom(f.id)}>✕</button>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+
+    /* ── STARTING FIVE — ROULETTE DRAFT & ASSIGN ── */
+  if(screen==='sf_draft'){
+    const team = sfTurn % 2 === 0 ? 'red' : 'blue';
+    const teamLineup = sfLineup[team] || {};
+    const availablePos = POSITIONS.filter(p => !teamLineup[p]);
+
+    const startSpin = () => {
+      setSfPhase('spinning');
+      let ticks = 0;
+      const maxTicks = 20; // How long the wheel spins
+      const spinInterval = setInterval(() => {
+        // Flash random fighters from the pool to simulate a slot machine
+        setDisplayFighter(randItem(sfPool));
+        ticks++;
+        if(ticks >= maxTicks) {
+          clearInterval(spinInterval);
+          // Lock in the actual randomly assigned fighter for this turn
+          setDisplayFighter(sfPool[sfTurn]); 
+          setSfPhase('assign');
+        }
+      }, 60);
+    };
+
+    const handleAssign = (pos) => {
+      const nextLineup = { ...sfLineup, [team]: { ...teamLineup, [pos]: sfPool[sfTurn] } };
+      setSfLineup(nextLineup);
+      
+      if (sfTurn + 1 >= 10) {
+        setScreen('sf_debate');
+      } else {
+        // Reset for the next team's spin
+        setSfTurn(sfTurn + 1);
+        setSfPhase('spin');
+        setDisplayFighter(null);
+      }
+    };
+
+    return (
+      <div className="shell scroll">
+        <div className="score-bar">
+          <div className="score-side">
+            <div className="score-n r">{Object.keys(sfLineup.red||{}).length}</div>
+            <div className="score-lbl">{names.red}</div>
+          </div>
+          <div className="score-mid">
+            <div style={{fontFamily:'var(--D)',fontSize:13,letterSpacing:3,color:'var(--muted)'}}>DRAFT</div>
+            <div style={{fontSize:11,color:'var(--muted)',fontWeight:700}}>{10-sfTurn} LEFT</div>
+          </div>
+          <div className="score-side">
+            <div className="score-n b">{Object.keys(sfLineup.blue||{}).length}</div>
+            <div className="score-lbl">{names.blue}</div>
+          </div>
+        </div>
+
+        <div className={`turn-banner ${team} a0`}>
+          {team==='red'?names.red:names.blue}'S TURN
+        </div>
+
+        <div style={{padding:'20px 20px', textAlign:'center', display:'flex', flexDirection:'column', gap: 20}}>
+          
+          {/* THE SPIN BUTTON */}
+          {sfPhase === 'spin' && (
+            <div className="a1" style={{marginTop: 40}}>
+              <button className={`btn ${team==='red'?'btn-r':'btn-b'}`} style={{padding: '24px 20px', fontSize: 28, boxShadow: `0 8px 32px var(--${team}-d)`}} onClick={startSpin}>
+                🎰 DRAW COMPETITOR
+              </button>
+            </div>
+          )}
+
+          {/* THE ROULETTE WINDOW */}
+          {(sfPhase === 'spinning' || sfPhase === 'assign') && displayFighter && (
+            <div className="a0" style={{background:'var(--surf)', border:`2px solid var(--${sfPhase === 'assign' ? team : 'border'})`, borderRadius:16, padding:'30px 16px', boxShadow: sfPhase === 'assign' ? `0 0 40px var(--${team}-d)` : 'none', transition: 'all 0.1s'}}>
+              <div style={{fontFamily:'var(--D)', fontSize: sfPhase==='spinning'?28:36, lineHeight:1, color: sfPhase==='spinning'?'var(--muted)':'var(--text)'}}>
+                {displayFighter.name}
+              </div>
+              <div style={{fontSize:13, color:'var(--muted)', fontStyle:'italic', marginTop:8, opacity: sfPhase==='spinning'?0:1, transition: 'opacity 0.2s'}}>
+                "{displayFighter.tag}"
+              </div>
+            </div>
+          )}
+
+          {/* THE POSITION ASSIGNMENT */}
+          {sfPhase === 'assign' && (
+            <div className="a2" style={{marginTop: 10}}>
+              <div style={{fontSize:12, color:'var(--muted)', fontWeight:800, letterSpacing:1, marginBottom: 12}}>
+                ASSIGN TO POSITION:
+              </div>
+              <div className="pos-rows">
+                {availablePos.map(pos=>(
+                  <div key={pos} className="pos-row" onClick={() => handleAssign(pos)} style={{cursor: 'pointer', border: `1px solid var(--${team}-d)`}}>
+                    <div className={`pos-lbl ${team}`}>{pos}</div>
+                    <div style={{fontSize:14, color:'var(--text)', fontWeight:700, flex: 1, textAlign: 'left'}}>{POS_FULL[pos]}</div>
+                    <div style={{color: `var(--${team})`, fontSize: 20}}>+</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  }
+
+
+
+  /* ── SF DEBATE ── */
+  if(screen==='sf_debate') return(
+    <div className="shell scroll">
+      <button className="nav-back" onClick={()=>setScreen('home')}>← HOME</button>
+      <div style={{padding:'0 20px 10px'}}>
+        <div style={{fontFamily:'var(--D)',fontSize:34,letterSpacing:2}} className="a0">THE LINEUPS</div>
+        <div style={{fontSize:13,color:'var(--gold)',fontWeight:800,marginTop:4}} className="a1">Who has the better starting five? DEBATE!</div>
+      </div>
+      <div className="lineup-wrap a2" style={{paddingBottom:4}}>
+        {['red','blue'].map(team=>(
+          <div key={team} className="lineup-side">
+            <div className={`lineup-hd ${team}`}>{team==='red'?names.red:names.blue}</div>
+            {POSITIONS.map(pos=>(
+              <div key={pos} className="lineup-item">
+                <div className="lineup-pos-lbl">{pos} · {POS_FULL[pos]}</div>
+                <div className="lineup-fname">{sfLineup[team][pos]?.name||'—'}</div>
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
+      <div style={{padding:'12px 20px'}}>
+        <div style={{fontSize:12,color:'var(--muted)',fontWeight:800,letterSpacing:.5,textAlign:'center',marginBottom:12}}>WHICH TEAM WINS? VOTE BELOW</div>
+        <div style={{display:'flex',gap:8,marginBottom:8}}>
+          <button className="btn-outline-r" onClick={()=>award('red')}>🏆 {names.red}</button>
+          <button className="btn-outline-b" onClick={()=>award('blue')}>🏆 {names.blue}</button>
+        </div>
+        <button className="btn btn-ghost" onClick={()=>{setPendingMode('sf');setTempRed(names.red);setTempBlue(names.blue);setScreen('setup');}}>⟳ NEW DRAFT</button>
+      </div>
+      {showWin&&(
+        <div className={`win-overlay ${winTeam}`} onClick={()=>setShowWin(false)}>
+          <div className={`win-big ${winTeam}`}>{winTeam==='red'?names.red:names.blue}</div>
+          <div className="win-sub">HAS THE BETTER TEAM!</div>
+          <div className="win-dismiss">TAP TO CONTINUE</div>
+        </div>
+      )}
+    </div>
+  );
+
+  return<div className="shell" style={{alignItems:'center',justifyContent:'center'}}>
+    <div style={{fontFamily:'var(--D)',fontSize:24,letterSpacing:4,color:'var(--muted)'}}>LOADING...</div>
+  </div>;
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>

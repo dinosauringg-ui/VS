@@ -1,0 +1,16 @@
+{
+  "name": "Vltimate Showdown",
+  "short_name": "Showdown",
+  "display": "standalone",
+  "background_color": "#07070f",
+  "theme_color": "#07070f",
+  "start_url": ".",
+  "icons": [
+    {
+      "src": "logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
