@@ -375,4 +375,3 @@ window.SCENARIOS = [
   "hosting Saturday Night Live with zero rehearsal",
   "surviving a blind date that is secretly a sting operation",
 ];
-
