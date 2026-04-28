@@ -463,6 +463,11 @@ function App(){
     setSfPhase('spin');
     setDisplayFighter(null);
   };
+  const addCustom=()=>{
+    if(!newFName.trim()) return;
+    const nc=[...custom,{id:Date.now(),name:newFName.trim(),tag:newFTag.trim()||'custom fighter',cat:'custom'}];
+    setCustom(nc);LS.set('vs_custom',nc);setNewFName('');setNewFTag('');
+  };
   const delCustom=(id)=>{const nc=custom.filter(f=>f.id!==id);setCustom(nc);LS.set('vs_custom',nc);};
   const toggleCat=(cat)=>{const n=disabledCats.includes(cat)?disabledCats.filter(c=>c!==cat):[...disabledCats,cat];setDisabledCats(n);LS.set('vs_cats',n);};
   const toggleFighter=(id)=>{const n=disabledFighters.includes(id)?disabledFighters.filter(i=>i!==id):[...disabledFighters,id];setDisabledFighters(n);LS.set('vs_dis_f',n);};
