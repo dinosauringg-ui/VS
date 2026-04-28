@@ -127,20 +127,87 @@ html,body{background:var(--bg);color:var(--text);font-family:var(--B);min-height
 .scen-who{font-family:var(--D);font-size:14px;letter-spacing:4px;color:var(--muted);display:block;}
 .scen-in{font-family:var(--D);font-size:clamp(24px,7vw,33px);color:var(--gold);letter-spacing:2px;line-height:1.15;text-shadow:0 0 40px var(--gold-d);display:block;}
 
-.f-row{display:flex;gap:10px;padding:0 16px;}
+.f-row{display:flex;gap:8px;padding:0 16px;}
 .f-wrap{flex:1;display:flex;flex-direction:column;justify-content:stretch;}
-.f-wrap.r{animation:floatIdle 3s ease-in-out infinite;}
-.f-wrap.b{animation:floatIdle 3.4s ease-in-out infinite;}
-.f-card{flex:1;border-radius:16px;padding:18px 12px;display:flex;flex-direction:column;align-items:center;text-align:center;min-height:168px;justify-content:center;position:relative;overflow:hidden;}
-.f-card.r{background:linear-gradient(150deg,var(--red-d) 0%,var(--surf) 70%);border:1.5px solid rgba(255,45,85,.3);animation:pulseR 3s ease-in-out infinite;}
-.f-card.b{background:linear-gradient(150deg,var(--blue-d) 0%,var(--surf) 70%);border:1.5px solid rgba(10,132,255,.3);animation:pulseB 3s ease-in-out infinite;}
-.f-team{font-family:var(--D);font-size:11px;letter-spacing:3px;margin-bottom:8px;}
-.f-team.r{color:var(--red);}
-.f-team.b{color:var(--blue);}
-.f-name{font-family:var(--D);font-size:clamp(19px,5vw,25px);line-height:1.1;color:var(--text);margin-bottom:6px;}
-.f-tag{font-size:11px;color:var(--muted);font-style:italic;line-height:1.4;}
-.vs-pill{display:flex;align-items:center;justify-content:center;width:36px;flex-shrink:0;align-self:center;animation:pop .4s .3s ease both;}
-.vs-pill span{font-family:var(--D);font-size:16px;letter-spacing:2px;color:var(--muted);}
+.f-wrap.r,.f-wrap.b{animation:none;}
+.f-card{
+  flex:1;border-radius:20px;padding:14px 14px 14px 16px;
+  display:flex;flex-direction:column;align-items:flex-start;text-align:left;
+  min-height:200px;justify-content:space-between;
+  position:relative;overflow:hidden;
+}
+/* Diagonal fine-line texture */
+.f-card::before{
+  content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(-50deg,transparent,transparent 18px,rgba(255,255,255,.018) 18px,rgba(255,255,255,.018) 19px);
+  pointer-events:none;z-index:0;
+}
+/* Large ambient orb top-right */
+.f-card::after{
+  content:'';position:absolute;top:-50px;right:-50px;
+  width:150px;height:150px;border-radius:50%;
+  pointer-events:none;z-index:0;
+}
+.f-card>*{position:relative;z-index:1;}
+
+/* Watermark initial – rendered via JS span */
+.f-watermark{
+  position:absolute;bottom:-10px;right:-4px;
+  font-family:var(--D);font-size:120px;line-height:1;letter-spacing:-4px;
+  font-weight:900;pointer-events:none;z-index:0;
+  opacity:.055;user-select:none;
+}
+
+.f-card.r{
+  background:linear-gradient(145deg,rgba(255,45,85,.2) 0%,var(--surf) 45%,var(--surf2) 100%);
+  border:1px solid rgba(255,45,85,.38);
+  border-left:3px solid var(--red);
+  box-shadow:0 12px 40px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.07);
+  animation:pulseR 3.5s ease-in-out infinite;
+}
+.f-card.r::after{background:radial-gradient(circle,rgba(255,45,85,.35) 0%,transparent 70%);}
+.f-watermark.r{color:var(--red);}
+
+.f-card.b{
+  background:linear-gradient(145deg,rgba(10,132,255,.2) 0%,var(--surf) 45%,var(--surf2) 100%);
+  border:1px solid rgba(10,132,255,.38);
+  border-left:3px solid var(--blue);
+  box-shadow:0 12px 40px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.07);
+  animation:pulseB 3.5s ease-in-out infinite;
+}
+.f-card.b::after{background:radial-gradient(circle,rgba(10,132,255,.35) 0%,transparent 70%);}
+.f-watermark.b{color:var(--blue);}
+
+.f-team{
+  font-family:var(--D);font-size:9px;letter-spacing:2.5px;
+  padding:3px 8px;border-radius:4px;display:inline-block;
+}
+.f-team.r{color:var(--red);background:rgba(255,45,85,.15);border:1px solid rgba(255,45,85,.3);}
+.f-team.b{color:var(--blue);background:rgba(10,132,255,.15);border:1px solid rgba(10,132,255,.3);}
+
+.f-content{display:flex;flex-direction:column;width:100%;position:relative;z-index:1;}
+.f-name{font-family:var(--D);font-size:clamp(19px,5.5vw,26px);line-height:1;color:var(--text);letter-spacing:.3px;}
+.f-name-sm{font-size:clamp(14px,4vw,18px)!important;}
+.f-pair-sep{font-size:9px;color:var(--muted);font-weight:900;letter-spacing:2.5px;margin:5px 0;}
+
+/* Tag as a compact footer */
+.f-tag{
+  font-size:10px;color:var(--muted);font-style:italic;line-height:1.45;
+  margin-top:8px;padding-top:7px;width:100%;
+  border-top:1px solid rgba(255,255,255,.07);
+}
+.f-tag::before{content:'" ';opacity:.5;}
+
+/* VS separator — vertical line with centered label */
+.vs-pill{
+  display:flex;flex-direction:column;align-items:center;
+  width:22px;flex-shrink:0;align-self:stretch;
+  animation:pop .4s .3s ease both;gap:0;
+}
+.vs-pill::before,.vs-pill::after{content:'';flex:1;width:1px;min-height:10px;}
+.vs-pill::before{background:linear-gradient(to bottom,transparent,var(--border2));}
+.vs-pill::after{background:linear-gradient(to top,transparent,var(--border2));}
+.vs-pill span{font-family:var(--D);font-size:9px;letter-spacing:2px;color:var(--muted);writing-mode:vertical-rl;padding:6px 0;}
 .vote-row{display:flex;gap:10px;padding:0 16px;}
 .win-overlay{position:fixed;inset:0;z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;backdrop-filter:blur(14px);}
 .win-overlay.r{background:rgba(255,45,85,.28);}
@@ -459,25 +526,25 @@ function App(){
 
         <div className="px20 a2" style={{display:'flex',flexDirection:'column',gap:10}}>
           <div className="mode-card active-r" onClick={()=>{setPendingMode('classic');setTempRed(names.red);setTempBlue(names.blue);setScreen('setup');}}>
-            <div className="mode-icon r">⚔️</div>
+            <div className="mode-icon r" style={{fontFamily:'var(--D)',fontSize:13,letterSpacing:1}}>VS</div>
             <div><div className="mode-title">CLASSIC MODE</div><div className="mode-desc">Two teams debate hilarious matchups across wild scenarios. Points awarded by the crowd.</div></div>
           </div>
           <div className="mode-card active-b" onClick={()=>{setPendingMode('sf');setTempRed(names.red);setTempBlue(names.blue);setScreen('setup');}}>
-            <div className="mode-icon b">🏀</div>
+            <div className="mode-icon b" style={{fontFamily:'var(--D)',fontSize:13,letterSpacing:1}}>5v5</div>
             <div><div className="mode-title">STARTING FIVE</div><div className="mode-desc">Draft 5 fighters each and build the ultimate basketball lineup. Who's got the better team?</div></div>
           </div>
                     <div className="mode-card" style={{borderColor: 'rgba(255,214,10,0.4)', background: 'rgba(255,214,10,0.06)'}} onClick={()=>{setPendingMode('tagteam');setTempRed(names.red);setTempBlue(names.blue);setScreen('setup');}}>
-            <div className="mode-icon" style={{background: 'var(--gold-d)'}}>🌪️</div>
+            <div className="mode-icon" style={{background: 'var(--gold-d)',fontFamily:'var(--D)',fontSize:13,letterSpacing:1,color:'var(--gold)'}}>2v2</div>
             <div><div className="mode-title" style={{color: 'var(--gold)'}}>TAG TEAM TORNADO</div><div className="mode-desc">2v2 chaos. Argue how your two randomly paired fighters synergize to dominate the scenario.</div></div>
           </div>
 
         </div>
 
         <div className="a3" style={{marginTop:20,display:'flex',gap:8,flexWrap:'wrap',justifyContent:'center',padding:'0 20px'}}>
-          <span className="chip" onClick={()=>setScreen('howToPlay')}>📖 How to Play</span>
-          <span className="chip" onClick={()=>setScreen('myFighters')}>✦ My Fighters{custom.length>0&&` (${custom.length})`}</span>
-          <span className="chip" onClick={()=>setScreen('leaderboard')}>🏆 Hall of Fame</span>
-          <span className="chip" onClick={()=>{setSettingsTab('packs');setScreen('settings');}}>⚙️ Settings</span>
+          <span className="chip" onClick={()=>setScreen('howToPlay')}>How to Play</span>
+          <span className="chip" onClick={()=>setScreen('myFighters')}>My Fighters{custom.length>0&&` (${custom.length})`}</span>
+          <span className="chip" onClick={()=>setScreen('leaderboard')}>Hall of Fame</span>
+          <span className="chip" onClick={()=>{setSettingsTab('packs');setScreen('settings');}}>Settings</span>
         </div>
       </div>
     </div>
@@ -489,7 +556,7 @@ function App(){
       <button className="nav-back" onClick={()=>setScreen('home')}>← BACK</button>
       <div style={{flex:1,display:'flex',flexDirection:'column',justifyContent:'center',paddingBottom:40}}>
         <div className="px20 a0" style={{marginBottom:28}}>
-          <div style={{fontFamily:'var(--D)',fontSize:13,letterSpacing:4,color:'var(--muted)',marginBottom:4}}>{pendingMode==='classic'?'⚔️ CLASSIC MODE':pendingMode==='tagteam'?'🌪️ TAG TEAM TORNADO':'🏀 STARTING FIVE'}</div>
+          <div style={{fontFamily:'var(--D)',fontSize:13,letterSpacing:4,color:'var(--muted)',marginBottom:4}}>{pendingMode==='classic'?'CLASSIC MODE':pendingMode==='tagteam'?'TAG TEAM TORNADO':'STARTING FIVE'}</div>
           <div style={{fontFamily:'var(--D)',fontSize:38,letterSpacing:2}}>SET YOUR<br/>TEAMS</div>
         </div>
         <div className="px20 a1" style={{display:'flex',flexDirection:'column',gap:10,marginBottom:20}}>
@@ -532,42 +599,48 @@ function App(){
           </div>
                    <div className="f-row">
             <div className="f-wrap aslam r" style={{animationDelay:'0.1s'}}>
-              <div className="f-card r" style={{justifyContent: activeMode==='tagteam'?'space-between':'center'}}>
+              <div className="f-card r">
+                <span className="f-watermark r">{names.red.charAt(0)}</span>
                 <div className="f-team r">{names.red}</div>
-                {activeMode === 'tagteam' ? (
-                  <div style={{display:'flex', flexDirection:'column', gap:8, alignItems:'center', margin:'auto 0'}}>
-                    <div className="f-name" style={{fontSize: 'clamp(15px,4vw,19px)', marginBottom:0}}>{matchup.f1[0].name}</div>
-                    <div style={{fontSize:11, color:'var(--red)', fontWeight:900, opacity:0.6}}>AND</div>
-                    <div className="f-name" style={{fontSize: 'clamp(15px,4vw,19px)', marginBottom:0}}>{matchup.f1[1].name}</div>
-                  </div>
-                ) : (
-                  <><div className="f-name">{matchup.f1.name}</div><div className="f-tag">"{matchup.f1.tag}"</div></>
-                )}
+                <div className="f-content">
+                  {activeMode === 'tagteam' ? (
+                    <>
+                      <div className="f-name f-name-sm">{matchup.f1[0].name}</div>
+                      <div className="f-pair-sep">AND</div>
+                      <div className="f-name f-name-sm">{matchup.f1[1].name}</div>
+                    </>
+                  ) : (
+                    <><div className="f-name">{matchup.f1.name}</div><div className="f-tag">{matchup.f1.tag}</div></>
+                  )}
+                </div>
               </div>
             </div>
             
             <div className="vs-pill"><span>VS</span></div>
             
             <div className="f-wrap aslam b" style={{animationDelay:'0.2s'}}>
-              <div className="f-card b" style={{justifyContent: activeMode==='tagteam'?'space-between':'center'}}>
+              <div className="f-card b">
+                <span className="f-watermark b">{names.blue.charAt(0)}</span>
                 <div className="f-team b">{names.blue}</div>
-                {activeMode === 'tagteam' ? (
-                  <div style={{display:'flex', flexDirection:'column', gap:8, alignItems:'center', margin:'auto 0'}}>
-                    <div className="f-name" style={{fontSize: 'clamp(15px,4vw,19px)', marginBottom:0}}>{matchup.f2[0].name}</div>
-                    <div style={{fontSize:11, color:'var(--blue)', fontWeight:900, opacity:0.6}}>AND</div>
-                    <div className="f-name" style={{fontSize: 'clamp(15px,4vw,19px)', marginBottom:0}}>{matchup.f2[1].name}</div>
-                  </div>
-                ) : (
-                  <><div className="f-name">{matchup.f2.name}</div><div className="f-tag">"{matchup.f2.tag}"</div></>
-                )}
+                <div className="f-content">
+                  {activeMode === 'tagteam' ? (
+                    <>
+                      <div className="f-name f-name-sm">{matchup.f2[0].name}</div>
+                      <div className="f-pair-sep">AND</div>
+                      <div className="f-name f-name-sm">{matchup.f2[1].name}</div>
+                    </>
+                  ) : (
+                    <><div className="f-name">{matchup.f2.name}</div><div className="f-tag">{matchup.f2.tag}</div></>
+                  )}
+                </div>
               </div>
             </div>
           </div>
           
           <div style={{textAlign:'center',padding:'10px 20px 0'}}><div style={{fontSize:12,color:'var(--muted)',fontWeight:800,letterSpacing:.5}}>DEBATE IT OUT • THEN VOTE</div></div>
           <div className="vote-row a2">
-            <button className="btn-outline-r" onClick={()=>award('red')}>🏆 {names.red} WINS</button>
-            <button className="btn-outline-b" onClick={()=>award('blue')}>🏆 {names.blue} WINS</button>
+            <button className="btn-outline-r" onClick={()=>award('red')}>{names.red} WINS</button>
+            <button className="btn-outline-b" onClick={()=>award('blue')}>{names.blue} WINS</button>
           </div>
           <div style={{padding:'0 16px',display:'flex',gap:8}}>
             <button className="btn btn-ghost" style={{flex:1}} onClick={genMatchup}>⟳ NEXT ROUND</button>
@@ -594,7 +667,7 @@ function App(){
           <div style={{fontFamily:'var(--D)',fontSize:38,letterSpacing:2}}>SETTINGS</div>
         </div>
         <div className="settings-tab-bar a1">
-          {[['packs','📦 PACKS'],['themes','🎨 THEMES'],['roster','⚙️ ROSTER']].map(([t,label])=>(
+          {[['packs','PACKS'],['themes','THEMES'],['roster','ROSTER']].map(([t,label])=>(
             <button key={t} className={`settings-tab ${settingsTab===t?'active':''}`} onClick={()=>setSettingsTab(t)}>{label}</button>
           ))}
         </div>
@@ -831,7 +904,7 @@ function App(){
           {sfPhase === 'spin' && (
             <div className="a1" style={{marginTop: 40}}>
               <button className={`btn ${team==='red'?'btn-r':'btn-b'}`} style={{padding: '24px 20px', fontSize: 28, boxShadow: `0 8px 32px var(--${team}-d)`}} onClick={startSpin}>
-                🎰 DRAW COMPETITOR
+                DRAW COMPETITOR
               </button>
             </div>
           )}
@@ -896,8 +969,8 @@ function App(){
       <div style={{padding:'12px 20px'}}>
         <div style={{fontSize:12,color:'var(--muted)',fontWeight:800,letterSpacing:.5,textAlign:'center',marginBottom:12}}>WHICH TEAM WINS? VOTE BELOW</div>
         <div style={{display:'flex',gap:8,marginBottom:8}}>
-          <button className="btn-outline-r" onClick={()=>award('red')}>🏆 {names.red}</button>
-          <button className="btn-outline-b" onClick={()=>award('blue')}>🏆 {names.blue}</button>
+          <button className="btn-outline-r" onClick={()=>award('red')}>{names.red}</button>
+          <button className="btn-outline-b" onClick={()=>award('blue')}>{names.blue}</button>
         </div>
         <button className="btn btn-ghost" onClick={()=>{setPendingMode('sf');setTempRed(names.red);setTempBlue(names.blue);setScreen('setup');}}>⟳ NEW DRAFT</button>
       </div>
