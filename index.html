@@ -9,7 +9,8 @@
 <link rel="manifest" href="manifest.json">
 <title>Vltimate Showdown</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:ital,wght@0,400;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 
@@ -23,7 +24,7 @@
   --text:#edeeff;--muted:rgba(237,238,255,.45);
   --bg-grad:radial-gradient(ellipse 80% 50% at 15% -5%,rgba(255,45,85,.07) 0%,transparent 55%),
     radial-gradient(ellipse 80% 50% at 85% 105%,rgba(10,132,255,.07) 0%,transparent 55%),var(--bg);
-  --D:'Bebas Neue',cursive;--B:'Nunito',sans-serif;
+  --D:'Bebas Neue',cursive;--B:'Inter',sans-serif;
 }
 [data-theme="arcade"]{
   --red:#ff006e;--red-d:rgba(255,0,110,.2);--red-g:rgba(255,0,110,.4);
@@ -64,6 +65,46 @@
   --bg-grad:radial-gradient(ellipse 80% 60% at 50% 100%,rgba(46,213,115,.07) 0%,transparent 60%),
     radial-gradient(ellipse 60% 40% at 20% 0%,rgba(255,71,87,.05) 0%,transparent 50%),var(--bg);
 }
+[data-theme="cyber"]{
+  --red:#ff0080;--red-d:rgba(255,0,128,.25);--red-g:rgba(255,0,128,.5);
+  --blue:#00ffff;--blue-d:rgba(0,255,255,.2);--blue-g:rgba(0,255,255,.4);
+  --gold:#ffff00;--gold-d:rgba(255,255,0,.15);
+  --bg:#0a0a0a;--surf:#1a1a1a;--surf2:#2a2a2a;
+  --border:rgba(0,255,255,.15);--border2:rgba(0,255,255,.3);
+  --text:#ffffff;--muted:rgba(255,255,255,.5);
+  --bg-grad:linear-gradient(45deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%),
+    radial-gradient(circle at 20% 80%, rgba(255,0,128,.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(0,255,255,.1) 0%, transparent 50%);
+}
+[data-theme="candy"]{
+  --red:#ff6b9d;--red-d:rgba(255,107,157,.2);--red-g:rgba(255,107,157,.4);
+  --blue:#6b9dff;--blue-d:rgba(107,157,255,.2);--blue-g:rgba(107,157,255,.4);
+  --gold:#ffd93d;--gold-d:rgba(255,217,61,.15);
+  --bg:#fff8f0;--surf:#ffe8d6;--surf2:#ffd1b3;
+  --border:rgba(255,107,157,.2);--border2:rgba(255,107,157,.4);
+  --text:#2d1b69;--muted:rgba(45,27,105,.6);
+  --bg-grad:radial-gradient(ellipse 80% 60% at 50% 50%,rgba(255,217,61,.1) 0%,transparent 70%),
+    linear-gradient(135deg, #fff8f0 0%, #ffe8d6 100%);
+}
+[data-theme="mono"]{
+  --red:#ffffff;--red-d:rgba(255,255,255,.15);--red-g:rgba(255,255,255,.3);
+  --blue:#cccccc;--blue-d:rgba(204,204,204,.15);--blue-g:rgba(204,204,204,.3);
+  --gold:#888888;--gold-d:rgba(136,136,136,.12);
+  --bg:#000000;--surf:#111111;--surf2:#222222;
+  --border:rgba(255,255,255,.1);--border2:rgba(255,255,255,.2);
+  --text:#ffffff;--muted:rgba(255,255,255,.5);
+  --bg-grad:linear-gradient(135deg, #000000 0%, #111111 50%, #000000 100%);
+}
+[data-theme="retro"]{
+  --red:#ff4500;--red-d:rgba(255,69,0,.2);--red-g:rgba(255,69,0,.4);
+  --blue:#0080ff;--blue-d:rgba(0,128,255,.2);--blue-g:rgba(0,128,255,.4);
+  --gold:#ffff00;--gold-d:rgba(255,255,0,.15);
+  --bg:#2d1b69;--surf:#3d2b79;--surf2:#4d3b89;
+  --border:rgba(255,69,0,.15);--border2:rgba(255,69,0,.3);
+  --text:#ffffff;--muted:rgba(255,255,255,.6);
+  --bg-grad:linear-gradient(135deg, #2d1b69 0%, #3d2b79 50%, #2d1b69 100%),
+    radial-gradient(circle at 70% 30%, rgba(255,255,0,.1) 0%, transparent 50%);
+}
 
 html,body{background:var(--bg);color:var(--text);font-family:var(--B);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased;transition:background .4s,color .3s;}
 #root{display:flex;justify-content:center;min-height:100vh;background:var(--bg-grad);transition:background .4s;}
@@ -85,9 +126,11 @@ html,body{background:var(--bg);color:var(--text);font-family:var(--B);min-height
 .apop{animation:pop .4s ease both}
 .aslam{animation:slamIn .5s cubic-bezier(.175,.885,.32,1.275) both}
 
-.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:15px 20px;border:none;border-radius:14px;font-family:var(--D);font-size:22px;letter-spacing:1.5px;cursor:pointer;transition:all .15s;-webkit-tap-highlight-color:transparent;user-select:none;}
-.btn:active{transform:scale(.97);filter:brightness(.88);}
-.btn-r{background:var(--red);color:#fff;box-shadow:0 4px 24px var(--red-g);}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:15px 20px;border:none;border-radius:18px;font-family:var(--D);font-size:22px;letter-spacing:1.5px;cursor:pointer;transition:transform .2s,box-shadow .2s,filter .2s;background-position:100% 0;-webkit-tap-highlight-color:transparent;user-select:none;}
+.btn:hover{transform:translateY(-1px);}
+.btn:focus-visible{outline:2px solid var(--gold);outline-offset:3px;}
+.btn:active{transform:scale(.98);filter:brightness(.92);}
+.btn-r{background:var(--red);color:#fff;box-shadow:0 14px 30px rgba(255,45,85,.18);}
 .btn-b{background:var(--blue);color:#fff;box-shadow:0 4px 24px var(--blue-g);}
 .btn-g{background:var(--gold);color:#000;box-shadow:0 4px 20px var(--gold-d);}
 .btn-ghost{background:transparent;color:var(--muted);border:1.5px solid var(--border);font-family:var(--B);font-size:14px;font-weight:800;letter-spacing:.3px;padding:12px 20px;border-radius:12px;transition:all .15s;}
@@ -260,21 +303,15 @@ html,body{background:var(--bg);color:var(--text);font-family:var(--B);min-height
 .scroll{overflow-y:auto;-webkit-overflow-scrolling:touch;}
 ::-webkit-scrollbar{width:3px;}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
-.mode-card{background:var(--surf);border:1.5px solid var(--border);border-radius:18px;padding:20px;display:flex;align-items:center;gap:16px;cursor:pointer;transition:all .15s;-webkit-tap-highlight-color:transparent;}
-.mode-card:hover{border-color:var(--border2);transform:translateY(-1px);}
-.mode-card:active{transform:scale(.98);}
-.mode-card.active-r{border-color:rgba(255,45,85,.4);background:rgba(255,45,85,.06);}
-.mode-card.active-b{border-color:rgba(10,132,255,.4);background:rgba(10,132,255,.06);}
 .mode-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;}
 .mode-icon.r{background:var(--red-d);}
-.mode-icon.b{background:var(--blue-d);}
 .mode-title{font-family:var(--D);font-size:22px;letter-spacing:1px;line-height:1;}
 .mode-desc{font-size:12px;color:var(--muted);margin-top:3px;line-height:1.4;}
 .empty-state{display:flex;flex-direction:column;align-items:center;gap:10px;padding:32px 20px;color:var(--muted);}
 .empty-icon{font-size:40px;opacity:.4;}
 .empty-text{font-size:14px;font-weight:700;text-align:center;}
 .cat-header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:var(--surf2);border-radius:12px;margin-top:16px;border:1px solid var(--border);}
-.cat-title{font-family:var(--D);font-size:18px;letter-spacing:2px;text-transform:uppercase;}
+.cat-title{font-family:var(--D);font-size:18px;letter-spacing:.75px;text-transform:none;}
 .dir-chip{display:inline-flex;font-size:12px;padding:6px 12px;border-radius:8px;border:1.5px solid var(--border);background:var(--surf);color:var(--text);font-weight:700;cursor:pointer;transition:all .12s;}
 .dir-chip:hover{border-color:var(--border2);}
 .dir-chip.off{opacity:0.4;text-decoration:line-through;}
@@ -282,22 +319,24 @@ html,body{background:var(--bg);color:var(--text);font-family:var(--B);min-height
 .px20{padding-left:20px;padding-right:20px;}
 
 /* ══ THEME PICKER ══ */
-.theme-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:0 20px;}
-.theme-swatch{border-radius:14px;padding:14px 10px;text-align:center;border:2px solid var(--border);cursor:pointer;transition:all .2s;-webkit-tap-highlight-color:transparent;position:relative;background:var(--surf);}
-.theme-swatch:hover{transform:translateY(-2px);border-color:var(--border2);}
-.theme-swatch.active{border-color:var(--gold);}
-.theme-swatch.active::after{content:'✓';position:absolute;top:6px;right:8px;font-size:11px;color:var(--gold);font-weight:900;}
-.theme-dots{display:flex;gap:4px;justify-content:center;margin-bottom:7px;}
-.theme-dot{width:12px;height:12px;border-radius:50%;}
-.theme-name{font-family:var(--D);font-size:12px;letter-spacing:1px;color:var(--text);}
+.theme-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;padding:0 20px;}
+.theme-swatch{border-radius:18px;padding:18px 14px;text-align:center;border:1.5px solid var(--border);cursor:pointer;transition:transform .2s,border-color .2s,background .2s;-webkit-tap-highlight-color:transparent;position:relative;background:rgba(255,255,255,.04);box-shadow:0 10px 30px rgba(0,0,0,.08);}
+.theme-swatch:hover{transform:translateY(-2px);border-color:var(--border2);background:rgba(255,255,255,.08);}
+.theme-swatch.active{border-color:var(--gold);background:rgba(255,214,10,.08);}
+.theme-swatch.active::after{content:'✓';position:absolute;top:10px;right:12px;font-size:12px;color:var(--gold);font-weight:900;}
+.theme-dots{display:flex;gap:6px;justify-content:center;margin-bottom:10px;}
+.theme-dot{width:14px;height:14px;border-radius:50%;}
+.theme-name{font-family:var(--D);font-size:13px;font-weight:800;letter-spacing:.08em;color:var(--text);text-transform:none;}
 
 /* ══ EXPANSION PACKS ══ */
-.pack-card{border-radius:18px;padding:20px;border:2px solid var(--border);background:var(--surf);cursor:pointer;transition:all .2s;-webkit-tap-highlight-color:transparent;position:relative;overflow:hidden;}
-.pack-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--gold-d) 0%,transparent 60%);opacity:0;transition:opacity .3s;pointer-events:none;}
-.pack-card:hover{transform:translateY(-1px);}
+.pack-card{border-radius:24px;padding:24px;border:1.5px solid rgba(255,255,255,.08);background:rgba(255,255,255,.05);cursor:pointer;transition:transform .25s,border-color .25s,box-shadow .25s;background-blend-mode:screen;position:relative;overflow:hidden;box-shadow:0 14px 35px rgba(0,0,0,.12);}
+.pack-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,214,10,.14) 0%,transparent 55%);opacity:0;transition:opacity .3s;pointer-events:none;}
+.pack-card:hover{transform:translateY(-3px);border-color:var(--border2);box-shadow:0 18px 50px rgba(0,0,0,.14);}
 .pack-card:active{transform:scale(.98);}
-.pack-card.enabled{border-color:var(--gold);}
+.pack-card.enabled{border-color:var(--gold);background:rgba(255,214,10,.08);}
 .pack-card.enabled::before{opacity:1;}
+.pack-header{display:flex;align-items:center;gap:14px;margin-bottom:12px;}
+.pack-desc{margin-top:10px;color:var(--muted);line-height:1.6;}
 .pack-header{display:flex;align-items:center;gap:12px;margin-bottom:10px;}
 .pack-emoji{font-size:28px;flex-shrink:0;}
 .pack-info{flex:1;}
@@ -310,9 +349,74 @@ html,body{background:var(--bg);color:var(--text);font-family:var(--B);min-height
 .active-pack-pill{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:999px;background:var(--gold-d);border:1px solid rgba(255,214,10,.3);font-size:11px;font-weight:800;color:var(--gold);}
 
 /* ══ SETTINGS TABS ══ */
-.settings-tab-bar{display:flex;gap:4px;padding:0 20px;margin-bottom:16px;}
-.settings-tab{flex:1;padding:10px 6px;text-align:center;border-radius:10px;font-family:var(--D);font-size:13px;letter-spacing:1px;cursor:pointer;border:1.5px solid transparent;background:var(--surf);color:var(--muted);transition:all .15s;-webkit-tap-highlight-color:transparent;}
-.settings-tab.active{background:var(--surf2);color:var(--text);border-color:var(--border2);}
+.settings-tab-bar{display:flex;gap:8px;padding:0 20px;margin-bottom:20px;}
+.settings-tab{flex:1;padding:12px 10px;text-align:center;border-radius:16px;font-family:var(--D);font-size:13px;letter-spacing:1px;cursor:pointer;border:1.5px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);color:var(--muted);transition:all .2s;-webkit-tap-highlight-color:transparent;}
+.settings-tab:hover{background:rgba(255,255,255,.06);}
+.settings-tab.active{background:rgba(255,255,255,.08);color:var(--text);border-color:var(--border2);box-shadow:0 12px 30px rgba(0,0,0,.08);}
+
+/* ══ CONFIRM DIALOG ══ */
+.confirm-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;z-index:1000;backdrop-filter:blur(4px);}
+.confirm-modal{background:var(--surf);border:1px solid var(--border);border-radius:20px;padding:24px;max-width:320px;width:90%;text-align:center;}
+.confirm-message{font-size:16px;margin-bottom:20px;color:var(--text);line-height:1.4;}
+.confirm-buttons{display:flex;gap:12px;justify-content:center;}
+.confirm-buttons button{flex:1;padding:12px 16px;border-radius:12px;font-family:var(--D);font-size:14px;letter-spacing:1px;cursor:pointer;border:none;-webkit-tap-highlight-color:transparent;}
+.confirm-buttons button:first-child{background:var(--surf2);color:var(--muted);border:1px solid var(--border);}
+.confirm-buttons button:last-child{background:var(--red);color:#fff;}
+
+/* ══ RESULTS SCREEN ══ */
+.results-panel{display:flex;flex-direction:column;gap:12px;animation:fadeUp .35s ease both;}
+.results-header-bar{display:flex;align-items:center;justify-content:space-between;padding:0 4px;}
+.results-winner{font-family:var(--D);font-size:34px;letter-spacing:2px;line-height:1;}
+.results-mode-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:2px;margin-top:2px;}
+.results-score-strip{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;background:var(--surf);border:1px solid var(--border);border-radius:18px;padding:14px 16px;}
+.results-score-side{display:flex;flex-direction:column;align-items:center;gap:2px;}
+.results-score-side.winner-side .results-big-score{filter:drop-shadow(0 0 12px currentColor);}
+.results-big-score{font-family:var(--D);font-size:48px;line-height:1;}
+.results-team-name{font-size:11px;font-weight:800;letter-spacing:1.5px;color:var(--muted);text-transform:uppercase;max-width:80px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.results-vs-dot{font-family:var(--D);font-size:13px;letter-spacing:3px;color:var(--border2);}
+
+/* Round fight cards */
+.rr-list{display:flex;flex-direction:column;gap:10px;}
+.rr-card{border-radius:20px;background:var(--surf);border:1px solid var(--border);overflow:hidden;transform:translateY(20px);opacity:0;animation:slideUp .4s ease forwards;animation-delay:calc(0.05s * var(--idx));}
+.rr-head{padding:10px 14px 6px;display:flex;align-items:baseline;gap:8px;}
+.rr-round-label{font-family:var(--D);font-size:11px;letter-spacing:2.5px;color:var(--gold);flex-shrink:0;}
+.rr-scenario{font-size:13px;color:var(--text);font-style:italic;line-height:1.3;opacity:.85;}
+.rr-fighters{display:grid;grid-template-columns:1fr 28px 1fr;align-items:stretch;gap:0;padding:0 10px 10px;}
+.rr-chip{border-radius:14px;padding:10px 10px;display:flex;flex-direction:column;gap:3px;transition:opacity .2s;}
+.rr-chip.winner{opacity:1;}
+.rr-chip.loser{opacity:.38;}
+.rr-chip-team{font-size:9px;font-weight:900;letter-spacing:2px;text-transform:uppercase;margin-bottom:1px;}
+.rr-chip-name{font-family:var(--D);font-size:15px;letter-spacing:.3px;line-height:1.15;color:var(--text);}
+.rr-chip-crown{font-size:13px;margin-top:4px;}
+.rr-sword{display:flex;align-items:center;justify-content:center;font-size:14px;opacity:.4;}
+.rr-rule-tag{margin:0 10px 10px;padding:5px 10px;border-radius:8px;background:rgba(255,20,147,.09);border:1px solid rgba(255,20,147,.22);font-size:11px;color:#ff69b4;font-style:italic;display:inline-block;}
+.results-empty{font-size:14px;color:var(--muted);padding:18px;border-radius:18px;background:var(--surf);border:1px solid var(--border);}
+.results-actions{display:flex;gap:10px;padding:4px 0 8px;}
+.results-share-feedback{font-size:12px;color:var(--muted);margin-top:4px;text-align:center;}
+@keyframes slideUp{0%{opacity:0;transform:translateY(20px);}100%{opacity:1;transform:translateY(0);}}
+
+/* ══ HOME SCREEN ══ */
+.mode-hero{background:var(--surf);border:1.5px solid rgba(255,45,85,.4);background:rgba(255,45,85,.06);border-radius:18px;padding:18px 20px;display:flex;align-items:center;gap:16px;cursor:pointer;transition:all .15s;-webkit-tap-highlight-color:transparent;}
+.mode-hero:hover{transform:translateY(-1px);border-color:rgba(255,45,85,.65);}
+.mode-hero:active{transform:scale(.98);}
+.mode-mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.mode-mini{background:var(--surf);border:1.5px solid var(--border);border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:8px;cursor:pointer;transition:all .15s;-webkit-tap-highlight-color:transparent;}
+.mode-mini:hover{border-color:var(--border2);transform:translateY(-1px);}
+.mode-mini:active{transform:scale(.98);}
+.mode-mini-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;font-family:var(--D);letter-spacing:.5px;}
+.mode-mini-title{font-family:var(--D);font-size:16px;letter-spacing:.8px;line-height:1;color:var(--text);}
+.mode-mini-desc{font-size:11px;color:var(--muted);line-height:1.35;}
+
+.tournament-bracket{display:flex;flex-direction:column;gap:20px;max-width:400px;margin:0 auto;}
+.fighter-option{display:flex;flex-direction:column;align-items:center;padding:16px;border-radius:12px;cursor:pointer;transition:all .2s;min-width:140px;border:2px solid transparent;}
+.fighter-option:hover{background:var(--surf2);border-color:var(--gold);transform:scale(1.02);}
+.fighter-option:active{transform:scale(.98);}
+.fighter-name{font-size:16px;font-weight:700;text-align:center;color:var(--text);line-height:1.2;}
+.winner-badge{font-size:18px;margin-top:6px;animation:pulse 1s infinite;}
+@keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.1);}}
+.winner-announcement{text-align:center;padding:30px;background:linear-gradient(135deg, var(--gold), var(--gold-d));border-radius:20px;margin:20px 0;color:white;animation:championGlow 2s ease-in-out;}
+@keyframes championGlow{0%{box-shadow:0 0 0 0 rgba(255,214,10,0.7);}50%{box-shadow:0 0 0 10px rgba(255,214,10,0);}100%{box-shadow:0 0 0 0 rgba(255,214,10,0);}}
+
 </style>
 </head>
 <body>
@@ -330,6 +434,23 @@ const EXPANSION_PACKS = window.EXPANSION_PACKS || [];
 const POSITIONS=['PG','SG','SF','PF','C'];
 const POS_FULL={PG:'Point Guard',SG:'Shooting Guard',SF:'Small Forward',PF:'Power Forward',C:'Center'};
 
+const MASTER_DEBATE_RULES = [
+  {id: 'devil_advocate', title: 'Devil\'s Advocate', description: 'You must argue the opposite of what you believe. Make your opponent\'s case stronger.'},
+  {id: 'only_grunts', title: 'Only Grunts', description: 'Communicate using only caveman-style grunts, groans, and primitive sounds. No words allowed.'},
+  {id: 'reverse_claims', title: 'Reverse Claims', description: 'Start every sentence with "Actually, the opposite is true..." and argue backwards logic.'},
+  {id: 'no_proper_nouns', title: 'No Proper Nouns', description: 'Avoid all proper names, brands, and specific titles. Use descriptions instead.'},
+  {id: 'poetry_only', title: 'Poetry Only', description: 'Express all arguments in rhyming verse. Bonus points for creative metaphors.'},
+  {id: 'whisper_mode', title: 'Whisper Mode', description: 'Speak only in whispers. Volume must stay below conversational level.'},
+  {id: 'third_person', title: 'Third Person Only', description: 'Refer to yourself in third person. "The red team believes..." instead of "I believe..."'},
+  {id: 'question_only', title: 'Question Only', description: 'Phrase everything as questions. No statements allowed.'},
+  {id: 'slow_motion', title: 'Slow Motion', description: 'Speak extremely slowly, drawing out every syllable. Take your time.'},
+  {id: 'backwards_speech', title: 'Backwards Speech', description: 'Say everything backwards. "siht si yhw" = "this is why"'},
+  {id: 'mime_mode', title: 'Mime Mode', description: 'Act out your arguments without speaking. Pure physical theater.'},
+  {id: 'baby_talk', title: 'Baby Talk', description: 'Speak like a toddler. Use simple words, repeat phrases, and lots of enthusiasm.'},
+  {id: 'sales_pitch', title: 'Sales Pitch', description: 'Present your argument as an infomercial. "But wait, there\'s more!"'},
+  {id: 'pirate_speak', title: 'Pirate Speak', description: 'Arrr! Argue like a pirate. Use nautical terms and pirate slang throughout.'}
+];
+
 const LS={
   get:(k,d)=>{try{const v=localStorage.getItem(k);return v?JSON.parse(v):d;}catch{return d;}},
   set:(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));}catch{}}
@@ -343,6 +464,10 @@ const THEMES=[
   {id:'colosseum',name:'COLOSSEUM',dots:['#e63946','#c9a84c','#f4c430']},
   {id:'blood',  name:'BLOOD',   dots:['#ff3131','#c0392b','#ff6b35']},
   {id:'jungle', name:'JUNGLE',  dots:['#ff4757','#2ed573','#ffa502']},
+  {id:'cyber',  name:'CYBER',   dots:['#ff0080','#00ffff','#ffff00']},
+  {id:'candy',  name:'CANDY',   dots:['#ff6b9d','#6b9dff','#ffd93d']},
+  {id:'mono',   name:'MONO',    dots:['#ffffff','#cccccc','#888888']},
+  {id:'retro',  name:'RETRO',   dots:['#ff4500','#0080ff','#ffff00']},
 ];
 
 function App(){
@@ -365,6 +490,24 @@ function App(){
   const [tagline,setTagline]=useState('WHO WOULD ACTUALLY WIN?');
   const [newFName,setNewFName]=useState('');
 
+  // Tournament state
+  const [tournamentBracket,setTournamentBracket]=useState([]);
+  const [tournamentRound,setTournamentRound]=useState(0);
+  const [tournamentWinner,setTournamentWinner]=useState(null);
+  const [tournamentSize,setTournamentSize]=useState(()=>LS.get('vs_tournament_size',8));
+
+  // Game settings
+  const [debateTimer,setDebateTimer]=useState(()=>LS.get('vs_debate_timer',0)); // 0 = disabled
+  const [scoreLimit,setScoreLimit]=useState(()=>LS.get('vs_score_limit',0)); // 0 = disabled
+  const [currentTimer,setCurrentTimer]=useState(0);
+  const [timerActive,setTimerActive]=useState(false);
+  const [gameOverTeam,setGameOverTeam]=useState(null);
+  const [roundHistory,setRoundHistory]=useState([]);
+  const [finalScores,setFinalScores]=useState({red:0,blue:0});
+  const [shareResultMessage,setShareResultMessage]=useState('');
+  const resultsRef=useRef(null);
+  const [debateTurn,setDebateTurn]=useState('red'); // 'red' | 'blue' | 'vote'
+
   // The Easter Egg Roller
   useEffect(() => {
     if (screen === 'home') {
@@ -376,12 +519,158 @@ function App(){
     }
   }, [screen]);
 
+  // Timer effect
+  useEffect(() => {
+    let interval;
+    if (timerActive && currentTimer > 0) {
+      interval = setInterval(() => {
+        setCurrentTimer(prev => {
+          if (prev <= 1) {
+            setTimerActive(false);
+            // Timer expired - could add sound or visual alert here
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [timerActive, currentTimer]);
+
   const [newFTag,setNewFTag]=useState('');
   const [sfPool,setSfPool]=useState([]);
   const [sfPicks,setSfPicks]=useState({red:[],blue:[]});
   const [sfTurn,setSfTurn]=useState(0);
     const [sfLineup,setSfLineup]=useState({red:{},blue:{}});
   const [sfPhase,setSfPhase]=useState('spin');
+
+  const TEAM_COLORS = [
+    {name: 'Red', hex: '#ff2d55'},
+    {name: 'Blue', hex: '#0a84ff'},
+    {name: 'Green', hex: '#34c759'},
+    {name: 'Purple', hex: '#af52de'},
+    {name: 'Orange', hex: '#ff9500'},
+    {name: 'Pink', hex: '#ff2d96'},
+  ];
+
+  const defaultColors = {red: TEAM_COLORS[0], blue: TEAM_COLORS[1]};
+  const [teamColors, setTeamColors] = useState(() => LS.get('vs_team_colors', defaultColors));
+  const [teamColorRed, setTeamColorRed] = useState(() => LS.get('vs_team_colors', defaultColors).red);
+  const [teamColorBlue, setTeamColorBlue] = useState(() => LS.get('vs_team_colors', defaultColors).blue);
+  const [confirmDialog, setConfirmDialog] = useState(null);
+
+  const showConfirm = (message, onConfirm) => setConfirmDialog({message, onConfirm, onCancel: () => setConfirmDialog(null)});
+
+  const getShareText = () => {
+    const winnerName = gameOverTeam === 'red' ? names.red : names.blue;
+    const loserName = gameOverTeam === 'red' ? names.blue : names.red;
+    const modeLabel = activeMode === 'classic' ? 'Classic mode' : activeMode === 'tagteam' ? 'Tag Team' : activeMode === 'masterdebate' ? 'Master Debate' : 'Starting Five';
+    const scoreSource = gameOverTeam ? finalScores : scores;
+    const scoreText = `${names.red} ${scoreSource.red} - ${scoreSource.blue} ${names.blue}`;
+    const roundSummary = roundHistory.length > 0
+      ? roundHistory.map((entry, idx) => `${idx+1}. ${entry.summary}`).join('\n')
+      : 'No rounds were recorded.';
+    return `Vltimate Showdown result: ${winnerName} beat ${loserName} in ${modeLabel}! Final score: ${scoreText}.\n\nRound summary:\n${roundSummary}`;
+  };
+
+  const captureResultsScreenshot = async () => {
+    if (!resultsRef.current) throw new Error('No results panel available');
+    const element = resultsRef.current;
+    const rect = element.getBoundingClientRect();
+    const styles = Array.from(document.styleSheets).reduce((css, sheet) => {
+      try {
+        return css + Array.from(sheet.cssRules || []).map(rule => rule.cssText).join('');
+      } catch (err) {
+        return css;
+      }
+    }, '');
+    const cloned = element.cloneNode(true);
+    const serialized = new XMLSerializer().serializeToString(cloned);
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${Math.ceil(rect.width)}" height="${Math.ceil(rect.height)}">` +
+      `<foreignObject width="100%" height="100%">` +
+      `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${rect.width}px;height:${rect.height}px;">` +
+      `<style>${styles}</style>${serialized}` +
+      `</div></foreignObject></svg>`;
+    const svgBlob = new Blob([svg], {type: 'image/svg+xml;charset=utf-8'});
+    const url = URL.createObjectURL(svgBlob);
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    await new Promise((resolve, reject) => { img.onload = resolve; img.onerror = reject; img.src = url; });
+    const scale = window.devicePixelRatio || 2;
+    const canvas = document.createElement('canvas');
+    canvas.width = rect.width * scale;
+    canvas.height = rect.height * scale;
+    const ctx = canvas.getContext('2d');
+    ctx.scale(scale, scale);
+    ctx.drawImage(img, 0, 0);
+    URL.revokeObjectURL(url);
+    return await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+  };
+
+  const shareResults = async () => {
+    const text = getShareText();
+    let screenshotFile = null;
+    try {
+      const blob = await captureResultsScreenshot();
+      if (blob) screenshotFile = new File([blob], 'vltimate-results.png', {type: 'image/png'});
+    } catch (err) {
+      console.warn('Screenshot capture failed', err);
+    }
+    try {
+      if (navigator.share) {
+        const payload = {title: 'Vltimate Showdown Result', text};
+        if (screenshotFile) payload.files = [screenshotFile];
+        await navigator.share(payload);
+        setShareResultMessage('Shared successfully!');
+        return;
+      }
+    } catch (err) {
+      console.warn('Native share failed', err);
+    }
+    try {
+      if (screenshotFile && navigator.clipboard && window.ClipboardItem) {
+        await navigator.clipboard.write([new ClipboardItem({'image/png': screenshotFile})]);
+        setShareResultMessage('Screenshot copied!');
+        return;
+      }
+    } catch (err) {
+      console.warn('Clipboard image copy failed', err);
+    }
+    try {
+      if (navigator.clipboard) {
+        await navigator.clipboard.writeText(text);
+        setShareResultMessage('Copied to clipboard!');
+        return;
+      }
+    } catch (err) {
+      // continue to fallback
+    }
+    try {
+      window.prompt('Copy your game result:', text);
+      setShareResultMessage('Result ready to share.');
+    } catch (err) {
+      setShareResultMessage('Could not share automatically.');
+    }
+  };
+
+  useEffect(() => {
+    if (!shareResultMessage) return;
+    const timeout = setTimeout(() => setShareResultMessage(''), 3000);
+    return () => clearTimeout(timeout);
+  }, [shareResultMessage]);
+
+  const getCategoryIcon = (cat) => {
+    const icons = {
+      items: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 7V5C3 4.44772 3.44772 4 4 4H20C20.5523 4 21 4.44772 21 5V7M3 7V19C3 19.5523 3.44772 20 4 20H20C20.5523 20 21 19.5523 21 19V7M3 7H21M12 11V15M9 13H15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>`,
+      animals: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L13.09 8.26L19 9L13.09 9.74L12 16L10.91 9.74L5 9L10.91 8.26L12 2Z" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.5"/></svg>`,
+      popculture: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="4" width="20" height="16" rx="2" stroke="currentColor" stroke-width="1.5"/><circle cx="9" cy="9" r="2" stroke="currentColor" stroke-width="1.5"/><path d="M7 15H11M13 15H17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>`,
+      celebs: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M6 21V19C6 17.8954 6.89543 17 8 17H16C17.1046 17 18 17.8954 18 19V21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>`,
+      memes: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="4" width="20" height="16" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M8 10H16M8 14H12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="18" cy="18" r="1" fill="currentColor"/></svg>`,
+      roles: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="6" width="18" height="12" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M8 10H16M8 14H16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>`,
+      custom: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L15 8L22 9L17 14L18 21L12 18L6 21L7 14L2 9L9 8L12 2Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`
+    };
+    return icons[cat] || `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M12 8V12M12 16H12.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>`;
+  };
   const [displayFighter,setDisplayFighter]=useState(null);
   const winTimerRef=useRef(null);
     const [settingsTab,setSettingsTab]=useState('packs');
@@ -419,11 +708,25 @@ function App(){
     if(mode === 'tagteam') {
       const [f1a, f1b, f2a, f2b] = pickN(getPool(), 4);
       setMatchup({f1: [f1a, f1b], f2: [f2a, f2b], scenario: randItem(getScenarios())});
+    } else if(mode === 'masterdebate') {
+      const [f1, f2] = pickN(getPool(), 2);
+      const rule1 = randItem(MASTER_DEBATE_RULES);
+      let rule2 = randItem(MASTER_DEBATE_RULES);
+      while(rule2.id === rule1.id) rule2 = randItem(MASTER_DEBATE_RULES);
+      setMatchup({f1, f2, scenario: randItem(getScenarios()), rule1, rule2});
+      setDebateTurn('red');
     } else {
       const [f1, f2] = pickN(getPool(), 2);
       setMatchup({f1, f2, scenario: randItem(getScenarios())});
     }
     setWinTeam(null);
+    setGameOverTeam(null);
+    
+    // Start timer if enabled
+    if(debateTimer > 0){
+      setCurrentTimer(debateTimer);
+      setTimerActive(true);
+    }
   };
 
   const award=(team)=>{
@@ -437,16 +740,52 @@ function App(){
       lArr.forEach(f=>{ if(!ns2[f.id])ns2[f.id]={matches:0,wins:0}; ns2[f.id].matches++; });
       setFighterStats(ns2);LS.set('vs_fstats',ns2);
     }
+    const winnerTeam = team === 'red' ? names.red : names.blue;
+    const loserTeam = team === 'red' ? names.blue : names.red;
+    const winnerFighters = activeMode === 'tagteam'
+      ? matchup && matchup[team === 'red' ? 'f1' : 'f2'] ? matchup[team === 'red' ? 'f1' : 'f2'].map(f=>f.name).join(' & ') : ''
+      : matchup ? (team === 'red' ? matchup.f1.name : matchup.f2.name) : '';
+    const loserFighters = activeMode === 'tagteam'
+      ? matchup && matchup[team === 'red' ? 'f2' : 'f1'] ? matchup[team === 'red' ? 'f2' : 'f1'].map(f=>f.name).join(' & ') : ''
+      : matchup ? (team === 'red' ? matchup.f2.name : matchup.f1.name) : '';
+    const roundEntry = {
+      winner: winnerTeam,
+      winnerTeam: team,
+      loser: loserTeam,
+      loserTeam: team === 'red' ? 'blue' : 'red',
+      winnerFighters,
+      loserFighters,
+      scenario: matchup?.scenario || 'Unknown scenario',
+      rule: activeMode === 'masterdebate' ? {title: `${names.red}: ${matchup.rule1?.title} / ${names.blue}: ${matchup.rule2?.title}`} : null,
+      summary: activeMode === 'masterdebate' && matchup?.rule1
+        ? `${winnerTeam} (${winnerFighters}) beat ${loserTeam} (${loserFighters}) in "${matchup?.scenario}" — rules: ${matchup.rule1.title} vs ${matchup.rule2.title}`
+        : `${winnerTeam} (${winnerFighters}) beat ${loserTeam} (${loserFighters}) in "${matchup?.scenario}"`
+    };
+    setRoundHistory(prev => [...prev, roundEntry]);
     setWinTeam(team);setShowWin(true);
+    setTimerActive(false); // Stop timer when someone wins
     clearTimeout(winTimerRef.current);
+
+    if(scoreLimit > 0 && ns[team] >= scoreLimit){
+      setFinalScores(ns);
+      setScores({red:0,blue:0});
+      LS.set('vs_scores',{red:0,blue:0});
+      setGameOverTeam(team);
+      return;
+    }
+
     winTimerRef.current=setTimeout(()=>{setShowWin(false);genMatchup();},2200);
   };
 
   const startGame=(mode)=>{
     const n={red:(tempRed||'Red Team').trim(),blue:(tempBlue||'Blue Team').trim()};
     setNames(n);LS.set('vs_names',n);
+    const c={red:teamColorRed,blue:teamColorBlue};
+    setTeamColors(c);LS.set('vs_team_colors',c);
     setActiveMode(mode);
-    if(mode==='classic' || mode==='tagteam'){genMatchup(mode);setScreen('play');}
+    setRoundHistory([]);
+    setShareResultMessage('');
+    if(mode==='classic' || mode==='tagteam' || mode==='masterdebate'){setFinalScores({red:0,blue:0});genMatchup(mode);setScreen('play');}
     else{
       const fighters=pickN(getPool(),10);
       setSfPool(fighters);setSfPicks({red:[],blue:[]});setSfTurn(0);
@@ -473,11 +812,103 @@ function App(){
   const toggleFighter=(id)=>{const n=disabledFighters.includes(id)?disabledFighters.filter(i=>i!==id):[...disabledFighters,id];setDisabledFighters(n);LS.set('vs_dis_f',n);};
   const togglePack=(pid)=>{const n=enabledPacks.includes(pid)?enabledPacks.filter(p=>p!==pid):[...enabledPacks,pid];setEnabledPacks(n);LS.set('vs_packs',n);};
   const setThemeAndSave=(t)=>{setTheme(t);LS.set('vs_theme',t);};
+  const setDebateTimerAndSave=(value)=>{setDebateTimer(value);LS.set('vs_debate_timer',value);};
+  const setScoreLimitAndSave=(value)=>{setScoreLimit(value);LS.set('vs_score_limit',value);};
+  const setTournamentSizeAndSave=(value)=>{setTournamentSize(value);LS.set('vs_tournament_size',value);};
   const resetRosterFilters=()=>{setDisabledCats([]);LS.set('vs_cats',[]);setDisabledFighters([]);LS.set('vs_dis_f',[]);};
   const enableAllPacks=()=>{const all=EXPANSION_PACKS.map(p=>p.id);setEnabledPacks(all);LS.set('vs_packs',all);};
   const disableAllPacks=()=>{setEnabledPacks([]);LS.set('vs_packs',[]);};
   const resetAllSettings=()=>{resetRosterFilters();disableAllPacks();setThemeAndSave('default');};
   const resetScores=()=>{setScores({red:0,blue:0});LS.set('vs_scores',{red:0,blue:0});};
+  const clearLeaderboard=()=>{setFighterStats({});LS.set('vs_fstats',{});};
+
+  // Tournament functions
+  const generateTournamentBracket=(size)=>{
+    const fighters = pickN(getPool(), size);
+    const scenarios = getScenarios();
+    const rounds = [];
+    let matchId = 1;
+    
+    // Calculate number of rounds
+    const numRounds = Math.ceil(Math.log2(size));
+    
+    // Generate first round
+    const firstRoundMatches = [];
+    for (let i = 0; i < size / 2; i++) {
+      firstRoundMatches.push({
+        id: matchId++,
+        fighter1: fighters[i * 2],
+        fighter2: fighters[i * 2 + 1],
+        winner: null,
+        scenario: randItem(scenarios)
+      });
+    }
+    rounds.push({ round: 1, matches: firstRoundMatches });
+    
+    // Generate subsequent rounds (empty initially)
+    for (let r = 2; r <= numRounds; r++) {
+      const numMatches = Math.pow(2, numRounds - r);
+      const roundMatches = [];
+      for (let m = 0; m < numMatches; m++) {
+        roundMatches.push({
+          id: matchId++,
+          fighter1: null,
+          fighter2: null,
+          winner: null,
+          scenario: randItem(scenarios)
+        });
+      }
+      rounds.push({ round: r, matches: roundMatches });
+    }
+    
+    return rounds;
+  };
+
+  const startTournament=()=>{
+    const bracket = generateTournamentBracket(tournamentSize);
+    setTournamentBracket(bracket);
+    setTournamentRound(1);
+    setTournamentWinner(null);
+    setScreen('tournament');
+  };
+
+  const selectTournamentWinner=(matchId, winner)=>{
+    setTournamentBracket(prev=>{
+      const newBracket=[...prev];
+      const roundIndex=newBracket.findIndex(r=>r.matches.some(m=>m.id===matchId));
+      const matchIndex=newBracket[roundIndex].matches.findIndex(m=>m.id===matchId);
+      newBracket[roundIndex].matches[matchIndex].winner=winner;
+
+      // Advance winner to next round if not the final round
+      if(roundIndex < newBracket.length - 1){
+        const nextRoundIndex=roundIndex+1;
+        const nextRound = newBracket[nextRoundIndex];
+        const positionInMatch = matchIndex % 2;
+        const nextMatchIndex = Math.floor(matchIndex / 2);
+
+        if(positionInMatch === 0){
+          nextRound.matches[nextMatchIndex].fighter1 = winner;
+        } else {
+          nextRound.matches[nextMatchIndex].fighter2 = winner;
+        }
+
+        // Check if round is complete and advance
+        const currentRound = newBracket[roundIndex];
+        if(currentRound.matches.every(m => m.winner)){
+          setTournamentRound(roundIndex + 2); // Advance to next round
+        }
+      } else {
+        // This is the final round, set the tournament winner
+        setTournamentWinner(winner);
+      }
+
+      return newBracket;
+    });
+  };
+
+  const advanceTournamentRound=()=>{
+    setTournamentRound(prev=>prev+1);
+  };
 
   /* ── HOME ── */
   if(screen==='home') return(
@@ -515,33 +946,45 @@ function App(){
           <div className="a1 px20" style={{marginBottom:20}}>
             <div style={{background:'var(--surf)',border:'1px solid var(--border)',borderRadius:14,padding:'12px 20px',display:'flex',alignItems:'center',justifyContent:'space-between'}}>
               <div style={{textAlign:'center'}}>
-                <div style={{fontFamily:'var(--D)',fontSize:32,color:'var(--red)',lineHeight:1}}>{scores.red}</div>
+                <div style={{fontFamily:'var(--D)',fontSize:32,color:teamColors.red.hex,lineHeight:1}}>{scores.red}</div>
                 <div style={{fontSize:11,color:'var(--muted)',fontWeight:800,letterSpacing:1}}>{names.red}</div>
               </div>
               <div style={{fontFamily:'var(--D)',fontSize:13,letterSpacing:3,color:'var(--muted)'}}>VS</div>
               <div style={{textAlign:'center'}}>
-                <div style={{fontFamily:'var(--D)',fontSize:32,color:'var(--blue)',lineHeight:1}}>{scores.blue}</div>
+                <div style={{fontFamily:'var(--D)',fontSize:32,color:teamColors.blue.hex,lineHeight:1}}>{scores.blue}</div>
                 <div style={{fontSize:11,color:'var(--muted)',fontWeight:800,letterSpacing:1}}>{names.blue}</div>
               </div>
-              <button className="reset-btn" onClick={resetScores}>RESET</button>
+              <button className="reset-btn" onClick={() => showConfirm('Reset scores?', resetScores)}>RESET</button>
             </div>
           </div>
         )}
 
-        <div className="px20 a2" style={{display:'flex',flexDirection:'column',gap:10}}>
-          <div className="mode-card active-r" onClick={()=>{setPendingMode('classic');setTempRed(names.red);setTempBlue(names.blue);setScreen('setup');}}>
+        <div className="px20 a2" style={{display:'flex',flexDirection:'column',gap:8}}>
+          {/* Hero: Classic Mode */}
+          <div className="mode-hero" onClick={()=>{setPendingMode('classic');setTempRed(names.red);setTempBlue(names.blue);setScreen('setup');}}>
             <div className="mode-icon r" style={{fontFamily:'var(--D)',fontSize:13,letterSpacing:1}}>VS</div>
-            <div><div className="mode-title">CLASSIC MODE</div><div className="mode-desc">Two teams debate hilarious matchups across wild scenarios. Points awarded by the crowd.</div></div>
-          </div>
-          <div className="mode-card active-b" onClick={()=>{setPendingMode('sf');setTempRed(names.red);setTempBlue(names.blue);setScreen('setup');}}>
-            <div className="mode-icon b" style={{fontFamily:'var(--D)',fontSize:13,letterSpacing:1}}>5v5</div>
-            <div><div className="mode-title">STARTING FIVE</div><div className="mode-desc">Draft 5 fighters each and build the ultimate basketball lineup. Who's got the better team?</div></div>
-          </div>
-                    <div className="mode-card" style={{borderColor: 'rgba(255,214,10,0.4)', background: 'rgba(255,214,10,0.06)'}} onClick={()=>{setPendingMode('tagteam');setTempRed(names.red);setTempBlue(names.blue);setScreen('setup');}}>
-            <div className="mode-icon" style={{background: 'var(--gold-d)',fontFamily:'var(--D)',fontSize:13,letterSpacing:1,color:'var(--gold)'}}>2v2</div>
-            <div><div className="mode-title" style={{color: 'var(--gold)'}}>TAG TEAM TORNADO</div><div className="mode-desc">2v2 chaos. Argue how your two randomly paired fighters synergize to dominate the scenario.</div></div>
+            <div><div className="mode-title">CLASSIC MODE</div><div className="mode-desc">Two teams debate hilarious matchups. Points awarded by the crowd.</div></div>
           </div>
 
+          {/* 2×2 compact grid */}
+          <div className="mode-mini-grid">
+            <div className="mode-mini" style={{borderColor:'rgba(10,132,255,.35)',background:'rgba(10,132,255,.05)'}} onClick={()=>{setPendingMode('sf');setTempRed(names.red);setTempBlue(names.blue);setScreen('setup');}}>
+              <div className="mode-mini-icon" style={{background:'var(--blue-d)',color:'var(--blue)',fontFamily:'var(--D)',fontSize:13}}>5v5</div>
+              <div><div className="mode-mini-title" style={{color:'var(--blue)'}}>STARTING FIVE</div><div className="mode-mini-desc">Draft your ultimate basketball lineup.</div></div>
+            </div>
+            <div className="mode-mini" style={{borderColor:'rgba(255,214,10,.35)',background:'rgba(255,214,10,.05)'}} onClick={()=>{setPendingMode('tagteam');setTempRed(names.red);setTempBlue(names.blue);setScreen('setup');}}>
+              <div className="mode-mini-icon" style={{background:'var(--gold-d)',color:'var(--gold)',fontFamily:'var(--D)',fontSize:13}}>2v2</div>
+              <div><div className="mode-mini-title" style={{color:'var(--gold)'}}>TAG TEAM</div><div className="mode-mini-desc">Pair two fighters and argue the chaos.</div></div>
+            </div>
+            <div className="mode-mini" style={{borderColor:'rgba(138,43,226,.35)',background:'rgba(138,43,226,.05)'}} onClick={startTournament}>
+              <div className="mode-mini-icon" style={{background:'rgba(138,43,226,.18)',fontSize:18}}>🏆</div>
+              <div><div className="mode-mini-title" style={{color:'#8a2be2'}}>TOURNAMENT</div><div className="mode-mini-desc">{tournamentSize}-fighter bracket. Crown a champion.</div></div>
+            </div>
+            <div className="mode-mini" style={{borderColor:'rgba(255,20,147,.35)',background:'rgba(255,20,147,.05)'}} onClick={()=>{setPendingMode('masterdebate');setTempRed(names.red);setTempBlue(names.blue);setScreen('setup');}}>
+              <div className="mode-mini-icon" style={{background:'rgba(255,20,147,.15)',fontSize:18}}>🎭</div>
+              <div><div className="mode-mini-title" style={{color:'#ff1493'}}>MASTER DEBATE</div><div className="mode-mini-desc">1v1 with wild random rules each turn.</div></div>
+            </div>
+          </div>
         </div>
 
         <div className="a3" style={{marginTop:20,display:'flex',gap:8,flexWrap:'wrap',justifyContent:'center',padding:'0 20px'}}>
@@ -549,6 +992,17 @@ function App(){
           <span className="chip" onClick={()=>setScreen('leaderboard')}>Hall of Fame</span>
           <span className="chip" onClick={()=>{setSettingsTab('packs');setScreen('settings');}}>Settings</span>
         </div>
+        {confirmDialog && (
+          <div className="confirm-overlay" onClick={() => setConfirmDialog(null)}>
+            <div className="confirm-modal" onClick={e => e.stopPropagation()}>
+              <div className="confirm-message">{confirmDialog.message}</div>
+              <div className="confirm-buttons">
+                <button onClick={confirmDialog.onCancel}>Cancel</button>
+                <button onClick={() => {confirmDialog.onConfirm(); setConfirmDialog(null);}}>Confirm</button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -559,21 +1013,31 @@ function App(){
       <button className="nav-back" onClick={()=>setScreen('home')}>← BACK</button>
       <div style={{flex:1,display:'flex',flexDirection:'column',justifyContent:'center',paddingBottom:40}}>
         <div className="px20 a0" style={{marginBottom:28}}>
-          <div style={{fontFamily:'var(--D)',fontSize:13,letterSpacing:4,color:'var(--muted)',marginBottom:4}}>{pendingMode==='classic'?'CLASSIC MODE':pendingMode==='tagteam'?'TAG TEAM TORNADO':'STARTING FIVE'}</div>
-          <div style={{fontFamily:'var(--D)',fontSize:38,letterSpacing:2}}>SET YOUR<br/>TEAMS</div>
+          <div style={{fontFamily:'var(--D)',fontSize:13,letterSpacing:1.5,color:'var(--muted)',marginBottom:4}}>{pendingMode==='classic'?'Classic mode':pendingMode==='tagteam'?'Tag team tornado':pendingMode==='masterdebate'?'Master debate':'Starting five'}</div>
+          <div style={{fontFamily:'var(--D)',fontSize:38,letterSpacing:1}}>Set your<br/>teams</div>
         </div>
         <div className="px20 a1" style={{display:'flex',flexDirection:'column',gap:10,marginBottom:20}}>
           <div style={{display:'flex',flexDirection:'column',gap:6}}>
-            <div style={{display:'flex',alignItems:'center',gap:8}}><div style={{width:10,height:10,borderRadius:'50%',background:'var(--red)',flexShrink:0}}/><span style={{fontSize:12,fontWeight:800,letterSpacing:1.5,color:'var(--red)'}}>RED TEAM</span></div>
-            <input className="inp" style={{borderColor:'rgba(255,45,85,.25)'}} value={tempRed} onChange={e=>setTempRed(e.target.value)} placeholder="Enter team name..." maxLength={24}/>
+            <div style={{display:'flex',alignItems:'center',gap:8}}><div style={{width:10,height:10,borderRadius:'50%',background:teamColorRed.hex,flexShrink:0}}/><span style={{fontSize:12,fontWeight:800,letterSpacing:1.5,color:teamColorRed.hex}}>{teamColorRed.name}</span></div>
+            <input className="inp" style={{borderColor:`${teamColorRed.hex}40`}} value={tempRed} onChange={e=>setTempRed(e.target.value)} placeholder="Enter team name..." maxLength={24}/>
+            <div style={{display:'flex',gap:8,flexWrap:'wrap'}}>
+              {TEAM_COLORS.map(color => (
+                <button key={color.name} onClick={() => setTeamColorRed(color)} style={{width:30,height:30,borderRadius:'50%',background:color.hex,border:color.name === teamColorRed.name ? '2px solid #fff' : '2px solid transparent',cursor:'pointer',transition:'all .15s'}} />
+              ))}
+            </div>
           </div>
           <div style={{display:'flex',flexDirection:'column',gap:6}}>
-            <div style={{display:'flex',alignItems:'center',gap:8}}><div style={{width:10,height:10,borderRadius:'50%',background:'var(--blue)',flexShrink:0}}/><span style={{fontSize:12,fontWeight:800,letterSpacing:1.5,color:'var(--blue)'}}>BLUE TEAM</span></div>
-            <input className="inp" style={{borderColor:'rgba(10,132,255,.25)'}} value={tempBlue} onChange={e=>setTempBlue(e.target.value)} placeholder="Enter team name..." maxLength={24}/>
+            <div style={{display:'flex',alignItems:'center',gap:8}}><div style={{width:10,height:10,borderRadius:'50%',background:teamColorBlue.hex,flexShrink:0}}/><span style={{fontSize:12,fontWeight:800,letterSpacing:1.5,color:teamColorBlue.hex}}>{teamColorBlue.name}</span></div>
+            <input className="inp" style={{borderColor:`${teamColorBlue.hex}40`}} value={tempBlue} onChange={e=>setTempBlue(e.target.value)} placeholder="Enter team name..." maxLength={24}/>
+            <div style={{display:'flex',gap:8,flexWrap:'wrap'}}>
+              {TEAM_COLORS.map(color => (
+                <button key={color.name} onClick={() => setTeamColorBlue(color)} style={{width:30,height:30,borderRadius:'50%',background:color.hex,border:color.name === teamColorBlue.name ? '2px solid #fff' : '2px solid transparent',cursor:'pointer',transition:'all .15s'}} />
+              ))}
+            </div>
           </div>
         </div>
         <div className="px20 a3">
-          <button className={`btn ${pendingMode==='classic'?'btn-r':pendingMode==='tagteam'?'btn-g':'btn-b'}`} onClick={()=>startGame(pendingMode)}>START {pendingMode==='sf'?'DRAFT':'BATTLE'}</button>
+          <button className={`btn ${pendingMode==='classic'?'btn-r':pendingMode==='tagteam'?'btn-g':pendingMode==='masterdebate'?'btn-g':'btn-b'}`} onClick={()=>startGame(pendingMode)}>START {pendingMode==='sf'?'DRAFT':pendingMode==='masterdebate'?'DEBATE':'BATTLE'}</button>
         </div>
       </div>
     </div>
@@ -583,28 +1047,203 @@ function App(){
   if(screen==='play') return(
     <div className="shell scroll">
       {showWin&&(
-        <div className={`win-overlay ${winTeam}`} onClick={()=>setShowWin(false)}>
-          <div className={`win-big ${winTeam}`}>{winTeam==='red'?names.red:names.blue}</div>
-          <div className="win-sub">WINS THE ROUND!</div>
-          <div className="win-dismiss">TAP TO CONTINUE</div>
+        <div className={`win-overlay ${winTeam}`} onClick={!gameOverTeam?()=>setShowWin(false):undefined}>
+          <div className="win-big" style={{color: winTeam === 'red' ? teamColors.red.hex : teamColors.blue.hex, textShadow: `0 0 60px ${winTeam === 'red' ? teamColors.red.hex + '66' : teamColors.blue.hex + '66'}`}}>{winTeam==='red'?names.red:names.blue}</div>
+          <div className="win-sub">{gameOverTeam ? 'GAME OVER' : 'WINS THE ROUND!'}</div>
+          {gameOverTeam ? (
+            <div style={{display:'flex',flexDirection:'column',alignItems:'center',gap:10}}>
+              <div style={{display:'flex',gap:10}}>
+                <button className="btn btn-g btn-sm" onClick={()=>{setShowWin(false);setGameOverTeam(null);setScreen('home');}}>BACK HOME</button>
+                <button className="btn btn-b btn-sm" onClick={()=>{setShowWin(false);setScreen('results');}}>VIEW RESULTS</button>
+              </div>
+              <button className="btn btn-sm btn-outline-b" onClick={shareResults}>SHARE</button>
+              {shareResultMessage && <div style={{fontSize:12,color:'var(--muted)'}}>{shareResultMessage}</div>}
+            </div>
+          ) : (
+            <div className="win-dismiss">TAP TO CONTINUE</div>
+          )}
         </div>
       )}
-      <div className="score-bar">
-        <div className="score-side"><div className="score-n r">{scores.red}</div><div className="score-lbl">{names.red}</div></div>
-        <div className="score-mid"><div className="score-vs">VS</div><button className="reset-btn" onClick={()=>{if(confirm('Reset scores?'))resetScores();}}>RESET</button></div>
-        <div className="score-side"><div className="score-n b">{scores.blue}</div><div className="score-lbl">{names.blue}</div></div>
+      <div className="score-bar" style={{backdropFilter: 'blur(20px)', background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.1)'}}>
+        <div className="score-side" style={{color: teamColors.red.hex}}><div className="score-n r" style={{color: teamColors.red.hex}}>{scores.red}</div><div className="score-lbl">{names.red}</div></div>
+        <div className="score-mid"><div className="score-vs">VS</div><button className="reset-btn" onClick={() => showConfirm('Reset scores?', resetScores)}>RESET</button></div>
+        <div className="score-side" style={{color: teamColors.blue.hex}}><div className="score-n b" style={{color: teamColors.blue.hex}}>{scores.blue}</div><div className="score-lbl">{names.blue}</div></div>
       </div>
+      {debateTimer > 0 && (
+        <div style={{
+          padding:'15px 20px 10px',
+          display:'flex',
+          alignItems:'center',
+          justifyContent:'center',
+          gap:15,
+          backdropFilter: 'blur(15px)',
+          background: currentTimer <= 5 ? 'rgba(255,69,85,0.15)' : 'rgba(255,214,10,0.1)',
+          border: `1px solid ${currentTimer <= 5 ? 'rgba(255,69,85,0.3)' : 'rgba(255,214,10,0.2)'}`,
+          borderRadius: '16px',
+          margin: '0 16px 10px',
+          boxShadow: currentTimer <= 5 ? '0 8px 32px rgba(255,69,85,0.2)' : '0 8px 32px rgba(255,214,10,0.15)',
+          animation: currentTimer <= 5 ? 'pulseR 1s ease-in-out infinite' : 'none'
+        }}>
+          <div style={{
+            width: '50px',
+            height: '50px',
+            borderRadius: '50%',
+            background: `conic-gradient(${currentTimer <= 5 ? '#ff4555' : '#ffd60a'} ${((debateTimer - currentTimer) / debateTimer) * 360}deg, rgba(255,255,255,0.1) 0deg)`,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            boxShadow: 'inset 0 2px 8px rgba(0,0,0,0.2)'
+          }}>
+            <div style={{
+              width: '38px',
+              height: '38px',
+              borderRadius: '50%',
+              background: 'rgba(0,0,0,0.3)',
+              backdropFilter: 'blur(10px)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}>
+              <div style={{
+                fontFamily:'var(--D)',
+                fontSize: '16px',
+                color: currentTimer <= 5 ? '#ff4555' : '#ffd60a',
+                fontWeight: 'bold',
+                textShadow: '0 1px 2px rgba(0,0,0,0.5)'
+              }}>
+                {String(Math.floor(currentTimer/60)).padStart(2,'0')}:{String(currentTimer%60).padStart(2,'0')}
+              </div>
+            </div>
+          </div>
+          <div>
+            <div style={{fontSize:10,color:'var(--text)',fontWeight:800,letterSpacing:2,textTransform:'uppercase',opacity:0.8}}>Time Remaining</div>
+            <div style={{fontSize:12,color:'var(--muted)',marginTop:2}}>
+              {currentTimer <= 5 ? '⚠️ Hurry up!' : currentTimer <= 10 ? '⏰ Getting close!' : '🕐 Keep debating!'}
+            </div>
+          </div>
+        </div>
+      )}
       {matchup&&(
         <div style={{flex:1,display:'flex',flexDirection:'column',gap:14,paddingTop:4,paddingBottom:20}}>
           <div className="scen-banner apop">
             <span className="scen-who">WHO WOULD WIN...</span>
             <span className="scen-in">in {matchup.scenario}?</span>
           </div>
+          {activeMode === 'masterdebate' && matchup.rule1 && debateTurn !== 'vote' && (() => {
+            const isRed = debateTurn === 'red';
+            const fighter = isRed ? matchup.f1 : matchup.f2;
+            const rule = isRed ? matchup.rule1 : matchup.rule2;
+            const teamName = isRed ? names.red : names.blue;
+            const teamColor = isRed ? teamColors.red.hex : teamColors.blue.hex;
+            return (
+              <div style={{display:'flex',flexDirection:'column',gap:14,paddingTop:4,paddingBottom:20}}>
+                {/* Turn Banner */}
+                <div style={{textAlign:'center',padding:'6px 20px 0'}}>
+                  <div style={{fontFamily:'var(--D)',fontSize:14,letterSpacing:4,color:'var(--muted)'}}>NOW ARGUING</div>
+                  <div style={{fontFamily:'var(--D)',fontSize:30,letterSpacing:2,color:teamColor,textShadow:`0 0 30px ${teamColor}55`}}>{teamName}</div>
+                </div>
+                {/* Rule Banner */}
+                <div style={{margin:'0 16px',padding:'14px 16px',borderRadius:16,background:`linear-gradient(135deg,rgba(255,20,147,0.12),rgba(255,105,180,0.05))`,border:'1px solid rgba(255,20,147,0.35)',textAlign:'center'}}>
+                  <div style={{fontFamily:'var(--D)',fontSize:11,letterSpacing:4,color:'#ff1493',marginBottom:4}}>THEIR RULE</div>
+                  <div style={{fontFamily:'var(--D)',fontSize:22,color:'#ff69b4',letterSpacing:1,marginBottom:6}}>{rule.title}</div>
+                  <div style={{fontSize:13,color:'var(--muted)',lineHeight:1.45}}>{rule.description}</div>
+                </div>
+                {/* Fighter Card */}
+                <div style={{padding:'0 16px'}}>
+                  <div className="f-card" style={{
+                    background:`linear-gradient(145deg,${teamColor}33 0%,var(--surf) 45%,var(--surf2) 100%)`,
+                    border:`1px solid ${teamColor}60`,borderLeft:`3px solid ${teamColor}`,
+                    boxShadow:`0 12px 40px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.07)`,
+                    minHeight:160,width:'100%'
+                  }}>
+                    <div style={{position:'absolute',top:'-50px',right:'-50px',width:'150px',height:'150px',borderRadius:'50%',background:`radial-gradient(circle,${teamColor}59 0%,transparent 70%)`,pointerEvents:'none',zIndex:0}}/>
+                    <span className="f-watermark" style={{color:teamColor}}>{teamName.charAt(0)}</span>
+                    <div style={{position:'absolute',top:10,right:10,fontSize:20,opacity:0.7}} dangerouslySetInnerHTML={{__html:getCategoryIcon(fighter.cat)}}/>
+                    <div className="f-team" style={{color:teamColor,background:`${teamColor}22`,border:`1px solid ${teamColor}44`}}>{teamName}</div>
+                    <div className="f-content" style={{marginTop:12}}>
+                      <div className="f-name">{fighter.name}</div>
+                      <div className="f-tag">{fighter.tag}</div>
+                    </div>
+                  </div>
+                </div>
+                {/* Done Button */}
+                <div style={{padding:'0 16px'}}>
+                  <button
+                    className="btn"
+                    style={{background:teamColor,boxShadow:`0 8px 28px ${teamColor}44`,color:'#fff'}}
+                    onClick={()=>{
+                      setDebateTurn(isRed?'blue':'vote');
+                      if(debateTimer>0){setCurrentTimer(debateTimer);setTimerActive(true);}
+                    }}
+                  >
+                    {isRed ? `${names.blue}'S TURN →` : 'VOTE NOW →'}
+                  </button>
+                </div>
+              </div>
+            );
+          })()}
+          {activeMode === 'masterdebate' && debateTurn === 'vote' && (
+            <div style={{display:'flex',flexDirection:'column',gap:14,paddingTop:4,paddingBottom:20}}>
+              <div style={{textAlign:'center',padding:'6px 20px 0'}}>
+                <div style={{fontFamily:'var(--D)',fontSize:14,letterSpacing:4,color:'var(--muted)'}}>BOTH SIDES HEARD</div>
+                <div style={{fontFamily:'var(--D)',fontSize:28,letterSpacing:2,color:'var(--gold)'}}>WHO WON?</div>
+              </div>
+              {/* Side-by-side recap */}
+              <div className="f-row">
+                <div className="f-wrap aslam r" style={{animationDelay:'0.1s'}}>
+                  <div className="f-card" style={{background:`linear-gradient(145deg,${teamColors.red.hex}33 0%,var(--surf) 45%,var(--surf2) 100%)`,border:`1px solid ${teamColors.red.hex}60`,borderLeft:`3px solid ${teamColors.red.hex}`,boxShadow:`0 12px 40px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.07)`}}>
+                    <div style={{position:'absolute',top:'-50px',right:'-50px',width:'150px',height:'150px',borderRadius:'50%',background:`radial-gradient(circle,${teamColors.red.hex}59 0%,transparent 70%)`,pointerEvents:'none',zIndex:0}}/>
+                    <span className="f-watermark" style={{color:teamColors.red.hex}}>{names.red.charAt(0)}</span>
+                    <div style={{position:'absolute',top:10,right:10,fontSize:20,opacity:0.7}} dangerouslySetInnerHTML={{__html:getCategoryIcon(matchup.f1.cat)}}/>
+                    <div className="f-team" style={{color:teamColors.red.hex}}>{names.red}</div>
+                    <div className="f-content" style={{marginTop:12}}>
+                      <div className="f-name">{matchup.f1.name}</div>
+                      <div className="f-tag">{matchup.f1.tag}</div>
+                    </div>
+                    <div style={{marginTop:8,padding:'6px 8px',background:'rgba(255,20,147,0.1)',borderRadius:8,border:'1px solid rgba(255,20,147,0.25)',fontSize:11,color:'#ff69b4',fontStyle:'italic'}}>🎭 {matchup.rule1.title}</div>
+                  </div>
+                </div>
+                <div className="vs-pill"><span>VS</span></div>
+                <div className="f-wrap aslam b" style={{animationDelay:'0.2s'}}>
+                  <div className="f-card" style={{background:`linear-gradient(145deg,${teamColors.blue.hex}33 0%,var(--surf) 45%,var(--surf2) 100%)`,border:`1px solid ${teamColors.blue.hex}60`,borderLeft:`3px solid ${teamColors.blue.hex}`,boxShadow:`0 12px 40px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.07)`}}>
+                    <div style={{position:'absolute',top:'-50px',right:'-50px',width:'150px',height:'150px',borderRadius:'50%',background:`radial-gradient(circle,${teamColors.blue.hex}59 0%,transparent 70%)`,pointerEvents:'none',zIndex:0}}/>
+                    <span className="f-watermark" style={{color:teamColors.blue.hex}}>{names.blue.charAt(0)}</span>
+                    <div style={{position:'absolute',top:10,right:10,fontSize:20,opacity:0.7}} dangerouslySetInnerHTML={{__html:getCategoryIcon(matchup.f2.cat)}}/>
+                    <div className="f-team" style={{color:teamColors.blue.hex}}>{names.blue}</div>
+                    <div className="f-content" style={{marginTop:12}}>
+                      <div className="f-name">{matchup.f2.name}</div>
+                      <div className="f-tag">{matchup.f2.tag}</div>
+                    </div>
+                    <div style={{marginTop:8,padding:'6px 8px',background:'rgba(255,20,147,0.1)',borderRadius:8,border:'1px solid rgba(255,20,147,0.25)',fontSize:11,color:'#ff69b4',fontStyle:'italic'}}>🎭 {matchup.rule2.title}</div>
+                  </div>
+                </div>
+              </div>
+              <div style={{textAlign:'center',padding:'4px 20px 0'}}><div style={{fontSize:12,color:'var(--muted)',fontWeight:800,letterSpacing:.5}}>VOTE FOR THE WINNER</div></div>
+              <div className="vote-row a2">
+                <button className="btn-outline-r" style={{borderColor:teamColors.red.hex+'4D',color:teamColors.red.hex}} onClick={()=>award('red')}>{names.red} WINS</button>
+                <button className="btn-outline-b" style={{borderColor:teamColors.blue.hex+'4D',color:teamColors.blue.hex}} onClick={()=>award('blue')}>{names.blue} WINS</button>
+              </div>
+              <div style={{padding:'0 16px',display:'flex',gap:8}}>
+                <button className="btn btn-ghost" style={{flex:1}} onClick={genMatchup}>⟳ NEXT ROUND</button>
+                <button className="btn btn-ghost" style={{width:'auto',padding:'12px 16px'}} onClick={()=>setScreen('home')}>⌂</button>
+              </div>
+            </div>
+          )}
+          {activeMode !== 'masterdebate' && (<>
+          {activeMode === 'classic' && matchup.rule && (
+            <div className="scen-banner apop" style={{marginTop: -10, padding: '12px 20px 8px', background: 'linear-gradient(135deg, rgba(255,20,147,0.1), rgba(255,105,180,0.05))', border: '1px solid rgba(255,20,147,0.3)'}}>
+              <span className="scen-who" style={{color: '#ff1493', fontSize: '11px'}}>MASTER DEBATE RULE</span>
+              <span className="scen-in" style={{color: '#ff69b4', fontSize: '18px'}}>{matchup.rule.title}</span>
+              <div style={{fontSize: '12px', color: 'var(--muted)', marginTop: '4px', lineHeight: '1.4'}}>{matchup.rule.description}</div>
+            </div>
+          )}
                    <div className="f-row">
             <div className="f-wrap aslam r" style={{animationDelay:'0.1s'}}>
-              <div className="f-card r">
-                <span className="f-watermark r">{names.red.charAt(0)}</span>
-                <div className="f-team r">{names.red}</div>
+              <div className="f-card" style={{background: `linear-gradient(145deg,${teamColors.red.hex}33 0%,var(--surf) 45%,var(--surf2) 100%)`, border: `1px solid ${teamColors.red.hex}60`, borderLeft: `3px solid ${teamColors.red.hex}`, boxShadow: `0 12px 40px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.07)`}}>
+                <div style={{position:'absolute',top:'-50px',right:'-50px',width:'150px',height:'150px',borderRadius:'50%',background:`radial-gradient(circle,${teamColors.red.hex}59 0%,transparent 70%)`,pointerEvents:'none',zIndex:0}}></div>
+                <span className="f-watermark" style={{color: teamColors.red.hex}}>{names.red.charAt(0)}</span>
+                <div style={{position:'absolute',top:10,right:10,fontSize:20,opacity:0.7}} dangerouslySetInnerHTML={{__html: getCategoryIcon(matchup.f1.cat)}} />
+                <div className="f-team" style={{color: teamColors.red.hex}}>{names.red}</div>
                 <div className="f-content">
                   {activeMode === 'tagteam' ? (
                     <>
@@ -622,9 +1261,11 @@ function App(){
             <div className="vs-pill"><span>VS</span></div>
             
             <div className="f-wrap aslam b" style={{animationDelay:'0.2s'}}>
-              <div className="f-card b">
-                <span className="f-watermark b">{names.blue.charAt(0)}</span>
-                <div className="f-team b">{names.blue}</div>
+              <div className="f-card" style={{background: `linear-gradient(145deg,${teamColors.blue.hex}33 0%,var(--surf) 45%,var(--surf2) 100%)`, border: `1px solid ${teamColors.blue.hex}60`, borderLeft: `3px solid ${teamColors.blue.hex}`, boxShadow: `0 12px 40px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.07)`}}>
+                <div style={{position:'absolute',top:'-50px',right:'-50px',width:'150px',height:'150px',borderRadius:'50%',background:`radial-gradient(circle,${teamColors.blue.hex}59 0%,transparent 70%)`,pointerEvents:'none',zIndex:0}}></div>
+                <span className="f-watermark" style={{color: teamColors.blue.hex}}>{names.blue.charAt(0)}</span>
+                <div style={{position:'absolute',top:10,right:10,fontSize:20,opacity:0.7}} dangerouslySetInnerHTML={{__html: getCategoryIcon(matchup.f2.cat)}} />
+                <div className="f-team" style={{color: teamColors.blue.hex}}>{names.blue}</div>
                 <div className="f-content">
                   {activeMode === 'tagteam' ? (
                     <>
@@ -642,15 +1283,109 @@ function App(){
           
           <div style={{textAlign:'center',padding:'10px 20px 0'}}><div style={{fontSize:12,color:'var(--muted)',fontWeight:800,letterSpacing:.5}}>DEBATE IT OUT • THEN VOTE</div></div>
           <div className="vote-row a2">
-            <button className="btn-outline-r" onClick={()=>award('red')}>{names.red} WINS</button>
-            <button className="btn-outline-b" onClick={()=>award('blue')}>{names.blue} WINS</button>
+            <button className="btn-outline-r" style={{borderColor: teamColors.red.hex + '4D', color: teamColors.red.hex}} onClick={()=>award('red')}>{names.red} WINS</button>
+            <button className="btn-outline-b" style={{borderColor: teamColors.blue.hex + '4D', color: teamColors.blue.hex}} onClick={()=>award('blue')}>{names.blue} WINS</button>
           </div>
           <div style={{padding:'0 16px',display:'flex',gap:8}}>
             <button className="btn btn-ghost" style={{flex:1}} onClick={genMatchup}>⟳ NEXT ROUND</button>
             <button className="btn btn-ghost" style={{width:'auto',padding:'12px 16px'}} onClick={()=>setScreen('home')}>⌂</button>
           </div>
+        </>)}
         </div>
       )}
+      {confirmDialog && (
+        <div className="confirm-overlay" onClick={() => setConfirmDialog(null)}>
+          <div className="confirm-modal" onClick={e => e.stopPropagation()}>
+            <div className="confirm-message">{confirmDialog.message}</div>
+            <div className="confirm-buttons">
+              <button onClick={confirmDialog.onCancel}>Cancel</button>
+              <button onClick={() => {confirmDialog.onConfirm(); setConfirmDialog(null);}}>Confirm</button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+
+  /* ── RESULTS ── */
+  const resultsScore = gameOverTeam ? finalScores : scores;
+  if(screen==='results') return(
+    <div className="shell scroll">
+      <button className="nav-back" onClick={()=>setScreen('home')}>← HOME</button>
+      <div style={{padding:'0 20px 32px'}}>
+        <div className="results-panel" ref={resultsRef}>
+
+          {/* ── Winner header ── */}
+          <div className="results-header-bar">
+            <div>
+              <div className="results-winner" style={{color: gameOverTeam==='red'?teamColors.red.hex:teamColors.blue.hex}}>
+                {gameOverTeam==='red'?names.red:names.blue} WINS
+              </div>
+              <div className="results-mode-label">{activeMode==='classic'?'Classic Mode':activeMode==='tagteam'?'Tag Team Tornado':activeMode==='masterdebate'?'Master Debate':'Starting Five'} · {roundHistory.length} round{roundHistory.length!==1?'s':''}</div>
+            </div>
+            <div style={{fontFamily:'var(--D)',fontSize:36,opacity:.25}}>🏆</div>
+          </div>
+
+          {/* ── Score strip ── */}
+          <div className="results-score-strip">
+            <div className={`results-score-side ${resultsScore.red>resultsScore.blue?'winner-side':''}`}>
+              <div className="results-big-score" style={{color:teamColors.red.hex}}>{resultsScore.red}</div>
+              <div className="results-team-name">{names.red}</div>
+            </div>
+            <div className="results-vs-dot">VS</div>
+            <div className={`results-score-side ${resultsScore.blue>resultsScore.red?'winner-side':''}`}>
+              <div className="results-big-score" style={{color:teamColors.blue.hex}}>{resultsScore.blue}</div>
+              <div className="results-team-name">{names.blue}</div>
+            </div>
+          </div>
+
+          {/* ── Round fight cards ── */}
+          <div className="rr-list">
+            {roundHistory.length>0 ? roundHistory.map((entry,idx)=>{
+              const redFighters = entry.winnerTeam==='red' ? entry.winnerFighters : entry.loserFighters;
+              const blueFighters = entry.winnerTeam==='blue' ? entry.winnerFighters : entry.loserFighters;
+              const redWon = entry.winnerTeam==='red';
+              const redColor = teamColors.red.hex;
+              const blueColor = teamColors.blue.hex;
+              return(
+                <div key={idx} className="rr-card" style={{'--idx':idx}}>
+                  <div className="rr-head">
+                    <span className="rr-round-label">R{idx+1}</span>
+                    <span className="rr-scenario">in {entry.scenario}</span>
+                  </div>
+                  <div className="rr-fighters">
+                    {/* Red chip */}
+                    <div className={`rr-chip ${redWon?'winner':'loser'}`} style={{background:`${redColor}${redWon?'20':'10'}`,border:`1px solid ${redColor}${redWon?'50':'20'}`}}>
+                      <div className="rr-chip-team" style={{color:redColor}}>{names.red}</div>
+                      <div className="rr-chip-name">{redFighters||'—'}</div>
+                      {redWon&&<div className="rr-chip-crown">👑</div>}
+                    </div>
+                    {/* Sword */}
+                    <div className="rr-sword">⚔️</div>
+                    {/* Blue chip */}
+                    <div className={`rr-chip ${!redWon?'winner':'loser'}`} style={{background:`${blueColor}${!redWon?'20':'10'}`,border:`1px solid ${blueColor}${!redWon?'50':'20'}`}}>
+                      <div className="rr-chip-team" style={{color:blueColor}}>{names.blue}</div>
+                      <div className="rr-chip-name">{blueFighters||'—'}</div>
+                      {!redWon&&<div className="rr-chip-crown">👑</div>}
+                    </div>
+                  </div>
+                  {entry.rule&&<div className="rr-rule-tag">🎭 {entry.rule.title}</div>}
+                </div>
+              );
+            }) : (
+              <div className="results-empty">No rounds were recorded.</div>
+            )}
+          </div>
+
+          {/* ── Actions ── */}
+          <div className="results-actions">
+            <button className="btn btn-g btn-sm" style={{flex:1}} onClick={()=>setScreen('home')}>BACK HOME</button>
+            <button className="btn btn-b btn-sm" style={{flex:1}} onClick={shareResults}>SHARE RESULTS</button>
+          </div>
+          {shareResultMessage&&<div className="results-share-feedback">{shareResultMessage}</div>}
+
+        </div>
+      </div>
     </div>
   );
 
@@ -673,7 +1408,7 @@ function App(){
           </div>
         </div>
         <div className="settings-tab-bar a1">
-          {[['packs','PACKS'],['themes','THEMES'],['roster','ROSTER']].map(([t,label])=>(
+          {[['packs','Packs'],['themes','Themes'],['roster','Roster'],['game','Game']].map(([t,label])=>(
             <button key={t} className={`settings-tab ${settingsTab===t?'active':''}`} onClick={()=>setSettingsTab(t)}>{label}</button>
           ))}
         </div>
@@ -682,7 +1417,7 @@ function App(){
           <div style={{padding:'0 20px 32px',display:'flex',flexDirection:'column',gap:12}} className="a2">
             <div style={{display:'flex',justifyContent:'space-between',gap:10,flexWrap:'wrap',marginBottom:12}}>
               <div style={{fontSize:13,color:'var(--muted)',fontWeight:700,lineHeight:1.6}}>
-                Expansion packs add new fighters AND scenarios to the pool. Toggle them on before starting a game.
+                Expansion packs add new fighters and scenarios to the pool. Toggle them on before starting a game.
               </div>
               <div style={{display:'flex',gap:8,flexWrap:'wrap'}}>
                 <button className="btn btn-sm btn-outline-b" onClick={enableAllPacks} style={{padding:'10px 14px'}}>Enable all</button>
@@ -724,6 +1459,51 @@ function App(){
                   <div className="theme-name">{t.name}</div>
                 </div>
               ))}
+            </div>
+          </div>
+        )}
+
+        {settingsTab==='game'&&(
+          <div style={{padding:'0 20px 32px',display:'flex',flexDirection:'column',gap:18}} className="a2">
+            <div style={{fontFamily:'var(--D)',fontSize:14,letterSpacing:2,color:'var(--muted)'}}>GAME OPTIONS</div>
+            <div style={{background:'var(--surf)',border:'1px solid var(--border)',borderRadius:16,padding:18,display:'flex',flexDirection:'column',gap:14}}>
+              <div style={{fontSize:13,color:'var(--muted)',fontWeight:700}}>DEBATE TIMER</div>
+              <div style={{display:'flex',flexWrap:'wrap',gap:10}}>
+                {[0,30,45,60,90].map(val=>(
+                  <button key={val} className={`btn btn-sm ${debateTimer===val?'btn-b':'btn-ghost'}`} onClick={()=>setDebateTimerAndSave(val)} style={{minWidth:86}}>
+                    {val===0?'Off':val+'s'}
+                  </button>
+                ))}
+              </div>
+              <div style={{fontSize:12,color:'var(--muted)'}}>When enabled, countdown begins for each matchup and keeps debates moving.</div>
+            </div>
+            <div style={{background:'var(--surf)',border:'1px solid var(--border)',borderRadius:16,padding:18,display:'flex',flexDirection:'column',gap:14}}>
+              <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+                <div style={{fontSize:14,color:'var(--muted)',fontWeight:700}}>CLASSIC SCORE TARGET</div>
+                <div style={{fontSize:12,color:'var(--text)'}}>{scoreLimit>0?scoreLimit+' points':'Off'}</div>
+              </div>
+              <div style={{display:'flex',flexWrap:'wrap',gap:10}}>
+                {[0,3,5,7,10].map(val=>(
+                  <button key={val} className={`btn btn-sm ${scoreLimit===val?'btn-r':'btn-ghost'}`} onClick={()=>setScoreLimitAndSave(val)} style={{minWidth:86}}>
+                    {val===0?'Off':val}
+                  </button>
+                ))}
+              </div>
+              <div style={{fontSize:12,color:'var(--muted)'}}>End classic and tag-team games when a team reaches this score.</div>
+            </div>
+            <div style={{background:'var(--surf)',border:'1px solid var(--border)',borderRadius:16,padding:18,display:'flex',flexDirection:'column',gap:14}}>
+              <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+                <div style={{fontSize:14,color:'var(--muted)',fontWeight:700}}>TOURNAMENT SIZE</div>
+                <div style={{fontSize:12,color:'var(--text)'}}>{tournamentSize} fighters</div>
+              </div>
+              <div style={{display:'flex',flexWrap:'wrap',gap:10}}>
+                {[4,8,16].map(val=>(
+                  <button key={val} className={`btn btn-sm ${tournamentSize===val?'btn-g':'btn-ghost'}`} onClick={()=>setTournamentSizeAndSave(val)} style={{minWidth:86}}>
+                    {val}
+                  </button>
+                ))}
+              </div>
+              <div style={{fontSize:12,color:'var(--muted)'}}>Adjust the bracket size for tournament mode.</div>
             </div>
           </div>
         )}
@@ -788,6 +1568,9 @@ function App(){
         <button className="nav-back" onClick={()=>setScreen('home')}>← BACK</button>
         <div style={{padding:'0 20px 32px'}}>
           <div className="a0"><div style={{fontFamily:'var(--D)',fontSize:38,letterSpacing:2}}>HALL OF FAME</div><div style={{fontSize:13,color:'var(--muted)',marginTop:4,marginBottom:20}}>All-time win rates for your roster.</div></div>
+          <div style={{display:'flex',justifyContent:'center',marginBottom:20}}>
+            <button className="btn btn-ghost" onClick={() => showConfirm('Clear all fighter stats? This cannot be undone.', clearLeaderboard)}>CLEAR LEADERBOARD</button>
+          </div>
           <div className="a1" style={{display:'flex',flexDirection:'column',gap:8}}>
             {ranked.map((f,i)=>(
               <div key={f.id} className="f-list-item" style={{animationDelay:`${i*.04}s`}}>
@@ -799,6 +1582,17 @@ function App(){
             {ranked.length===0&&<div className="empty-state"><div className="empty-icon">📊</div><div className="empty-text">No battles yet.<br/>Play some rounds to see who rises.</div></div>}
           </div>
         </div>
+        {confirmDialog && (
+          <div className="confirm-overlay" onClick={() => setConfirmDialog(null)}>
+            <div className="confirm-modal" onClick={e => e.stopPropagation()}>
+              <div className="confirm-message">{confirmDialog.message}</div>
+              <div className="confirm-buttons">
+                <button onClick={confirmDialog.onCancel}>Cancel</button>
+                <button onClick={() => {confirmDialog.onConfirm(); setConfirmDialog(null);}}>Confirm</button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     );
   }
@@ -886,23 +1680,23 @@ function App(){
 
     return (
       <div className="shell scroll">
-        <button className="nav-back" onClick={()=>{resetSfState();setScreen('home');}}>← HOME</button>
+        <button className="nav-back" onClick={() => showConfirm('Back out of the draft? Progress will be lost.', () => {resetSfState(); setScreen('home');})}>← HOME</button>
         <div className="score-bar">
-          <div className="score-side">
-            <div className="score-n r">{Object.keys(sfLineup.red||{}).length}</div>
+          <div className="score-side" style={{color: teamColors.red.hex}}>
+            <div className="score-n r" style={{color: teamColors.red.hex}}>{Object.keys(sfLineup.red||{}).length}</div>
             <div className="score-lbl">{names.red}</div>
           </div>
           <div className="score-mid">
             <div style={{fontFamily:'var(--D)',fontSize:13,letterSpacing:3,color:'var(--muted)'}}>DRAFT</div>
             <div style={{fontSize:11,color:'var(--muted)',fontWeight:700}}>{10-sfTurn} LEFT</div>
           </div>
-          <div className="score-side">
-            <div className="score-n b">{Object.keys(sfLineup.blue||{}).length}</div>
+          <div className="score-side" style={{color: teamColors.blue.hex}}>
+            <div className="score-n b" style={{color: teamColors.blue.hex}}>{Object.keys(sfLineup.blue||{}).length}</div>
             <div className="score-lbl">{names.blue}</div>
           </div>
         </div>
 
-        <div className={`turn-banner ${team} a0`}>
+        <div className="turn-banner" style={{color: team === 'red' ? teamColors.red.hex : teamColors.blue.hex}}>
           {team==='red'?names.red:names.blue}'S TURN
         </div>
 
@@ -911,7 +1705,7 @@ function App(){
           {/* THE SPIN BUTTON */}
           {sfPhase === 'spin' && (
             <div className="a1" style={{marginTop: 40}}>
-              <button className={`btn ${team==='red'?'btn-r':'btn-b'}`} style={{padding: '24px 20px', fontSize: 28, boxShadow: `0 8px 32px var(--${team}-d)`}} onClick={startSpin}>
+              <button className="btn" style={{background: team === 'red' ? teamColors.red.hex : teamColors.blue.hex, boxShadow: `0 8px 32px ${team === 'red' ? teamColors.red.hex + '40' : teamColors.blue.hex + '40'}`}} onClick={startSpin}>
                 DRAW COMPETITOR
               </button>
             </div>
@@ -947,6 +1741,88 @@ function App(){
             </div>
           )}
         </div>
+        {confirmDialog && (
+          <div className="confirm-overlay" onClick={() => setConfirmDialog(null)}>
+            <div className="confirm-modal" onClick={e => e.stopPropagation()}>
+              <div className="confirm-message">{confirmDialog.message}</div>
+              <div className="confirm-buttons">
+                <button onClick={confirmDialog.onCancel}>Cancel</button>
+                <button onClick={() => {confirmDialog.onConfirm(); setConfirmDialog(null);}}>Confirm</button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+
+
+  /* ── TOURNAMENT ── */
+  if(screen==='tournament'){
+    const currentRound = tournamentBracket[tournamentRound - 1];
+    const roundNames = ['Quarterfinals', 'Semifinals', 'Championship'];
+    const isFinalRound = tournamentRound === 3;
+
+    return (
+      <div className="shell scroll">
+        <button className="nav-back" onClick={() => showConfirm('End tournament?', () => setScreen('home'))}>← HOME</button>
+        <div style={{padding:'0 20px 10px'}}>
+          <div style={{textAlign:'center',marginBottom:20}}>
+            <div style={{fontFamily:'var(--D)',fontSize:18,letterSpacing:2,color:'var(--gold)',marginBottom:4}}>TOURNAMENT</div>
+            <div style={{fontSize:16,color:'var(--text)',fontWeight:600,marginBottom:8}}>{roundNames[tournamentRound - 1]}</div>
+            <div style={{fontSize:14,color:'var(--muted)',marginBottom:12}}>Round {tournamentRound} of 3</div>
+            {currentRound && (
+              <div style={{fontSize:12,color:'var(--gold)',fontWeight:600}}>
+                {currentRound.matches.filter(m => !m.winner).length} match{currentRound.matches.filter(m => !m.winner).length !== 1 ? 'es' : ''} remaining
+              </div>
+            )}
+          </div>
+
+          <div className="tournament-bracket">
+            {currentRound && currentRound.matches.map(match => (
+              <div key={match.id} className="tournament-match">
+                <div style={{width:'100%',textAlign:'center',marginBottom:16,padding:'12px',background:'rgba(255,214,10,0.1)',borderRadius:'12px',border:'1px solid rgba(255,214,10,0.3)'}}>
+                  <div style={{fontSize:14,color:'var(--gold)',fontWeight:600,marginBottom:6}}>🏆 BATTLE SCENARIO 🏆</div>
+                  <div style={{fontSize:16,color:'var(--text)',fontStyle:'italic',lineHeight:1.4,fontWeight:500}}>"{match.scenario}"</div>
+                </div>
+                <div style={{display:'flex',alignItems:'center',width:'100%',justifyContent:'space-between'}}>
+                  <div className="fighter-option" onClick={() => !match.winner && selectTournamentWinner(match.id, match.fighter1)}>
+                    <div className="fighter-name">{match.fighter1?.name || 'TBD'}</div>
+                    {match.fighter1?.tag && <div style={{fontSize:12,color:'var(--muted)',marginTop:2,textAlign:'center'}}>"{match.fighter1.tag}"</div>}
+                    {match.winner?.id === match.fighter1?.id && <div className="winner-badge">🏆</div>}
+                  </div>
+                  <div style={{fontSize:32,margin:'0 16px',color:'var(--gold)',fontWeight:800,textShadow:'2px 2px 4px rgba(0,0,0,0.3)'}}>⚔️</div>
+                  <div className="fighter-option" onClick={() => !match.winner && selectTournamentWinner(match.id, match.fighter2)}>
+                    <div className="fighter-name">{match.fighter2?.name || 'TBD'}</div>
+                    {match.fighter2?.tag && <div style={{fontSize:12,color:'var(--muted)',marginTop:2,textAlign:'center'}}>"{match.fighter2.tag}"</div>}
+                    {match.winner?.id === match.fighter2?.id && <div className="winner-badge">🏆</div>}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {tournamentWinner && (
+            <div className="winner-announcement">
+              <div style={{fontSize:20,fontWeight:800,color:'var(--gold)'}}>🏆 CHAMPION 🏆</div>
+              <div style={{fontSize:18,marginTop:10}}>{tournamentWinner.name}</div>
+              <div style={{fontSize:14,color:'var(--muted)',fontStyle:'italic',marginTop:4}}>"{tournamentWinner.tag}"</div>
+              <button className="btn btn-gold" style={{marginTop:20}} onClick={() => setScreen('home')}>BACK TO HOME</button>
+            </div>
+          )}
+        </div>
+        {confirmDialog && (
+          <div className="confirm-overlay" onClick={() => setConfirmDialog(null)}>
+            <div className="confirm-modal" onClick={e => e.stopPropagation()}>
+              <div className="confirm-message">{confirmDialog.message}</div>
+              <div className="confirm-buttons">
+                <button onClick={confirmDialog.onCancel}>Cancel</button>
+                <button onClick={() => {confirmDialog.onConfirm(); setConfirmDialog(null);}}>Confirm</button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     );
   }
@@ -964,7 +1840,7 @@ function App(){
       <div className="lineup-wrap a2" style={{paddingBottom:4}}>
         {['red','blue'].map(team=>(
           <div key={team} className="lineup-side">
-            <div className={`lineup-hd ${team}`}>{team==='red'?names.red:names.blue}</div>
+            <div className="lineup-hd" style={{color: team === 'red' ? teamColors.red.hex : teamColors.blue.hex}}>{team==='red'?names.red:names.blue}</div>
             {POSITIONS.map(pos=>(
               <div key={pos} className="lineup-item">
                 <div className="lineup-pos-lbl">{pos} · {POS_FULL[pos]}</div>
@@ -977,14 +1853,14 @@ function App(){
       <div style={{padding:'12px 20px'}}>
         <div style={{fontSize:12,color:'var(--muted)',fontWeight:800,letterSpacing:.5,textAlign:'center',marginBottom:12}}>WHICH TEAM WINS? VOTE BELOW</div>
         <div style={{display:'flex',gap:8,marginBottom:8}}>
-          <button className="btn-outline-r" onClick={()=>award('red')}>{names.red}</button>
-          <button className="btn-outline-b" onClick={()=>award('blue')}>{names.blue}</button>
+          <button className="btn-outline-r" style={{borderColor: teamColors.red.hex + '4D', color: teamColors.red.hex}} onClick={()=>award('red')}>{names.red}</button>
+          <button className="btn-outline-b" style={{borderColor: teamColors.blue.hex + '4D', color: teamColors.blue.hex}} onClick={()=>award('blue')}>{names.blue}</button>
         </div>
         <button className="btn btn-ghost" onClick={()=>{setPendingMode('sf');setTempRed(names.red);setTempBlue(names.blue);setScreen('setup');}}>⟳ NEW DRAFT</button>
       </div>
       {showWin&&(
         <div className={`win-overlay ${winTeam}`} onClick={()=>setShowWin(false)}>
-          <div className={`win-big ${winTeam}`}>{winTeam==='red'?names.red:names.blue}</div>
+          <div className="win-big" style={{color: winTeam === 'red' ? teamColors.red.hex : teamColors.blue.hex, textShadow: `0 0 60px ${winTeam === 'red' ? teamColors.red.hex + '66' : teamColors.blue.hex + '66'}`}}>{winTeam==='red'?names.red:names.blue}</div>
           <div className="win-sub">HAS THE BETTER TEAM!</div>
           <div className="win-dismiss">TAP TO CONTINUE</div>
         </div>
