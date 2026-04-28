@@ -455,24 +455,23 @@ function App(){
     }
   };
 
-
-  const sfDraftPick=(f)=>{
-    const team=sfTurn%2===0?'red':'blue';
-    const np={...sfPicks,[team]:[...sfPicks[team],f]};setSfPicks(np);
-    const nt=sfTurn+1;setSfTurn(nt);
-    if(nt>=10){setSfLineup({red:{},blue:{}});setSfPhase('red');setScreen('sf_assign');}
-  };
-
-  const addCustom=()=>{
-    if(!newFName.trim())return;
-    const nc=[...custom,{id:Date.now(),name:newFName.trim(),tag:newFTag.trim()||'custom fighter',cat:'custom'}];
-    setCustom(nc);LS.set('vs_custom',nc);setNewFName('');setNewFTag('');
+  const resetSfState=()=>{
+    setSfPool([]);
+    setSfPicks({red:[],blue:[]});
+    setSfTurn(0);
+    setSfLineup({red:{},blue:{}});
+    setSfPhase('spin');
+    setDisplayFighter(null);
   };
   const delCustom=(id)=>{const nc=custom.filter(f=>f.id!==id);setCustom(nc);LS.set('vs_custom',nc);};
   const toggleCat=(cat)=>{const n=disabledCats.includes(cat)?disabledCats.filter(c=>c!==cat):[...disabledCats,cat];setDisabledCats(n);LS.set('vs_cats',n);};
   const toggleFighter=(id)=>{const n=disabledFighters.includes(id)?disabledFighters.filter(i=>i!==id):[...disabledFighters,id];setDisabledFighters(n);LS.set('vs_dis_f',n);};
   const togglePack=(pid)=>{const n=enabledPacks.includes(pid)?enabledPacks.filter(p=>p!==pid):[...enabledPacks,pid];setEnabledPacks(n);LS.set('vs_packs',n);};
   const setThemeAndSave=(t)=>{setTheme(t);LS.set('vs_theme',t);};
+  const resetRosterFilters=()=>{setDisabledCats([]);LS.set('vs_cats',[]);setDisabledFighters([]);LS.set('vs_dis_f',[]);};
+  const enableAllPacks=()=>{const all=EXPANSION_PACKS.map(p=>p.id);setEnabledPacks(all);LS.set('vs_packs',all);};
+  const disableAllPacks=()=>{setEnabledPacks([]);LS.set('vs_packs',[]);};
+  const resetAllSettings=()=>{resetRosterFilters();disableAllPacks();setThemeAndSave('default');};
   const resetScores=()=>{setScores({red:0,blue:0});LS.set('vs_scores',{red:0,blue:0});};
 
   /* ── HOME ── */
@@ -542,7 +541,6 @@ function App(){
 
         <div className="a3" style={{marginTop:20,display:'flex',gap:8,flexWrap:'wrap',justifyContent:'center',padding:'0 20px'}}>
           <span className="chip" onClick={()=>setScreen('howToPlay')}>How to Play</span>
-          <span className="chip" onClick={()=>setScreen('myFighters')}>My Fighters{custom.length>0&&` (${custom.length})`}</span>
           <span className="chip" onClick={()=>setScreen('leaderboard')}>Hall of Fame</span>
           <span className="chip" onClick={()=>{setSettingsTab('packs');setScreen('settings');}}>Settings</span>
         </div>
@@ -664,7 +662,10 @@ function App(){
       <div className="shell scroll">
         <button className="nav-back" onClick={()=>setScreen('home')}>← BACK</button>
         <div style={{padding:'0 20px 8px'}} className="a0">
-          <div style={{fontFamily:'var(--D)',fontSize:38,letterSpacing:2}}>SETTINGS</div>
+          <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',gap:12}}>
+            <div style={{fontFamily:'var(--D)',fontSize:38,letterSpacing:2}}>SETTINGS</div>
+            <button className="btn btn-sm btn-outline-r" onClick={resetAllSettings} style={{whiteSpace:'nowrap'}}>Reset all</button>
+          </div>
         </div>
         <div className="settings-tab-bar a1">
           {[['packs','PACKS'],['themes','THEMES'],['roster','ROSTER']].map(([t,label])=>(
@@ -674,8 +675,14 @@ function App(){
 
         {settingsTab==='packs'&&(
           <div style={{padding:'0 20px 32px',display:'flex',flexDirection:'column',gap:12}} className="a2">
-            <div style={{fontSize:13,color:'var(--muted)',fontWeight:700,lineHeight:1.6,marginBottom:4}}>
-              Expansion packs add new fighters AND scenarios to the pool. Toggle them on before starting a game.
+            <div style={{display:'flex',justifyContent:'space-between',gap:10,flexWrap:'wrap',marginBottom:12}}>
+              <div style={{fontSize:13,color:'var(--muted)',fontWeight:700,lineHeight:1.6}}>
+                Expansion packs add new fighters AND scenarios to the pool. Toggle them on before starting a game.
+              </div>
+              <div style={{display:'flex',gap:8,flexWrap:'wrap'}}>
+                <button className="btn btn-sm btn-outline-b" onClick={enableAllPacks} style={{padding:'10px 14px'}}>Enable all</button>
+                <button className="btn btn-sm btn-outline-r" onClick={disableAllPacks} style={{padding:'10px 14px'}}>Disable all</button>
+              </div>
             </div>
             {EXPANSION_PACKS.map((pack,idx)=>{
               const isOn=enabledPacks.includes(pack.id);
@@ -717,8 +724,11 @@ function App(){
         )}
 
         {settingsTab==='roster'&&(
-          <div style={{padding:'0 20px 32px',display:'flex',flexDirection:'column'}} className="a2">
-            <div style={{fontSize:13,color:'var(--muted)',marginBottom:4}}>Toggle categories or individual fighters.</div>
+          <div style={{padding:'0 20px 32px',display:'flex',flexDirection:'column',gap:18}} className="a2">
+            <div style={{display:'flex',flexDirection:'column',gap:8}}>
+              <div style={{fontSize:13,color:'var(--muted)'}}>Toggle categories or individual fighters. Custom fighters are now managed here too.</div>
+              <button className="btn btn-sm btn-outline-b" onClick={resetRosterFilters} style={{width:'fit-content'}}>Reset roster filters</button>
+            </div>
             {Object.entries(grouped).map(([cat,fList],idx)=>{
               const isCatOff=disabledCats.includes(cat);
               return(
@@ -735,6 +745,26 @@ function App(){
                 </div>
               );
             })}
+            <div style={{background:'var(--surf)',border:'1px solid var(--border)',borderRadius:16,padding:16,display:'flex',flexDirection:'column',gap:10}}>
+              <div style={{fontFamily:'var(--D)',fontSize:14,letterSpacing:3,color:'var(--muted)'}}>CUSTOM FIGHTERS</div>
+              <div style={{display:'flex',flexDirection:'column',gap:10}}>
+                <input className="inp" value={newFName} onChange={e=>setNewFName(e.target.value)} placeholder="Fighter name..." maxLength={40} onKeyDown={e=>e.key==='Enter'&&newFName.trim()&&addCustom()}/>
+                <input className="inp" value={newFTag} onChange={e=>setNewFTag(e.target.value)} placeholder='Tagline (optional)' maxLength={60} onKeyDown={e=>e.key==='Enter'&&newFName.trim()&&addCustom()}/>
+                <button className="btn btn-g btn-sm" onClick={addCustom} disabled={!newFName.trim()} style={{opacity:newFName.trim()?1:.5,width:'fit-content'}}>+ ADD FIGHTER</button>
+              </div>
+              {custom.length===0?(
+                <div style={{fontSize:13,color:'var(--muted)'}}>No custom fighters yet. Add your own to the roster.</div>
+              ):(
+                <div style={{display:'flex',flexDirection:'column',gap:8}}>
+                  {custom.map((f,i)=>(
+                    <div key={f.id} className="f-list-item" style={{padding:'10px 12px'}}>
+                      <div className="f-list-info"><div className="f-list-name">{f.name}</div><div className="f-list-tag">{f.tag}</div></div>
+                      <button className="del-btn" onClick={()=>delCustom(f.id)}>✕</button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         )}
       </div>
@@ -811,34 +841,6 @@ function App(){
   );
 
   /* ── MY FIGHTERS ── */
-  if(screen==='myFighters') return(
-    <div className="shell scroll">
-      <button className="nav-back" onClick={()=>setScreen('home')}>← BACK</button>
-      <div style={{padding:'0 20px 32px',display:'flex',flexDirection:'column',gap:20}}>
-        <div className="a0"><div style={{fontFamily:'var(--D)',fontSize:38,letterSpacing:2}}>MY FIGHTERS</div><div style={{fontSize:13,color:'var(--muted)',marginTop:4}}>Add custom inside-joke fighters.</div></div>
-        <div className="a1" style={{background:'var(--surf)',border:'1px solid var(--border)',borderRadius:16,padding:16,display:'flex',flexDirection:'column',gap:10}}>
-          <div style={{fontFamily:'var(--D)',fontSize:14,letterSpacing:3,color:'var(--muted)'}}>ADD FIGHTER</div>
-          <input className="inp" value={newFName} onChange={e=>setNewFName(e.target.value)} placeholder="Fighter name..." maxLength={40} onKeyDown={e=>e.key==='Enter'&&newFName.trim()&&addCustom()}/>
-          <input className="inp" value={newFTag} onChange={e=>setNewFTag(e.target.value)} placeholder='Tagline (optional)' maxLength={60} onKeyDown={e=>e.key==='Enter'&&newFName.trim()&&addCustom()}/>
-          <button className="btn btn-g btn-sm" onClick={addCustom} disabled={!newFName.trim()} style={{opacity:newFName.trim()?1:.5}}>+ ADD FIGHTER</button>
-        </div>
-        {custom.length===0?(
-          <div className="a2 empty-state"><div className="empty-icon">🥊</div><div className="empty-text">No custom fighters yet.<br/>Add your friends, enemies, or a very aggressive houseplant.</div></div>
-        ):(
-          <div className="a2" style={{display:'flex',flexDirection:'column',gap:8}}>
-            <div className="section-lbl">YOUR ROSTER ({custom.length})</div>
-            {custom.map((f,i)=>(
-              <div key={f.id} className="f-list-item">
-                <div style={{width:36,height:36,borderRadius:10,background:'var(--surf2)',display:'flex',alignItems:'center',justifyContent:'center',fontFamily:'var(--D)',fontSize:18,color:'var(--gold)',flexShrink:0}}>{i+1}</div>
-                <div className="f-list-info"><div className="f-list-name">{f.name}</div>{f.tag&&<div className="f-list-tag">"{f.tag}"</div>}</div>
-                <button className="del-btn" onClick={()=>delCustom(f.id)}>✕</button>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-    </div>
-  );
 
     /* ── STARTING FIVE — ROULETTE DRAFT & ASSIGN ── */
   if(screen==='sf_draft'){
@@ -879,6 +881,7 @@ function App(){
 
     return (
       <div className="shell scroll">
+        <button className="nav-back" onClick={()=>{resetSfState();setScreen('home');}}>← HOME</button>
         <div className="score-bar">
           <div className="score-side">
             <div className="score-n r">{Object.keys(sfLineup.red||{}).length}</div>
