@@ -305,7 +305,28 @@ window.EXPANSION_PACKS = [
       "emerging from a massive, unexplained explosion",
       "defending a city block from a giant monster attack"
     ]
+  }  ,
+  {
+    id: "pack_wrong_game",
+    name: "THIS IS THE WRONG GAME",
+    emoji: "🃏", 
+    description: "Glitch the simulation with iconic pieces from the world's most famous board and card games.",
+    fighters: [
+      {id:8001, name: "The Monopoly Man", tag: "collecting $200 and your soul", cat: "wronggame"},
+      {id:8002, name: "A Draw 4 Card", tag: "the friendship-ender", cat: "wronggame"},
+      {id:8003, name: "The Queen of Hearts", tag: "off with their heads!", cat: "wronggame"},
+      {id:8004, name: "A 'Chance' Card", tag: "bank error in your favor", cat: "wronggame"},
+      {id:8005, name: "The Operation Guy", tag: "buzzing with anxiety", cat: "wronggame"},
+      {id:8006, name: "A Scrabble 'Z' Tile", tag: "worth 10 points and zero mercy", cat: "wronggame"},
+      {id:8007, name: "The Clue Candlestick", tag: "it was me, in the library", cat: "wronggame"},
+      {id:8008, name: "A King-Sized Candy Land Card", tag: "stuck in the molasses swamp", cat: "wronggame"}
+    ],
+    scenarios: [
+      "in a high-stakes poker game for the fate of the universe",
+      "trying to finish a board game without anyone flipping the table"
+    ]
   }
+  
 
 ];
 
