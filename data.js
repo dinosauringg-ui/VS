@@ -305,28 +305,69 @@ window.EXPANSION_PACKS = [
       "emerging from a massive, unexplained explosion",
       "defending a city block from a giant monster attack"
     ]
-  }  ,
+  },
   {
-    id: "pack_wrong_game",
-    name: "THIS IS THE WRONG GAME",
-    emoji: "🃏", 
-    description: "Glitch the simulation with iconic pieces from the world's most famous board and card games.",
+    id: "pack_dnd",
+    name: "CRITICAL ROLEPLAY",
+    emoji: "🐉",
+    description: "Monsters, metagamers, and the absolute chaos of rolling a natural one.",
     fighters: [
-      {id:8001, name: "The Monopoly Man", tag: "collecting $200 and your soul", cat: "wronggame"},
-      {id:8002, name: "A Draw 4 Card", tag: "the friendship-ender", cat: "wronggame"},
-      {id:8003, name: "The Queen of Hearts", tag: "off with their heads!", cat: "wronggame"},
-      {id:8004, name: "A 'Chance' Card", tag: "bank error in your favor", cat: "wronggame"},
-      {id:8005, name: "The Operation Guy", tag: "buzzing with anxiety", cat: "wronggame"},
-      {id:8006, name: "A Scrabble 'Z' Tile", tag: "worth 10 points and zero mercy", cat: "wronggame"},
-      {id:8007, name: "The Clue Candlestick", tag: "it was me, in the library", cat: "wronggame"},
-      {id:8008, name: "A King-Sized Candy Land Card", tag: "stuck in the molasses swamp", cat: "wronggame"}
+      {id:8001,name:"Brennan Lee Mulligan",tag:"get in the comments!",cat:"dnd"},
+      {id:8002,name:"Matthew Mercer",tag:"how do you want to do this?",cat:"dnd"},
+      {id:8003,name:"The Tarrasque",tag:"CR 30 world-eater",cat:"dnd"},
+      {id:8004,name:"A Mimic Disguised as a Health Potion",tag:"trust absolutely nothing",cat:"dnd"},
+      {id:8005,name:"Drizzt Do'Urden",tag:"dual-wielding plot armor",cat:"dnd"},
+      {id:8006,name:"A Gelatinous Cube",tag:"slowly digesting your victory",cat:"dnd"},
+      {id:8007,name:"A Beholder with Glasses",tag:"beauty is in the eye of the... wait",cat:"dnd"},
+      {id:8008,name:"A Level 1 Wizard",tag:"dies to 1d4 falling damage",cat:"dnd"},
+      {id:8009,name:"Strahd von Zarovich",tag:"he is the ancient, he is the land",cat:"dnd"},
+      {id:8010,name:"A Mind Flayer",tag:"brain food connoisseur",cat:"dnd"},
+      {id:8011,name:"Boblin the Goblin",tag:"the party's favorite NPC",cat:"dnd"},
+      {id:8012,name:"A Nat 1 on a Death Save",tag:"pure, unadulterated despair",cat:"dnd"},
+      {id:8013,name:"An Overly Enthusiastic Bard",tag:"will attempt to seduce the enemy",cat:"dnd"},
+      {id:8014,name:"Vecna",tag:"missing a hand and an eye",cat:"dnd"},
+      {id:8015,name:"A Displacer Beast",tag:"not actually where it appears",cat:"dnd"},
+      {id:8016,name:"An Owlbear",tag:"hoot growl",cat:"dnd"},
+      {id:8017,name:"Tiamat",tag:"five heads, zero mercy",cat:"dnd"},
+      {id:8018,name:"A Rules Lawyer",tag:"actually, according to page 42...",cat:"dnd"},
+      {id:8019,name:"The Demogorgon",tag:"prince of demons",cat:"dnd"},
+      {id:8020,name:"A Bag of Holding filled with sharp objects",tag:"an impending astral tear",cat:"dnd"}
     ],
     scenarios: [
-      "in a high-stakes poker game for the fate of the universe",
-      "trying to finish a board game without anyone flipping the table"
+      "a tavern brawl that escalated way too quickly",
+      "surviving a trap-filled tomb created by a mad lich",
+      "convincing the city guard they didn't start the fire",
+      "a dragon's hoard audit",
+      "rolling for initiative in a cramped 5x5 hallway",
+      "attempting to stealth in full plate armor",
+      "a high-stakes puzzle meant for a toddler but solved by adults",
+      "haggling with a shopkeeper who is definitely a retired level 20 adventurer",
+      "surviving the immediate consequences of a wild magic surge",
+      "explaining their tragic backstory to a bartender who does not care"
     ]
-  }
-  
+  },
+{
+    id: "pack_wronggame",
+    name: "WRONG GAME",
+    emoji: "🃏",
+    description: "Cards, pieces, and items that wandered in from completely different games.",
+    fighters: [
+      {id:9001,name:"A Bigger Blacker Dick",tag:"the ultimate trump card",cat:"wronggame"},
+      {id:9002,name:"A Blue Car with Six Pink Pegs",tag:"living their best Life",cat:"wronggame"},
+      {id:9003,name:"A Draw 4 Wild Card",tag:"ruining friendships since 1971",cat:"wronggame"},
+      {id:9004,name:"The Monopoly Top Hat",tag:"passed Go, collecting $200",cat:"wronggame"},
+      {id:9005,name:"The Long Tetris Piece",tag:"arriving right when you don't need it",cat:"wronggame"},
+      {id:9006,name:"A Blue Shell",tag:"first place's worst nightmare",cat:"wronggame"},
+      {id:9007,name:"Colonel Mustard in the Library with the Candlestick",tag:"definitely did it",cat:"wronggame"},
+    {id:9008,name:"A Brutal Case of Dysentery", tag:"the undisputed champion of the 1800s",cat:"wronggame"}
+    ],
+    scenarios: [
+      "a sudden death UNO match",
+      "a trade negotiation for two bricks and a wheat",
+      "a Rainbow Road time trial",
+      "a real estate bidding war over Boardwalk"
+    ]
+}
 
 ];
 
@@ -375,3 +416,4 @@ window.SCENARIOS = [
   "hosting Saturday Night Live with zero rehearsal",
   "surviving a blind date that is secretly a sting operation",
 ];
+
