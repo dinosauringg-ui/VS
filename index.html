@@ -576,42 +576,57 @@ html,body{background:var(--bg);color:var(--text);font-family:var(--B);min-height
   font-size:28px;
   text-shadow:0 0 12px currentColor;
 }
-
-.f-tooltip{
-  position:relative;
-  display:inline-block;
+/* ══ IMPROVED TOOLTIP (Inward-Anchored) ══ */
+.f-wrap {
+  position: relative; /* Anchor for the tooltip */
 }
 
-.f-tooltip .tooltip-text{
-  visibility:hidden;
-  background-color:var(--surf2);
-  border:1px solid var(--border2);
-  color:var(--text);
-  text-align:center;
-  border-radius:12px;
-  padding:10px 16px;
-  position:fixed;
-  z-index:9999;
-  transform:translate(-50%, -100%);
-  width:min(320px, calc(100vw - 32px));
-  max-width:340px;
-  font-size:12px;
-  font-style:normal;
-  line-height:1.4;
-  box-shadow:0 12px 36px rgba(0,0,0,.32);
-  opacity:0;
-  transition:opacity .2s, transform .2s;
-  pointer-events:none;
+.tooltip-text {
+  visibility: hidden;
+  background-color: var(--surf2);
+  border: 1px solid var(--border2);
+  color: var(--text);
+  text-align: center;
+  border-radius: 12px;
+  padding: 10px 16px;
+  position: absolute;
+  bottom: 100%; 
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity .2s, transform .2s;
+  pointer-events: none;
+  font-size: 12px;
+  line-height: 1.4;
+  box-shadow: 0 12px 36px rgba(0,0,0,.4);
+  margin-bottom: 12px;
+  
+  /* Sizing constraints for mobile */
+  width: max-content;
+  max-width: 220px; 
 }
 
-.f-tooltip .tooltip-text::after{
-  display:none;
+/* Red Team (Left Card) - Anchor left, expand right */
+.f-wrap.r .tooltip-text {
+  left: 0;
+  transform: translateY(10px); 
+}
+.f-wrap.r:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
 }
 
-.f-tooltip:hover .tooltip-text{
-  visibility:visible;
-  opacity:1;
+/* Blue Team (Right Card) - Anchor right, expand left */
+.f-wrap.b .tooltip-text {
+  right: 0;
+  transform: translateY(10px); 
 }
+.f-wrap.b:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+}
+
 
 
 
@@ -1330,19 +1345,21 @@ function App(){
     <div className="shell scroll">
       <div style={{flex:1,display:'flex',flexDirection:'column',justifyContent:'center',gap:0,paddingBottom:32,minHeight:'100vh'}}>
         <div className="px20 a0" style={{paddingTop:50,paddingBottom:20,display:'flex',flexDirection:'column',alignItems:'center'}}>
-                   <img 
-            src="logo2.png" 
-            alt="Vltimate Showdown" 
-            style={{
-              width: '100%', 
-              maxWidth: '420px', 
-              objectFit: 'contain', 
-              mixBlendMode: 'screen', 
-              filter: 'contrast(1.15) brightness(1.1)',
-              WebkitMaskImage: 'radial-gradient(ellipse 90% 70% at 50% 50%, black 50%, transparent 100%)',
-              maskImage: 'radial-gradient(ellipse 90% 70% at 50% 50%, black 50%, transparent 100%)'
-            }}
-          />
+                   {/* Main Menu Logo Swap */}
+<img 
+  src={theme === 'cyber' ? "logo2alt.png" : "logo2.png"} 
+  alt="Vltimate Showdown" 
+  style={{
+    width: '100%', 
+    maxWidth: '420px', 
+    objectFit: 'contain',
+    /* Apply specific filters for the Cyber logo to pop */
+    filter: theme === 'cyber' ? 'drop-shadow(0 0 10px #00ff00)' : 'contrast(1.15) brightness(1.1)',
+    WebkitMaskImage: 'radial-gradient(ellipse 90% 70% at 50% 50%, black 50%, transparent 100%)',
+    maskImage: 'radial-gradient(ellipse 90% 70% at 50% 50%, black 50%, transparent 100%)'
+  }}
+/>
+
 
            <div className="home-sub" style={{marginTop:-10, zIndex:2, position:'relative', color: tagline !== 'WHO WOULD ACTUALLY WIN?' ? 'var(--gold)' : 'var(--muted)'}}>
             {tagline}
@@ -1581,23 +1598,25 @@ function App(){
                   <div style={{fontSize:13,color:'var(--muted)',lineHeight:1.45}}>{rule.description}</div>
                 </div>
                 {/* Fighter Card */}
-                <div style={{padding:'0 16px'}}>
-                  <div className="f-card" style={{
-                    background:`linear-gradient(145deg,${teamColor}33 0%,var(--surf) 45%,var(--surf2) 100%)`,
-                    border:`1px solid ${teamColor}60`,borderLeft:`3px solid ${teamColor}`,
-                    boxShadow:`0 12px 40px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.07)`,
-                    minHeight:160,width:'100%'
-                  }}>
-                    <div style={{position:'absolute',top:'-50px',right:'-50px',width:'150px',height:'150px',borderRadius:'50%',background:`radial-gradient(circle,${teamColor}59 0%,transparent 70%)`,pointerEvents:'none',zIndex:0}}/>
-                    <span className="f-watermark" style={{color:teamColor}}>{teamName.charAt(0)}</span>
-                    <div style={{position:'absolute',top:10,right:10,fontSize:20,opacity:0.7}} dangerouslySetInnerHTML={{__html:getCategoryIcon(fighter.cat)}}/>
-                    <div className="f-team" style={{color:teamColor,background:`${teamColor}22`,border:`1px solid ${teamColor}44`}}>{teamName}</div>
-                    <div className="f-content" style={{marginTop:12}}>
-                      <div className="f-name">{fighter.name}</div>
-                      <div className="f-tag">{fighter.tag}</div>
-                    </div>
-                  </div>
-                </div>
+                <div className="f-card" style={{/* existing styles */}}>
+  {/* The Tooltip is now a direct child of f-card */}
+  {matchup.f1.description && (
+    <span className="tooltip-text">{matchup.f1.description}</span>
+  )}
+  
+  <div style={{position:'absolute',top:'-50px',right:'-50px',/*...*/}} />
+  <span className="f-watermark">{names.red.charAt(0)}</span>
+  
+  <div className="f-team">{names.red}</div>
+  
+  <div style={{display:'flex', alignItems:'center', gap:12, marginTop:12}}>
+    <div className="f-emoji">{matchup.f1.emoji || '⚔️'}</div>
+    <div className="f-content" style={{flex:1}}>
+       <div className="f-name">{matchup.f1.name}</div>
+       <div className="f-tag">{matchup.f1.tag}</div>
+    </div>
+  </div>
+</div>
                 {/* Done Button */}
                 <div style={{padding:'0 16px'}}>
                   <button
@@ -1671,18 +1690,25 @@ function App(){
           )}
                    <div className="f-row">
             <div className="f-wrap aslam r" style={{animationDelay:'0.1s'}}>
-              <div className="f-card" style={{background: `linear-gradient(145deg,${teamColors.red.hex}33 0%,var(--surf) 45%,var(--surf2) 100%)`, border: `1px solid ${teamColors.red.hex}60`, borderLeft: `3px solid ${teamColors.red.hex}`, boxShadow: `0 12px 40px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.07)`}}>
-                <div style={{position:'absolute',top:'-50px',right:'-50px',width:'150px',height:'150px',borderRadius:'50%',background:`radial-gradient(circle,${teamColors.red.hex}59 0%,transparent 70%)`,pointerEvents:'none',zIndex:0}}></div>
-                <span className="f-watermark" style={{color: teamColors.red.hex}}>{names.red.charAt(0)}</span>
-                <div style={{position:'absolute',top:10,right:10,fontSize:20,opacity:0.7}} dangerouslySetInnerHTML={{__html: getCategoryIcon(matchup.f1.cat)}} />
-                <div className="f-team" style={{color: teamColors.red.hex}}>{names.red}</div>
-                <div style={{display:'flex', alignItems:'center', gap:12, marginTop:12}}>
-                  <div className="f-tooltip" style={{marginRight:8}} onPointerMove={updateTooltipPosition} onPointerEnter={updateTooltipPosition}>
-                    <div className="f-emoji">{matchup.f1.emoji || '⚔️'}</div>
-                    {matchup.f1.description && <span className="tooltip-text" style={{top: tooltipPosition.y - 42, left: tooltipPosition.x}}>{matchup.f1.description}</span>}
-                  </div>
-                  <div className="f-content" style={{flex:1}}>
-                    {activeMode === 'tagteam' ? (
+  {/* Move tooltip here, outside the f-card */}
+  {matchup.f1.description && (
+    <span className="tooltip-text">{matchup.f1.description}</span>
+  )}
+  
+  <div className="f-card" style={{/* ... existing styles ... */}}>
+    <div style={{position:'absolute',top:'-50px',right:'-50px',/*...*/}}></div>
+    <span className="f-watermark" style={{color: teamColors.red.hex}}>{names.red.charAt(0)}</span>
+    
+    <div style={{position:'absolute',top:10,right:10,fontSize:20,opacity:0.7}} dangerouslySetInnerHTML={{__html: getCategoryIcon(matchup.f1.cat)}} />
+    <div className="f-team" style={{color: teamColors.red.hex}}>{names.red}</div>
+    
+    <div style={{display:'flex', alignItems:'center', gap:12, marginTop:12}}>
+      {/* Emoji is just text now, no f-tooltip wrapper */}
+      <div className="f-emoji">{matchup.f1.emoji || '⚔️'}</div>
+      
+      <div className="f-content" style={{flex:1}}>
+        {activeMode === 'tagteam' ? (
+
                       <>
                         <div className="f-name f-name-sm">{matchup.f1[0].name}</div>
                         <div className="f-pair-sep">AND</div>
@@ -1699,16 +1725,22 @@ function App(){
             <div className="vs-pill"><span>VS</span></div>
             
             <div className="f-wrap aslam b" style={{animationDelay:'0.2s'}}>
-              <div className="f-card" style={{background: `linear-gradient(145deg,${teamColors.blue.hex}33 0%,var(--surf) 45%,var(--surf2) 100%)`, border: `1px solid ${teamColors.blue.hex}60`, borderLeft: `3px solid ${teamColors.blue.hex}`, boxShadow: `0 12px 40px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.07)`}}>
-                <div style={{position:'absolute',top:'-50px',right:'-50px',width:'150px',height:'150px',borderRadius:'50%',background:`radial-gradient(circle,${teamColors.blue.hex}59 0%,transparent 70%)`,pointerEvents:'none',zIndex:0}}></div>
-                <span className="f-watermark" style={{color: teamColors.blue.hex}}>{names.blue.charAt(0)}</span>
-                <div style={{position:'absolute',top:10,right:10,fontSize:20,opacity:0.7}} dangerouslySetInnerHTML={{__html: getCategoryIcon(matchup.f2.cat)}} />
-                <div className="f-team" style={{color: teamColors.blue.hex}}>{names.blue}</div>
-                <div style={{display:'flex', alignItems:'center', gap:12, marginTop:12}}>
-                  <div className="f-tooltip" style={{marginRight:8}} onPointerMove={updateTooltipPosition} onPointerEnter={updateTooltipPosition}>
-                    <div className="f-emoji">{matchup.f2.emoji || '⚔️'}</div>
-                    {matchup.f2.description && <span className="tooltip-text" style={{top: tooltipPosition.y - 42, left: tooltipPosition.x}}>{matchup.f2.description}</span>}
-                  </div>
+  {/* Move tooltip here, outside the f-card */}
+  {matchup.f2.description && (
+    <span className="tooltip-text">{matchup.f2.description}</span>
+  )}
+  
+  <div className="f-card" style={{/* ... existing styles ... */}}>
+    <div style={{position:'absolute',top:'-50px',right:'-50px',/*...*/}}></div>
+    <span className="f-watermark" style={{color: teamColors.blue.hex}}>{names.blue.charAt(0)}</span>
+    
+    <div style={{position:'absolute',top:10,right:10,fontSize:20,opacity:0.7}} dangerouslySetInnerHTML={{__html: getCategoryIcon(matchup.f2.cat)}} />
+    <div className="f-team" style={{color: teamColors.blue.hex}}>{names.blue}</div>
+    
+    <div style={{display:'flex', alignItems:'center', gap:12, marginTop:12}}>
+      {/* Emoji is just text now, no f-tooltip wrapper */}
+      <div className="f-emoji">{matchup.f2.emoji || '⚔️'}</div>
+
                   <div className="f-content" style={{flex:1}}>
                     {activeMode === 'tagteam' ? (
                       <>
